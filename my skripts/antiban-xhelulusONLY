@@ -1,0 +1,11 @@
+local userid = game.Players.LocalPlayer.UserId;
+if userid == 3001347724 then
+    --antiban/xhatbypass
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/antiban-antilogger/main/xhatbypass_lulaslollipop", true))()
+elseif userid == 4406450103 then
+    --antiban/xhatbypass
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/antiban-antilogger/main/xhatbypass_lulaslollipop", true))()
+else
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/kustomnotif/main/notifikation_lulaslollipop", true))()
+    Notify("🔒", "No Access", 5)
+end;
