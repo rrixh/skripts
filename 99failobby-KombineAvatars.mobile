@@ -1,0 +1,321 @@
+getgenv().mainAvatar = ""
+getgenv().sekondAvatar = ""
+getgenv().defaultAvatar = ""
+getgenv().nekogirls = (99387651581628)
+getgenv().getImg = (nekogirls)
+local GameTitleSize = 19
+local GameTitleFont = 49
+local owner = "lulaslollipop 🍭"
+
+local fullyVisible = 0;
+local halfVisible = 0.5;
+local notVisible = 1;
+
+local mainAvatarTransparenxy = 0.1
+local sekondAvatarTransparenxy = 0.1
+local imgTransparenxy = fullyVisible
+local imageBehindAllElements = -1.5
+
+local frameTransparenxy = 0.8
+local toggleTransparenxy = 0.2
+local imageTransparenxy = fullyVisible
+local bgImageTransparenxy = halfVisible
+local kombineButtonTransparenxy = 0.25
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+local err = function(txt)
+spawn(function()
+local RRixh1 = loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/uwuware/main/skripts/AkaliNotif", true))();
+local Notify = RRixh1.Notify
+Notify({Description = txt; Duration = 3});
+  end);
+end;
+
+--supported input
+local mobile = Enum.UserInputType.Touch
+local mouse1 = Enum.UserInputType.MouseButton1
+local mousemove = Enum.UserInputType.MouseMovement
+--input type
+local supportedInputs = { mobile ,mouse1, mousemove }
+
+local morphs = {
+ tubers93 = "Tubers93", tubers = "Tubers93", ["93"] = "Tubers93",
+ ["director vivian"] = "Director Vivian",
+vivian = "Director Vivian",
+vivi = "Director Vivian",
+director = "Director Vivian",
+["john doe"] = "John Doe", johndoe = "John Doe", john = "John Doe", doe = "John Doe", jenna = "Jenna", poppy = "Poppy", unseenbones = "Unseenbones", unseen = "Unseenbones", bones = "Unseenbones",
+["explorer elizabeth"] = "Explorer Elizabeth", explorer = "Explorer Elizabeth",
+elizabeth = "Explorer Elizabeth",
+["death dollie"] = "Death Dollie",
+dollie = "Death Dollie",
+deathdollie = "Death Dollie",
+["666"] = "666", sixsixsix = "666", devil = "666", worker = "Worker", soldier = "Soldier", manager = "Manager", ["front man"] = "Front Man", frontman = "Front Man", ["golden manager"] = "Golden Manager", goldenmanager = "Golden Manager", ["diamond manager"] = "Diamond Manager",
+diamondmanager = "Diamond Manager",
+diamond = "Diamond Manager", ["emerald manager"] = "Emerald Manager", emeraldmanager = "Emerald Manager", emerald = "Emerald Manager",
+["ruby manager"] = "Ruby Manager",
+ rubymanager = "Ruby Manager",
+ ruby = "Ruby Manager",
+ ["neon manager"] = "Neon Manager",
+ neonmanager = "Neon Manager",
+ neon = "Neon Manager",
+["1x1x1"] = "1x1x1", onexonexone = "1x1x1", ["1x"] = "1x1x1", ["1x1"] = "1x1x1",
+["ghost 001"] = "Ghost  001", ["ghost001"]="Ghost  001", ghost = "Ghost  001", ["noot noot"] = "Noot Noot", nootnoot = "Noot Noot", penguin = "Noot Noot", noot = "Noot Noot", bear = "Hopper", polar = "Hopper",
+hopper = "Hopper", polarbear = "Hopper", ["polar bear"] = "Hopper",
+roof = "Roof", buur ="Buur", ["the chair"] = "The Chair", thechair = "The Chair", chair = "The Chair", ["lord duck"] = "Lord Duck", lordduck = "Lord Duck", duck = "Lord Duck", lordduxk = "Lord Duck", duxk = "Lord Duck",
+yourself = "You", you = "You", me = "You",
+default = "You", bandites = "Bandites", bandit = "Bandites", lunar = "Lunar", jayingee = "jayingee", sharkblox = "Sharkblox", shark = "Sharkblox", sub = "Sub", oblivious = "Oblivious", myusernamesthis = "MyUsernamesThis", nightfoxx = "Night_foxx", ["night foxx"] = "Night_foxx", night_foxx = "night_foxx", dapandagirl = "DaPandaGirl", ["panda girl"] = "DaPandaGirl", ["da panda girl"] = "DaPandaGirl", tanqr = "TanqR", iamsanna = "iamsanna", sanna = "iamsanna", inquisitormaster = "Inquisitormaster", inquisitor = "Inquisitormaster", ashleyosity = "Ashleyosity", evanbear = "EvanBear", ["evan bear"] = "EvanBear", evan = "EvanBear", witch = "Phoeberry", phoeberry = "Phoeberry", phoe = "Phoeberry", kreekcraft = "KreekCraft", kreek = "KreekCraft", craft = "KreekCraft", kaden = "Kaden", tooquick = "TooQuick", notive = "notive", ashleytheunicorn = "AshleyTheUnicorn", antantixx = "Ant Antixx", ["ant antixx"] = "Ant Antixx", ant = "Ant Antixx", antixx = "Ant Antixx", zacharyzaxor = "ZacharyZaxor", zachary = "ZacharyZaxor", seedeng = "Seedeng", deng = "Seedeng", preston = "PrestonPlayz", ["preston playz"] = "PrestonPlayz", prestonplayz = "PrestonPlayz", timmeh = "Timmeh", realroses = "realroses", cheru = "realroses", cherussii = "realroses", djmonopoli = "DJMonopoli", monopoli = "DJMonopoli", dj = "DJMonopoli", itsfunneh = "ItsFunneh", ["its funneh"] = "ItsFunneh", sebee = "Sebee", minitoon = "Minitoon", acenix = "Acenix", twistedpandora = "TwistedPandora", pandora = "TwistedPandora", sally = "Sally", konekokitten = "KonekoKitten", koneko = "KonekoKitten", cookiecutter = "CookieCutter", cookie = "CookieCutter", cutter = "CookieCutter", denis = "Denis", tofuu = "Tofuu", temprist = "Temprist", ["bacon girl"] = "Bacon Girl", bacongirl = "Bacon Girl", poke = "Poke", russo = "Russo", kavra = "Kavra", foreverhd = "ForeverHD", gamingwithkev = "GamingwithKev", nicsterv = "NicsterV", nicster = "NicsterV", hypercookiie = "HyperCookiie", hypercookie = "HyperCookiie", cookiie = "HyperCookiie", ["guest 0284"] = "Guest 0284", guest0284 = "Guest 0284", meganplays = "MeganPlays", megan = "MeganPlays", leahashe = "Leah Ashe", leah = "Leah Ashe", ["leah ashe"] = "Leah Ashe", herbert = "Herbert", mats = "Mats", bucket = "Mats", conor3d = "Conor3D", conor = "Conor3D", sketch = "Sketch", loginhdi = "LOGinHDi", login = "LOGinHDi", sabrina = "SabrinaBrite", sabrinabrite = "SabrinaBrite", amberry = "Amberrry", amberrry = "Amberrry", berrry = "Amberrry", fgteev = "FGTeeV", deeter = "DeeterPlays", deeterplays = "DeeterPlays", guest21938 = "Guest 21938", ["guest 21938"] = "Guest 21938", thinknoodles = "ThinkNoodles", noodles = "ThinkNoodles", ved_dev = "VeD_DeV",  banker = "Banker", vipdeerguy = "VIP Deer Guy", ["vip deer guy"] = "VIP Deer Guy", vipdeerguy = "VIP Deer Guy", deerguy = "VIP Deer Guy", vipliongirl = "VIP Lion Girl", ["vip lion girl"] = "VIP Lion Girl", liongirl = "VIP Lion Girl", ["deer guy"] = "VIP Deer Guy", ["lion girl"] = "VIP Lion Girl", vipdeergirl = "VIP Deer Girl", ["vip deer girl"] = "VIP Deer Girl", ["deer girl"] = "VIP Deer Girl", player212 = "Player 212", ["player 212"] = "Player 212", vipbuffalogirl = "VIP Buffalo Girl", ["vip buffalo girl"] = "VIP Buffalo Girl", ["buffalo girl"] = "VIP Buffalo Girl", vipeagleguy = "VIP Eagle Guy", ["vip eagle guy"] = "VIP Eagle Guy", ["eagle guy"] = "VIP Eagle Guy", karen = "Karen", guestiebot = "Guestie Bot", guestie = "Guestie Bot", viplionguy = "VIP Lion Guy", ["vip lion guy"] = "VIP Lion Guy", lionguy = "VIP Lion Guy", ["lion guy"] = "VIP Lion Guy", guestybot = "Guesty Bot", guesty = "Guesty Bot", viptiger = "VIP Tiger", ["vip tiger"] = "VIP Tiger", businessguy = "Business Guy", ["business guy"] = "Business Guy", business = "Business Guy", baconbot = "Bacon Bot", ["bacon bot"] = "Bacon Bot", vipbearguy = "VIP Bear Guy", ["vip bear guy"] = "VIP Bear Guy", ["bear guy"] = "VIP Bear Guy", bearguy = "VIP Bear Guy", bankerguy = "Banker Guy", ["banker guy"] = "Banker Guy", ["vip owl guy"] = "VIP Owl Guy", vipowlguy = "VIP Owl Guy", owlguy = "VIP Owl Guy", ["owl guy"] = "VIP Owl Guy", ["shiny vip deer girl"] = "Shiny VIP Deer Girl", ["shiny deer girl"] = "Shiny VIP Deer Girl", shinydeergirl = "Shiny VIP Deer Girl", shinyredsquid = "Shiny Red Squid", ["shiny red squid"] = "Shiny Red Squid", ["shiny vip eagle girl"] = "Shiny VIP Eagle Girl", ["shiny eagle girl"] = "Shiny VIP Eagle Girl", ["shiny vip bear girl"] = "Shiny VIP Bear Girl", ["shiny bear girl"] = "Shiny VIP Bear Girl", shinybeargirl = "Shiny VIP Bear Girl", shinyliongirl = "Shiny VIP Lion Girl", ["shiny lion girl"] = "Shiny VIP Lion Girl", ["shiny vip lion girl"] = "Shiny VIP Lion Girl", shinyowlguy = "Shiny VIP Owl Guy", ["shiny vip owl guy"] = "Shiny VIP Owl Guy", ["shiny vip tiger girl"] = "Shiny VIP Tiger Girl", ["shiny tiger girl"] = "Shiny VIP Tiger Girl", shinytigergirl = "Shiny VIP Tiger Girl", ["shiny vip deer guy"] = "Shiny VIP Deer Guy", ["shiny deer guy"] = "Shiny VIP Deer Guy", shinydeerguy = "Shiny VIP Deer Guy", ["golden front man"] = "Golden Front Man", goldenfrontman = "Golden Front Man", ["gold front man"] = "Golden Front Man", rubyfrontman = "Ruby Front Man", ["ruby front man"] = "Ruby Front Man", sapphirefrontman = "Sapphire Front Man", sapphire = "Sapphire Front Man", ["sapphire front man"] = "Sapphire Front Man", ["diamond front man"] = "Diamond Front Man", diamondfrontman = "Diamond Front Man", 
+}
+
+local function kombineAvatars(selectedAva)
+    local morphAvatar = morphs[selectedAva]
+    if morphAvatar and morphAvatar ~= "" then
+        for i = 1, 2 do
+            spawn(function()
+                ReplicatedStorage.Shared.Remotes.morphRequest.RemoteFunction:InvokeServer(morphAvatar)
+            end)
+        end
+    else
+        print"invalid morph"; return
+    end
+end
+
+-- Function to create the GUI
+local function _()
+    local screenGui = Instance.new("ScreenGui", game.CoreGui)
+    screenGui.Name = "MorphGui"
+    screenGui.ResetOnSpawn = false
+
+    local frame = Instance.new("Frame", screenGui)
+    frame.Size = UDim2.new(0, 280, 0, 180)
+    frame.Position = UDim2.new(0.5, -140, 0.5, -90)
+    frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    frame.BackgroundTransparency = frameTransparenxy
+    frame.Active = true
+    frame.Draggable = true
+
+    local stroke = Instance.new("UIStroke", frame)
+    stroke.Thickness = 2
+    stroke.Color = Color3.fromRGB(0, 255, 0)
+    stroke.Transparency = 0.5
+
+    local bgImage = Instance.new("ImageLabel", frame)
+    bgImage.Size = UDim2.new(1, 0, 1, 0)
+    bgImage.Position = UDim2.new(0, 0, 0, 0)
+    bgImage.Image = "rbxassetid://"..getImg
+    bgImage.ImageTransparency = imageTransparenxy
+    bgImage.BackgroundTransparency = bgImageTransparenxy
+    bgImage.ZIndex = imageBehindAllElements -- Ensure image is behind other elements
+
+    local titleLabel = Instance.new("TextLabel", frame)
+    titleLabel.Text = "Kombine Avatars"
+    titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+    titleLabel.Position = UDim2.new(0, 0, 0, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.TextColor3 = Color3.fromRGB(250, 250, 250)
+    titleLabel.TextScaled = true
+    titleLabel.TextStrokeTransparency = 0
+    titleLabel.TextStrokeColor3 = Color3.new(0, 0.8, 0)
+    titleLabel.Font = Enum.Font.FredokaOne
+    titleLabel.TextSize = 16
+
+    local subTitleLabel = Instance.new("TextLabel", frame)
+    subTitleLabel.Text = "99% fail obby"
+subTitleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+    subTitleLabel.Position = UDim2.new(0, 0, 0.1, 0)
+    subTitleLabel.BackgroundTransparency = 1
+    subTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    subTitleLabel.TextScaled = true
+    subTitleLabel.TextStrokeTransparency = 0.5
+    subTitleLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    subTitleLabel.Font = GameTitleFont
+    subTitleLabel.TextSize = GameTitleSize
+
+    -- Main Avatar Textbox
+    local mainAvatarBox = Instance.new("TextBox", frame)
+    mainAvatarBox.Size = UDim2.new(0, 127, 0, 40)
+    mainAvatarBox.Position = UDim2.new(0.5, -139, 0.5, -25)
+    mainAvatarBox.PlaceholderText = "Main Avatar"
+    mainAvatarBox.PlaceholderColor3 = Color3.fromRGB(0, 255, 0)
+    mainAvatarBox.Font = Enum.Font.SourceSansBold
+    mainAvatarBox.TextSize = 14
+    mainAvatarBox.BackgroundTransparency = mainAvatarTransparenxy
+
+    -- Sekond Avatar Textbox
+    local sekondAvatarBox = Instance.new("TextBox", frame)
+    sekondAvatarBox.Size = UDim2.new(0, 127, 0, 40)
+    sekondAvatarBox.Position = UDim2.new(0.5, 12, 0.5, -25)
+    sekondAvatarBox.PlaceholderText = "Sekond Avatar"
+    sekondAvatarBox.PlaceholderColor3 = Color3.fromRGB(0, 255, 0)
+    sekondAvatarBox.Font = Enum.Font.SourceSansBold
+    sekondAvatarBox.TextSize = 14
+    sekondAvatarBox.BackgroundTransparency = sekondAvatarTransparenxy
+
+    -- Kombine Button
+    local kombineButton = Instance.new("TextButton", frame)
+    kombineButton.Size = UDim2.new(0, 100, 0, 40)
+    kombineButton.Position = UDim2.new(0.5, -50, 1, -47)
+    kombineButton.Text = "Kombine"
+    kombineButton.TextColor3 = Color3.new(1, 1, 1)
+    kombineButton.Font = Enum.Font.SourceSansBold
+    kombineButton.TextSize = 14
+    kombineButton.BackgroundColor3 = Color3.new(0, 0.6, 0)
+    kombineButton.BackgroundTransparency = kombineButtonTransparenxy
+
+    -- Unmorph Button
+    local unmorphButton = Instance.new("TextButton", frame)
+    unmorphButton.Size = UDim2.new(0, 70, 0, 30)
+    unmorphButton.Position = UDim2.new(0, 0, 1, -30)
+unmorphButton.Text = "Unmorph"
+    unmorphButton.TextColor3 = Color3.new(1, 1, 1)
+    unmorphButton.Font = Enum.Font.SourceSansBold
+    unmorphButton.TextSize = 14
+    unmorphButton.BackgroundColor3 = Color3.new(1, 0, 0)
+    unmorphButton.BackgroundTransparency = 0.4
+
+    -- Author Label
+    local authorLabel = Instance.new("TextLabel", frame)
+    authorLabel.Text = owner
+authorLabel.Font = Enum.Font.DenkOne
+authorLabel.TextSize = 14
+    authorLabel.Size = UDim2.new(0.3, 0, 0.1, 0)
+    authorLabel.Position = UDim2.new(0.7, 0, 0.9, 0)
+    authorLabel.BackgroundTransparency = 1
+    authorLabel.TextColor3 = Color3.fromRGB(30, 30, 30)
+    authorLabel.TextScaled = true
+    authorLabel.TextStrokeTransparency = 0.3
+    authorLabel.TextStrokeColor3 = Color3.new(1, 1, 1)
+    authorLabel.TextSize = 10.5
+
+    -- Unmorph function
+    unmorphButton.MouseButton1Click:Connect(function()
+        ReplicatedStorage.Shared.Remotes.morphRequest.RemoteFunction:InvokeServer(morphs["you"])
+        print("unmorphed")
+    end)
+
+    -- Kombine function
+    kombineButton.MouseButton1Click:Connect(function()
+        local mainAvatar = mainAvatarBox.Text
+        local sekondAvatar = sekondAvatarBox.Text
+
+        if mainAvatar == "" or mainAvatar == " " or sekondAvatar == "" or sekondAvatar == " " then
+            print("textboxes kant be blank")
+            return
+        end
+
+        if morphs[mainAvatar:lower()] and morphs[sekondAvatar:lower()] then
+            getgenv().mainAvatar = mainAvatar:lower()
+            getgenv().sekondAvatar = sekondAvatar:lower()
+            kombineAvatars(getgenv().mainAvatar)
+            kombineAvatars(getgenv().sekondAvatar)
+            mainAvatarBox.Text = ""
+            sekondAvatarBox.Text = ""
+kombineButton.TextWrapped = true
+kombineButton.Text = "done ✅"
+            wait(1.30)
+            kombineButton.Text = "Kombine"
+            err(""..getgenv().mainAvatar.." & "..getgenv().sekondAvatar.." kombined")
+        else
+            err("invalid morph")
+        end
+    end)
+
+    -- Drag glow effect for frame
+    local dragging = false
+local dragInput, mousePos, framePos
+
+    local function update(input)
+        local delta = input.Position - mousePos
+        frame.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+    end
+
+    frame.InputBegan:Connect(function(input)
+        if input.UserInputType == mousemove or input.UserInputType == mobile then
+            dragging = true
+            mousePos = input.Position
+            framePos = frame.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                    stroke.Transparency = 0.5
+                end
+            end)
+            stroke.Transparency = 0
+        end
+    end)
+
+    frame.InputChanged:Connect(function(input)
+        if input.UserInputType == mousemove or input.UserInputType == mobile then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end)
+
+    -- Toggle Button
+    local toggleButton = Instance.new("ImageButton", screenGui)
+    toggleButton.Size = UDim2.new(0, 50, 0, 50)
+    toggleButton.Position = UDim2.new(0, 10, 0, 10)
+    toggleButton.Image = "rbxassetid://"..getImg
+    toggleButton.BackgroundTransparency = toggleTransparenxy
+    toggleButton.ZIndex = 4
+
+    -- Make the toggle button circular
+    toggleButton.ClipsDescendants = true
+    toggleButton.ImageTransparency = imgTransparenxy
+    local corner = Instance.new("UICorner", toggleButton)
+    corner.CornerRadius = UDim.new(0.5, 0) -- Circular shape
+
+    -- Drag logic for the toggle button
+    local toggleDragging = false
+    local toggleDragInput, toggleMousePos, toggleFramePos
+    local dragThreshold = 10
+    local hasDragged = false
+
+    local function toggleUpdate(input)
+        local delta = input.Position - toggleMousePos
+        toggleButton.Position = UDim2.new(toggleFramePos.X.Scale, toggleFramePos.X.Offset + delta.X, toggleFramePos.Y.Scale, toggleFramePos.Y.Offset + delta.Y)
+    end
+
+    toggleButton.InputBegan:Connect(function(input)
+        if input.UserInputType == mouse1 or input.UserInputType == mobile then
+            toggleDragging = true
+            toggleMousePos = input.Position
+            toggleFramePos = toggleButton.Position
+            hasDragged = false
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    toggleDragging = false
+                    if not hasDragged then
+                        frame.Visible = not frame.Visible
+                    end
+                end
+            end)
+        end
+    end)
+
+    toggleButton.InputChanged:Connect(function(input)
+        if input.UserInputType == mousemove or input.UserInputType == mobile then
+            toggleDragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == toggleDragInput and toggleDragging then
+            if (input.Position - toggleMousePos).magnitude > dragThreshold then
+                hasDragged = true
+                toggleUpdate(input)
+            end
+        end
+    end)
+end;_()
