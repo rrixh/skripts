@@ -1,0 +1,22 @@
+getgenv().autoreload = true;
+while getgenv().autoreload == true and game:GetService("RunService").Heartbeat:Wait() do
+if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
+            if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool"):FindFirstChild("Ammo") then
+                if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool"):FindFirstChild("Ammo").Value <= 0 then
+                    game:GetService("ReplicatedStorage").MainEvent:FireServer("Reload", game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool")) 
+                    wait(1)
+                end
+            end
+        end
+end;
+game.Players.LocalPlayer.Chatted:Connect(function(...)
+if(...=='!on')then
+getgenv().autoreload = true
+elseif(...=='!off')then
+getgenv().autoreload = false
+ end;
+end)
+
+spawn(function()
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "DaHood Auto Reload", Duration = 10, Button1 = "aight 👍🏽", Callback = function()end, Text = "say \"!on\" to enable and\n \"!off\" to disable"});
+end);
