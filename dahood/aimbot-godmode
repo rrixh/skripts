@@ -1,0 +1,127 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+-- Create UI Elements
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.Name = "TrollGUI"
+
+local frame = Instance.new("Frame", screenGui)
+frame.Size = UDim2.new(0, 300, 0, 150)
+frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+frame.BorderSizePixel = 0
+
+local titleLabel = Instance.new("TextLabel", frame)
+titleLabel.Size = UDim2.new(0, 300, 0, 50)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+titleLabel.BorderSizePixel = 0
+titleLabel.Text = "DaHood"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 24
+
+local yesButton = Instance.new("TextButton", frame)
+yesButton.Size = UDim2.new(0, 100, 0, 50)
+yesButton.Position = UDim2.new(0.25, -50, 1, -60)
+yesButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+yesButton.BorderSizePixel = 0
+yesButton.Text = "Godmode"
+yesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+yesButton.Font = Enum.Font.SourceSansBold
+yesButton.TextSize = 18
+
+local noButton = Instance.new("TextButton", frame)
+noButton.Size = UDim2.new(0, 100, 0, 50)
+noButton.Position = UDim2.new(0.75, -50, 1, -60)
+noButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+noButton.BorderSizePixel = 0
+noButton.Text = "Aimbot"
+noButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+noButton.Font = Enum.Font.SourceSansBold
+noButton.TextSize = 18
+
+-- Function to Reposition and Apply Effects
+local function superTroll()
+local newX = math.random(0, 700)
+local newY = math.random(0, 500)
+frame.Position = UDim2.new(0, newX, 0, newY)
+
+-- Apply some crazy effects
+local spinEffect = TweenService:Create(frame, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {Rotation = 360})
+spinEffect:Play()
+
+local slideEffect = TweenService:Create(frame, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Position = UDim2.new(1, 0, 1, 0)})
+slideEffect:Play()
+
+local notification = Instance.new("TextLabel", screenGui)
+notification.Size = UDim2.new(0, 200, 0, 50)
+notification.Position = UDim2.new(math.random(0, 0.8), 0, math.random(0, 0.8), 0)
+notification.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+notification.BorderSizePixel = 0
+notification.Text = "SIKE! TROLLED!"
+notification.TextColor3 = Color3.fromRGB(255, 255, 255)
+notification.Font = Enum.Font.SourceSansBold
+notification.TextSize = 18
+
+local function removeNotification()
+notification:Destroy()
+end
+
+delay(2, removeNotification)
+
+-- Additional trolling: random notifications
+local notifs = {"SIKE!", "TROLLED!", "LOL!", "CAN'T CLOSE ME!", "BETTER LUCK NEXT TIME!", "FAIL RETARD!", "NICE TRY!", "HAHAHA!", "GOTCHA!", "U THOUGHT😂"}
+for _, msg in ipairs(notifs) do
+local randomNotif = Instance.new("TextLabel", screenGui)
+randomNotif.Size = UDim2.new(0, 200, 0, 50)
+randomNotif.Position = UDim2.new(math.random(0, 0.8), 0, math.random(0, 0.8), 0)
+randomNotif.BackgroundColor3 = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
+randomNotif.BorderSizePixel = 0
+randomNotif.Text = msg
+randomNotif.TextColor3 = Color3.fromRGB(255, 255, 255)
+randomNotif.Font = Enum.Font.SourceSansBold
+randomNotif.TextSize = 14
+
+delay(3, function() randomNotif:Destroy() end)
+end
+
+-- Additional trolling: playing sounds
+local soundIds = {144420194, 144422272, 144423450}
+for _, soundId in ipairs(soundIds) do
+local sound = Instance.new("Sound", player:WaitForChild("PlayerGui"))
+sound.SoundId = "rbxassetid://"..soundId
+sound:Play()
+delay(5, function() sound:Destroy() end)
+end
+
+-- Additional trolling: typing random keys
+local keys = {Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D, Enum.KeyCode.Space}
+RunService.RenderStepped:Connect(function()
+if math.random() < 0.1 then
+UserInputService.InputBegan:Fire(keys[math.random(1, #keys)])
+end
+end)
+
+-- Additional trolling: random resizing
+local resizeEffect = TweenService:Create(frame, TweenInfo.new(0.5, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut, -1, true), {Size = UDim2.new(0, math.random(100, 500), 0, math.random(100, 200))})
+resizeEffect:Play()
+
+-- Additional trolling: random colors
+local colorEffect = TweenService:Create(frame, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {BackgroundColor3 = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))})
+colorEffect:Play()
+end
+
+-- Connect Buttons to Super Troll Function
+yesButton.MouseButton1Click:Connect(superTroll)
+noButton.MouseButton1Click:Connect(superTroll)
+
+
+RunService.Heartbeat:Connect(function()
+if not screenGui.Parent then
+screenGui.Parent = player:WaitForChild("PlayerGui")
+end
+end)
