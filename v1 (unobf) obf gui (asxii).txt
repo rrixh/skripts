@@ -1,0 +1,231 @@
+-- obf gui --
+imgs = loadstring(game:HttpGet("https://github.com/rrixh/uwuware/raw/refs/heads/main/images/img",true))();
+getgenv().draggable = true
+getgenv().OWNER = ("lulaslollipop 🍭")
+getgenv().TITLE = ("FE Obfuskator GUI 👺\n[LUA/JAVA/CSS/PYTHON]")
+
+getgenv().getImg = imgs.happygirls
+
+local kustomobf = Instance.new("ScreenGui")
+local OBFgui = Instance.new("Frame")
+local kodeinput = Instance.new("TextBox")
+local obftextbox = Instance.new("TextBox")
+local OBFbtn = Instance.new("TextButton")
+local kopyOBF = Instance.new("TextButton")
+local klearbutton = Instance.new("TextButton") 
+local klosebutton = Instance.new("TextButton")
+local roundgui = Instance.new("UICorner")
+local roundobf = Instance.new("UICorner")
+local roundkopy = Instance.new("UICorner")
+local roundklear = Instance.new("UICorner")  
+local imglbl = Instance.new("ImageLabel")
+local ownerlbl = Instance.new("TextLabel") 
+local titlelbl = Instance.new("TextLabel")
+
+local white = Color3.new(1, 1, 1);
+local blaxk = Color3.new(.01, .01, .01)
+local red = Color3.new(1, 0, 0)
+local green = Color3.new(0, 1, 0)
+local blue = Color3.new(0, 0, 1)
+
+getgenv().niga=function(txt,dur)
+    _G.RRixh = loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/uwuware/main/skripts/AkaliNotif", true))();
+    _G.Notify = _G.RRixh.Notify; _G.Notify({Description = txt or "Kopied 🍭", Duration = dur or 4}); 
+end;
+
+kustomobf.Parent = game.CoreGui
+kustomobf.Name = "FEOBFLULAS"
+local feobf = game.CoreGui:FindFirstChild(kustomobf.Name);
+
+OBFgui.Parent = kustomobf
+OBFgui.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15)
+OBFgui.Position = UDim2.new(0.5, 0, 0.5, 0)
+OBFgui.Size = UDim2.new(0.5, 0, 0.6, 0)
+OBFgui.AnchorPoint = Vector2.new(0.5, 0.5)
+OBFgui.BorderSizePixel = 0
+OBFgui.BackgroundTransparency = 0.5
+
+imglbl.Parent = OBFgui 
+imglbl.Size = UDim2.new(1, 0, 1, 0)
+imglbl.BackgroundTransparency = 1
+imglbl.Image = "rbxassetid://"..getImg
+imglbl.Transparency = 0.8
+
+roundgui.CornerRadius = UDim.new(40, 40)
+roundgui.Parent = OBFgui;
+
+kodeinput.Parent = OBFgui
+kodeinput.BackgroundColor3 = Color3.new(.75, .1, .1)
+kodeinput.Position = UDim2.new(0.1, 0, 0.15, 0)
+kodeinput.Size = UDim2.new(0.8, 0, 0.25, 0)
+kodeinput.Text = ("kode here");
+local defaultInputTxt = kodeinput.Text;
+kodeinput.PlaceholderText = "kode here"
+kodeinput.TextWrapped = true
+kodeinput.ClearTextOnFocus = false
+kodeinput.TextEditable = false
+kodeinput.TextColor3 = blaxk
+
+obftextbox.Parent = OBFgui
+obftextbox.BackgroundColor3 = Color3.new(.1, .6, .1)
+obftextbox.Position = UDim2.new(0.1, 0, 0.45, 0)
+obftextbox.Size = UDim2.new(0.8, 0, 0.25, 0)
+obftextbox.Text = "obf kode will appear here"
+obftextbox.PlaceholderText = "obf kode"
+obftextbox.TextWrapped = true
+obftextbox.ClearTextOnFocus = false
+obftextbox.TextEditable = false
+obftextbox.TextColor3 = white
+
+OBFbtn.Parent = OBFgui
+OBFbtn.BackgroundColor3 = Color3.new(0.2, 0.6, 0.2)
+OBFbtn.Position = UDim2.new(0.1, 0, 0.8, 0)
+OBFbtn.Size = UDim2.new(0.25, 0, 0.15, 0)
+OBFbtn.Text = ("Obfuskate")
+
+roundobf.CornerRadius = UDim.new(0, 15)
+roundobf.Parent = OBFbtn;
+
+klearbutton.Parent = OBFgui
+klearbutton.BackgroundColor3 = Color3.new(0.6, 0.6, 0)  
+klearbutton.Position = UDim2.new(0.4, 0, 0.8, 0)
+klearbutton.Size = UDim2.new(0.2, 0, 0.15, 0);
+klearbutton.Text = ("Klear")
+
+roundklear.CornerRadius = UDim.new(0, 15);
+roundklear.Parent = klearbutton;
+
+kopyOBF.Parent = OBFgui
+kopyOBF.BackgroundColor3 = Color3.new(0.2, 0.6, 0.6)
+kopyOBF.Position = UDim2.new(0.65, 0, 0.8, 0)
+kopyOBF.Size = UDim2.new(0.3, 0, 0.15, 0)
+kopyOBF.Text = ("Kopy")
+
+roundkopy.CornerRadius = UDim.new(0, 15)
+roundkopy.Parent = kopyOBF;
+
+klosebutton.Parent = OBFgui
+klosebutton.BackgroundColor3 = Color3.new(1, 0, 0)
+klosebutton.Position = UDim2.new(0.9, -14, 0.05, 0)
+klosebutton.Size = UDim2.new(0.1, 0, 0.1, 0)
+klosebutton.Text = "x"
+klosebutton.TextStrokeTransparency = .9
+
+ownerlbl.Parent = OBFgui;
+ownerlbl.Text = getgenv().OWNER;
+ownerlbl.Position = UDim2.new(1.010, -355, 0, 1) 
+ownerlbl.Size = UDim2.new(0.3, 0, 0.05, 0)
+ownerlbl.BackgroundTransparency = 1
+ownerlbl.TextColor3 = white
+ownerlbl.Font = Enum.Font.FredokaOne
+ownerlbl.TextSize = 10
+ownerlbl.TextStrokeTransparency = 0
+
+titlelbl.Parent = OBFgui
+titlelbl.Text = getgenv().TITLE;
+titlelbl.Position = UDim2.new(0.5, 0, 0.03, 0) 
+titlelbl.Size = UDim2.new(0.4, 0, 0.1, 0)
+titlelbl.BackgroundTransparency = 1
+titlelbl.TextColor3 = white
+titlelbl.Font = Enum.Font.LuckiestGuy
+titlelbl.TextSize = 14;
+titlelbl.AnchorPoint = Vector2.new(0.5, 0)
+titlelbl.TextStrokeTransparency = 0
+
+local function OBFkode()
+    kodeinput.TextEditable = true
+    local SKRIPTtoOBF = kodeinput.Text
+    local shit = {}
+
+    local function getbytes()
+    for num = 1, #SKRIPTtoOBF do
+shit[num] = string.byte(SKRIPTtoOBF,num)
+        end
+    end
+
+    local function konvertstring()
+        local niglet = ("")
+        for obj = 1, #shit do
+     niglet = niglet .. "\\" .. shit[obj]
+        end;
+        return niglet
+    end
+
+    local function obf()
+        getbytes();
+        local str = konvertstring();
+return [[ -- 🍭 OBFUSKATED BY LULASLOLLIPOP 🍭 FE OBFUSKATOR --
+loadstring("]] .. str .. [[")();
+]]
+    end
+
+    obftextbox.Text = obf()
+    kodeinput.TextEditable = false;
+end
+
+local function klearinput()
+kodeinput.Text = "Kleared!";
+wait(.5)
+kodeinput.Text = ""
+end
+
+local function kopy()
+    setclipboard(obftextbox.Text)
+    wait(-.01)
+    niga("Kopied",3)
+end
+
+local function klosegui()
+    kustomobf:Destroy()
+end
+
+local UserInputService = game:GetService("UserInputService")
+
+local function makeDraggable(guiElement)
+    local dragging = false
+    local dragInput, mousePos, framePos
+    local dragThreshold = 6
+
+    guiElement.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            mousePos = input.Position
+            framePos = guiElement.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    guiElement.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - mousePos
+            guiElement.Position = UDim2.new(
+                framePos.X.Scale,
+                framePos.X.Offset + delta.X,
+                framePos.Y.Scale,
+                framePos.Y.Offset + delta.Y
+            )
+        end
+    end)
+end;
+
+OBFbtn.MouseButton1Click:Connect(OBFkode);
+klearbutton.MouseButton1Click:Connect(klearinput)
+kopyOBF.MouseButton1Click:Connect(kopy);
+klosebutton.MouseButton1Click:Connect(klosegui);
+
+if getgenv().draggable==true then
+    makeDraggable(OBFgui);
+else
+    local paisjsisij919292919172727272288292929299191299182898_91919199911919818181818shirhsitjsirjisjridjskakaosksjkalaoaoawuhwkqksizizmaodihdjwmsoxidhwnskoxxunsmsoxixjsmxoxiwjmoxusnwksidjsmsodij
+end;
