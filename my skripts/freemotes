@@ -1,8 +1,13 @@
--- FREEMOTES HUB v3.1 --
+-- FREEMOTES HUB v3.2 (freakymotes)--
 local hub,no=pcall(function()
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/rrixh/uwuware/refs/heads/main/skripts/globaLS', true))();
-        rnote = getgenv().rnote;spawn=spawn;
+local lastupdate;
+
+lastupdate = "Sep 14, "..os.date("%Y")
+
+rnote = getgenv().rnote;
+spawn=spawn;
         
 spawn(function()
 repeat wait() until rnote;
@@ -41,13 +46,80 @@ end;
 -- ======================================================
 getgenv().animationz = {};
 getgenv().newAnim = function(ID, Name, OG)
-Name = OG == true and Name.." (Roblox)" or Name == true and getname(tostring(ID)) or Name;
+Name = OG == true and Name:upper().." (Roblox)" or Name == true and getname(tostring(ID)):upper() or Name;
     table.insert(animationz, ID)
     table.insert(animationz, Name)
 end;
 local add = getgenv().newAnim;
 
 -- === EMOTE LIST === --
+
+add(136831243854748,"fashion roadkill")
+add(133597663639529,"happy sit")
+add(79415545851251,"disconnect lag fall")
+add(131944532784605,"disconnect lag fall 2")
+add(100858437532182,"lag")
+add(1114184856480219,true) -- sad rocking
+add(10714403700,true) -- rock on face
+add(84129863420846,"deliquent squat")
+add(104151027065011,"look how fat my ass is")
+add(128264493741915,"squat workout")
+add(137068880594650,"goofy stance")
+add(85970143628380, true) -- bboy pose
+add(10714100539,"plaqueboymax messing up the beat")
+add(124972419921258,"become a mini me")
+add(89414911001028,"become mini dance")
+add(137271301043519,"mini Gangnam style PSY")
+add(139646149622620,"mini walk")
+add(17000021306,"Mini Kong",true)
+add(12804157977,"Ay-Yo Dance Move (NCT-127)")
+add(85267023718407,"Chappell Roan - HOT TO GO!",true)
+add(15679621440,"Festive Dance",true)
+add(15571453761,"Nicki Minaj - Starships",true)
+add(15698404340,"Cuco - Levitate",true)
+add(1278290938049071,"muslim praying")
+add(133013198006917,"dizzy v2")
+add(10714066964,"dizzy")
+add(119100855615432,"Squid Game - skipping emote")
+add(11309255148,"Elton John - Heart Skip",true)
+add(15505459811,"Flex Walk",true)
+add(71105746210464,"The Weeknd Starboy strut")
+add(94437106564879,"fighting warrior stance")
+add(105947156749343,"fighting idle")
+add(139832013282381,"fighting stance 2")
+add(116763940575803,true) -- fighting stance
+add(71483195998835,"KAPOW! (offsale exklusive)")
+add(85670977721943,"ready to fight!")
+add(122348959836766,"slap fight")
+add(108225134235478,"slap")
+add(99230819255990,"JUMP SLAP") -- jumpslapv4
+add(137713041194843,"body waving")
+add(132856429338244,"backflip fail 😵")
+add(79428627645102,"slow motion backflip")
+add(131205329995035,"flirty backflip")
+add(117373674181293,"kool backflip")
+add(83263981931146,"iShowSpeed slo mo backflip") -- SLOMO BAXKFLIP
+add(15693621070,"backflip")
+add(103381045781392,"Kawaii krossed legs pose")
+add(83986683016694,"Kute leg up Profile Pose")
+add(128197972195350,true) -- KUTE LEGS UP POSE
+add(96673018720208,"DO THA THANG 2.0 (viral shimmy dance)")
+add(140486970056356,true) -- DO THA THANG!!
+add(106460951920573,"Twirl That Thang")
+add(133595981289603,"flying hero")
+add(94649451773818,"Richard - The Hero Dance")
+add(133307155622158,"star sleeping face down")
+add(10714360343,"Sleep")
+add(125186677354672,"god emote")
+add(10714347256,"Godlike")
+add(106529787409818,"Baby sit")
+add(79269224561595,"krybaby")
+add(136678550375678,true) -- Bouncy
+add(106398383152416, true) -- kawaii bouncy poses
+add(138118251473453, "Kute Bouncy anime dance")
+add(99581988002903,"Bouncy spring")
+add(124063531509789,"Queen Funk - Zoomin Zoomin")
+add(132499588684957,"Bouncy human ball")
 add(96302637160212, true) -- kawaii bouncy sit
 add(14352343065, "Baby Queen - Bouncy Twirl",true)
 add(15609995579,"Yungblud Happier Jump",true)
@@ -105,8 +177,8 @@ add(135507560258222, getname(135507560258222)) -- Basic Jafi Rock (130 BPM)
 add(105007742376735,"tweak out roll")
 add(139872659085764, "milly rock")
 add(85844480092557, "ROCK LEE STANCE")
-add(1171598172032171,"billy bounce v2.0")
-add(137603230947968, "billy bounce")
+-- add(1171598172032171,"billy bounce v2.0")
+-- add(137603230947968, "billy bounce")
 newAnim(87428466949063,"bouncing baddie")
 newAnim(78072494163948, "micheal myers bounce v2.0")
 newAnim(129357062468183, "micheal myers bounce")
@@ -397,7 +469,7 @@ InfoDate.BackgroundTransparency = 1
 InfoDate.TextColor3 = Color3.fromRGB(200,200,200)
 InfoDate.Font = F(fonts.lastupdated)
 InfoDate.TextScaled = true
-InfoDate.Text = "Date updated: Sep 14, 2025"
+InfoDate.Text = "Date updated: "..lastupdate
 
 local ChangeLogScroll = Instance.new("ScrollingFrame", InfoFrame)
 ChangeLogScroll.Name = "ChangeLog"
@@ -414,8 +486,9 @@ track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function(
 end))
 
 local updates = {
-"if you want more emotes added to this free emotes gui dm me on diskord [@bommunity] with screenshots or a list of emote names  from the roblox marketplace or any emotes found in the game 'Katalog Avatar Kreator' and i will add them",
-"(sep 10, 2025) - 26 new emotes added",
+"(Sep 14, 2025) +131 emotes added",
+"request emotes by sending me a dm on discord or telegram",
+"(sep 10, 2025) +26 new emotes added",
 "(sep 10, 2025) - search box added to lookup emotes by name easily",
 "[v3.0] (sep 9, 2025) - animation speed boxes (page 1 & 2), steal players animations (page 2)",
 "(sep 8, 2025) - pages fixed",
@@ -523,7 +596,7 @@ Title.BackgroundTransparency = 1
 Title.TextColor3 = Color3.fromRGB(255,255,255)
 Title.TextScaled = true
 Title.Font = F(fonts.title)
-Title.Text = "🍭 FREEMOTES v3 🍭"
+Title.Text = "🍭 FREEaky EMOTES v3 🍭"
 Title.ZIndex = 3
 Title.Position = UDim2.new(0, LEFT_START, 0, 0)
 Title.Size = UDim2.new(1, -(LEFT_START + rightReserved), 0, HeaderSize)
@@ -580,7 +653,7 @@ local function showPage(page)
     PageBadge.Text = "Page: " .. tostring(page)
     if page == 3 then
         refreshInfoEmoteCount()
-        InfoDate.Text = "Date updated: Sep 9, 2025"
+  InfoDate.Text = "Date updated: "..lastupdate
     end
     applyVisibility()
 end
@@ -856,12 +929,12 @@ do
     row2.BackgroundTransparency = 1
     row2.ZIndex = 4
 
-    local SearchBox_P1 = CreateInteractable(UDim2.new(1,0,1,0), "Searchbar", "search animations here...", Grey, 6, false, "TextBox", row2)
+    SearchBox_P1 = CreateInteractable(UDim2.new(1,0,1,0), "Searchbar", "search animations here...", Grey, 6, false, "TextBox", row2)
     track(SearchBox_P1:GetPropertyChangedSignal("Text"):Connect(function()
         filterList(AnimationsFrame, string.lower(SearchBox_P1.Text or ""))
     end))
     filterList(AnimationsFrame, "")
-end
+end;
 
 -- ======================================================
 -- STEAL MODE (Page 2) with proper highlight teardown
@@ -1064,5 +1137,5 @@ filterInit()
 showPage(1)
 warn("Number of emotes:", math.floor(#animationz/2))
 
-end);
+end); -- pkall
 if not hub then rnote(tostring(no)) warn(no) return end;
