@@ -397,7 +397,7 @@ InfoDate.BackgroundTransparency = 1
 InfoDate.TextColor3 = Color3.fromRGB(200,200,200)
 InfoDate.Font = F(fonts.lastupdated)
 InfoDate.TextScaled = true
-InfoDate.Text = "Date updated: Sep 9, 2025"
+InfoDate.Text = "Date updated: Sep 14, 2025"
 
 local ChangeLogScroll = Instance.new("ScrollingFrame", InfoFrame)
 ChangeLogScroll.Name = "ChangeLog"
