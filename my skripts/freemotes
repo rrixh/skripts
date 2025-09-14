@@ -2,7 +2,10 @@
 local hub,no=pcall(function()
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/rrixh/uwuware/refs/heads/main/skripts/globaLS', true))();
+        rnote = getgenv().rnote;spawn=spawn;
+        
 spawn(function()
+repeat wait() until rnote;
 rnote("FREEMOTES V3 loading...", 3)
 end)
 
@@ -31,19 +34,87 @@ arrows = "FredokaOne", -- Gotham
 local fonts = getgenv().fonts;
 local function F(name)
     return Enum.Font[name] or Enum.Font.Gotham
-end
+end;
 
 -- ======================================================
 -- ANIMATION LIST API
 -- ======================================================
 getgenv().animationz = {};
 getgenv().newAnim = function(ID, Name, OG)
-Name = OG == true and Name.." (Roblox)" or Name;
+Name = OG == true and Name.." (Roblox)" or Name == true and getname(tostring(ID)) or Name;
     table.insert(animationz, ID)
     table.insert(animationz, Name)
-end
+end;
+local add = getgenv().newAnim;
 
 -- === EMOTE LIST === --
+add(96302637160212, true) -- kawaii bouncy sit
+add(14352343065, "Baby Queen - Bouncy Twirl",true)
+add(15609995579,"Yungblud Happier Jump",true)
+add(14022936101,"YUNG BLUD - HIGH KICK",true)
+add(74087960856949, "spiderman pose (exklusive)")
+add(140603973935390,"maboy spiderman")
+add(71918078252326,"spidey")
+add(78342162273616,"spiderman 2.0")
+add(83345430870757,"SPIDEY HANG")
+add(100415783658122,"TWICE - The Feels",true)
+add(78449434716522,"Tyla Baddie dance")
+add(135666457483077,"kute duo hug emote")
+add(124780202850939,"Kutesy hug duo pose cutecore kawaii hold")
+add(89930880557935,"Kute kawaii side hug Pose")
+add(74146582057902,"Kute kawaii hugging & kicking feet")
+add(110271693046662, "Diva Katwalk")
+add(70418480730096,"Kute model Katwalk")
+add(107611766569881, getname(107611766569881)) -- baxkflip into split
+add(115150168480412,"front splits 3.0")
+add(16371217304,"Skadoosh Emote - Kung Fu Panda 4 (offsale)",true)
+add(119294845436998,"everybody loves kung fu fighting")
+add(98795536838908,"asian boat dance")
+add(75040559357535,"asian squat")
+add(107271599689246,"annyeong (안녕)")
+add(92324467121726, getname(92324467121726)) -- Cleopatra Reclining Style Pose
+add(133718157859498,"kozy kawaii sit")
+add(131532348578183,"kute silly kawaii sit")
+add(102036475756594,"kawaii kute anime sit v3.0")
+add(85961795938515,"kawaii shy sit idle pose")
+add(136073073685621,"kandy emote")
+add(119784159661596,"kute kawaii girly pose [moving idle]")
+add(126834786214500,"kartwheel moving")
+add(82493645455958,"watch it move")
+add(17746180844, "Sturdy Dance - Ice Spice",true)
+add(133405528329839,"Lady Gaga - Judas 2025 Choreo", true)
+add(126216621030394, "Lady Gaga - Abracadabra",true)
+add(738678484827471,"(OG) THE REJEKT (exklusive)")
+add(134367159363456,"(OG) KAT DADDY (offsale/exklusive)")
+add(96269478844761,"cha cha slide")
+add(131164821531850,"toosie slide")
+add(85247727536511,"jubi slide")
+add(92672042026262,"klassy - FORTNITE")
+add(137367641938990,"knocked - FORTNITE")
+add(125379786496551,"Thank The Busdriver skyfall - FORNITE")
+add(116409384225743,"orange justice - FORTNITE")
+add(135940354239870,"eating - TIKTOK")
+add(79018027660574, "ian dance - TIKTOK")
+add(117760015982719,"Jumpstyle - TIKTOK")
+add(139057884114649, "Just know - TIKTOK")
+add(82462838694002, "hit the folks")
+add(96183692791512, "sitting legs out holding plushie ^_^")
+add(120092695096312,"LOL")
+add(95761454251213, getname(95761454251213)) -- roxk  with me
+add(135507560258222, getname(135507560258222)) -- Basic Jafi Rock (130 BPM) 
+add(105007742376735,"tweak out roll")
+add(139872659085764, "milly rock")
+add(85844480092557, "ROCK LEE STANCE")
+add(1171598172032171,"billy bounce v2.0")
+add(137603230947968, "billy bounce")
+newAnim(87428466949063,"bouncing baddie")
+newAnim(78072494163948, "micheal myers bounce v2.0")
+newAnim(129357062468183, "micheal myers bounce")
+newAnim(118050477588612,"upside down floating mirage")
+newAnim(140029540689849,"flying mirage")
+newAnim(91648079587853,"flashpoint run mirage")
+newAnim(130284331740270, "speed mirage")
+newAnim(115334992181298, "idle mirage v3")
 newAnim(71031117208314, "nya kitty kneel")
 newAnim(116622837605059, "kutest sitting kitty idle pose")
 newAnim(115326549133848, "flying body")
@@ -994,4 +1065,4 @@ showPage(1)
 warn("Number of emotes:", math.floor(#animationz/2))
 
 end);
-if not hub then rnote(no) warn(no) return end;
+if not hub then rnote(tostring(no)) warn(no) return end;
