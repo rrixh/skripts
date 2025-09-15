@@ -53,7 +53,65 @@ end;
 local add = getgenv().newAnim;
 
 -- === EMOTE LIST === --
-
+add(118478958778995, "Kame Hame Ha")
+add(112220709701439, "goku charge up")
+add(106345021112927, "goku flying")
+add(89495830134450, "goku hop")
+add(135021333879521, "die lit dance")
+add(138213797821927, "Boogie down - FORTNITE")
+add(97512291756771, "Billy bounce - FORTNITE")
+add(116073335606789, "zany - FORTNITE")
+add(88071224385325, "phonk - FORTNITE")
+add(105934608518484, "rat dance - FORTNITE")
+add(138727713064496, "elektro shuffle - FORTNITE")
+add(119284187579961, "Ride The Pony - FORTNITE")
+add(110835311100233, "charleston roaring 1920s dance")
+add(84462709967194, "MJ moonwalk")
+add(112934105807112, "MJ moonwalk around")
+add(82471303022920, "slow infinite fall")
+add(110979677723900, "slo motion saitama punch")
+add(79428627645102, "slo motion backflip")
+add(123763532572423, "ninja run")
+add(114495718243722, "miss the RAGE")
+add(135823269056913, "kawaii blowing kiss")
+add(116400359809034, "blow a kiss")
+add(86339673982616, "kid tantrum")
+add(117722859258913, "rolling tantrum")
+add(138243322520289, "basketball head")
+add(106722547325315, "sumo stomp")
+add(88577457423712, "have u seen my head")
+add(99694231408564, "superhero fly")
+add(132105268936736, "superhero flying loop")
+add(77286786289523, "blocboy jb - shoot")
+add(80443100846814, "party party")
+add(5895324424, "jumping cheer")
+add(139390570947836, "Klassic retro jump")
+add(100901692455858, "jump spin")
+add(10714378156, "jumping wave")
+add(74184679835720, "star jump")
+add(91486819956007, "hopping")
+add(124944721534059, "bloxky krouxh jump")
+add(124944721534059, "Blocky YIPPEE jump")
+add(102892231143777, "Anime cheer")
+add(75888548366951, "jumping jacks")
+add(139177215097167, "jumping n spinning around (LIMITED✨)")
+add(96767105386109, "kat jump")
+add(115952229051580, "kawaii jump")
+add(102999180775248, "klassic upside down jump")
+add(106604976894858, "(T-pose) pixar light jump")
+add(11444443576, "Elton John - Still Standing",true)
+add(91821363359739, "standing barrage fight")
+add(104146517681516, "FE poop")
+add(96767103034146, "FE mega poop")
+add(110823391306128, "FE ultra poop")
+add(114876082979747, "ugly knee drop")
+add(136456098761541, "tall kreature run")
+add(70636286183373, "run in place")
+add(104428851742579, "I WANNA RUN AWAY")
+add(87721497492370, "animal run")
+add(104074120169874, "naruto run")
+add(102355014922549, "naruto run 2.0 (LIMITED✨)")
+add(73485678861586, "naruto run 3.0")
 add(77304386644418,true) -- big hand wave
 add(108646388198302,true) -- flexer
 add(10714371274,"shuffle") -- shuffle
@@ -497,6 +555,7 @@ track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function(
 end))
 
 local updates = {
+"(sep 15, 2025) +72 emotes added",
 "(Sep 14, 2025) +131 emotes added",
 "request emotes by sending me a dm on discord or telegram",
 "(sep 10, 2025) +26 new emotes added",
