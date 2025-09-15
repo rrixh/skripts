@@ -45,8 +45,8 @@ end;
 -- ANIMATION LIST API
 -- ======================================================
 getgenv().animationz = {};
-getgenv().newAnim = function(ID, Name, OG)
-Name = OG == true and Name:upper().." (Roblox)" or Name == true and getname(tostring(ID)):upper() or Name;
+getgenv().newAnim = function(ID, Name, original)
+Name = (original == true) and Name.." (Roblox)" or Name == true and getname(tostring(ID)) or Name;
     table.insert(animationz, ID)
     table.insert(animationz, Name)
 end;
@@ -54,12 +54,23 @@ local add = getgenv().newAnim;
 
 -- === EMOTE LIST === --
 
+add(77304386644418,true) -- big hand wave
+add(108646388198302,true) -- flexer
+add(10714371274,"shuffle") -- shuffle
+add(118468821959324,"shuffle 2.0") -- shuffling
+add(112931882473990,"signature shuffle") -- signature shuffle
+add(95849769342211,"Elektro shuffle") --elektro shuffle
+add(109677964084274,"6 7") -- ohio shuffle (6-7)
+add(107828342516230,"shuffle litvin") -- shuffle litvin 
+add(90396962685022,"Squid shuffle") -- squid shuffle 
+add(126842570000334,"Bring it around town - spongebob") -- bring it around town
+add(10714391240,"Old Town Road - Lil Nas X",true)
 add(136831243854748,"fashion roadkill")
 add(133597663639529,"happy sit")
 add(79415545851251,"disconnect lag fall")
 add(131944532784605,"disconnect lag fall 2")
 add(100858437532182,"lag")
-add(1114184856480219,true) -- sad rocking
+-- add(1114184856480219,true) -- sad rocking
 add(10714403700,true) -- rock on face
 add(84129863420846,"deliquent squat")
 add(104151027065011,"look how fat my ass is")
@@ -77,7 +88,7 @@ add(85267023718407,"Chappell Roan - HOT TO GO!",true)
 add(15679621440,"Festive Dance",true)
 add(15571453761,"Nicki Minaj - Starships",true)
 add(15698404340,"Cuco - Levitate",true)
-add(1278290938049071,"muslim praying")
+-- add(1278290938049071,"muslim praying")
 add(133013198006917,"dizzy v2")
 add(10714066964,"dizzy")
 add(119100855615432,"Squid Game - skipping emote")
@@ -90,7 +101,7 @@ add(139832013282381,"fighting stance 2")
 add(116763940575803,true) -- fighting stance
 add(71483195998835,"KAPOW! (offsale exklusive)")
 add(85670977721943,"ready to fight!")
-add(122348959836766,"slap fight")
+add(122348959836766,"Baddies slap fight")
 add(108225134235478,"slap")
 add(99230819255990,"JUMP SLAP") -- jumpslapv4
 add(137713041194843,"body waving")
@@ -137,14 +148,14 @@ add(89930880557935,"Kute kawaii side hug Pose")
 add(74146582057902,"Kute kawaii hugging & kicking feet")
 add(110271693046662, "Diva Katwalk")
 add(70418480730096,"Kute model Katwalk")
-add(107611766569881, getname(107611766569881)) -- baxkflip into split
+add(107611766569881,true) -- baxkflip into split
 add(115150168480412,"front splits 3.0")
 add(16371217304,"Skadoosh Emote - Kung Fu Panda 4 (offsale)",true)
 add(119294845436998,"everybody loves kung fu fighting")
 add(98795536838908,"asian boat dance")
 add(75040559357535,"asian squat")
 add(107271599689246,"annyeong (안녕)")
-add(92324467121726, getname(92324467121726)) -- Cleopatra Reclining Style Pose
+add(92324467121726, true) -- Cleopatra Reclining Style Pose
 add(133718157859498,"kozy kawaii sit")
 add(131532348578183,"kute silly kawaii sit")
 add(102036475756594,"kawaii kute anime sit v3.0")
@@ -154,7 +165,7 @@ add(119784159661596,"kute kawaii girly pose [moving idle]")
 add(126834786214500,"kartwheel moving")
 add(82493645455958,"watch it move")
 add(17746180844, "Sturdy Dance - Ice Spice",true)
-add(133405528329839,"Lady Gaga - Judas 2025 Choreo", true)
+add(133405528329839,"Lady Gaga - Judas 2025 Choreo",true)
 add(126216621030394, "Lady Gaga - Abracadabra",true)
 add(738678484827471,"(OG) THE REJEKT (exklusive)")
 add(134367159363456,"(OG) KAT DADDY (offsale/exklusive)")
@@ -172,8 +183,8 @@ add(139057884114649, "Just know - TIKTOK")
 add(82462838694002, "hit the folks")
 add(96183692791512, "sitting legs out holding plushie ^_^")
 add(120092695096312,"LOL")
-add(95761454251213, getname(95761454251213)) -- roxk  with me
-add(135507560258222, getname(135507560258222)) -- Basic Jafi Rock (130 BPM) 
+add(95761454251213, true) -- roxk  with me
+add(135507560258222, true) -- Basic Jafi Rock (130 BPM) 
 add(105007742376735,"tweak out roll")
 add(139872659085764, "milly rock")
 add(85844480092557, "ROCK LEE STANCE")
@@ -211,11 +222,11 @@ newAnim(95632241886226, "krossed arms - hip sway")
 newAnim(91767510752557, "hands down - hip sway")
 newAnim(118384730513841, "kute hip sway v3.0")
 newAnim(72055951191150, "kute hip sway v2.0")
-newAnim(138316142522795, "hip sway")
+newAnim(138316142522795, "kute hip sway")
 newAnim(123072232025169, "Hips")
 newAnim(95017473712131, "GOJO GOKU STRETcH")
 newAnim(96018013254855, "kartwheel to split - gymnastics 🤸 ")
-newAnim(76279004953134, getname(76279004953134)) -- SPLIT
+newAnim(76279004953134, true) -- SPLIT
 newAnim(125632404352712, "incredible splits")
 newAnim(127935496272883, "perfekt standing split - gymnastics 🤸 ")
 newAnim(72023263424662, "kartwheel > 360 > split - gymnastics 🤸")
@@ -229,13 +240,13 @@ newAnim(95680170751590, "lazy handstand")
 newAnim(113862174571669, "kriss kross applesauce - sit")
 newAnim(102840777887514, "look under legs v2.0")
 newAnim(98673561169547, "look under legs")
-newAnim(105973640923990,"smooth tip toes")
+newAnim(105973640923990, "smooth tip toes")
 newAnim(99783661468387, "heebie jeebies")
-newAnim(113675536501038, getname(113675536501038)) -- head shoulders knees toes
+newAnim(113675536501038, true) -- head shoulders knees toes
 newAnim(103670521359891, "anime exorcism")
 newAnim(87234220922831,"anime koi 춤")
 newAnim(110619271110653, "kupid shuffle")
-newAnim(140692198363356, getname(140692198363356)) -- one hand pushup
+newAnim(140692198363356, true) -- one hand pushup
 newAnim(123144357660575,"floating sit - legs krossed")
 newAnim(112902720817093, "kute shoulder karry v2")
 newAnim(122931716945373, "kute shoulder karry v1")
@@ -244,29 +255,29 @@ newAnim(124412437293606, "kawaii tiptoe pose")
 newAnim(74646376889974,"flirty split to lay down ")
 newAnim(138762128384941,"kute sit")
 newAnim(130864458167146, "kawaii pose")
-newAnim(85028748752300, getname(85028748752300)) -- happy wave
+newAnim(85028748752300, true) -- happy wave
 newAnim(116313244331689, "kute chill pose")
 newAnim(133603603298438, "wickedly kute")
 newAnim(88945588397605, "feeling kute v2.0")
 newAnim(95148665700645, "kute sidewayz feet kicks")
 newAnim(128974543601967, "sexy seductive kneel")
 newAnim(124369689700678,"kute wave")
-newAnim(87552868168208, getname(87552868168208)) -- shhhhhhhh!
+newAnim(87552868168208, true) -- shhhhhhhh!
 newAnim(83747413459673, getname(83747413459673)) -- little jumps
 newAnim(108053044406872, "kute leg up pose")
 newAnim(115257437995638, "sassy hands on hip")
 newAnim(102785083457436, "kute kitty kat paws")
 newAnim(110083585424215, "kute krouch")
 newAnim(134221596131910, "kute pose")
-newAnim(72261453241756, getname(72261453241756)) -- knee slapper
+newAnim(72261453241756, true) -- knee slapper
 newAnim(132998845771568, "praying v2")
 newAnim(70792784107234, getname(70792784107234).." v1")
 newAnim(84973303565168,"broken")
-newAnim(82554507166762, getname(82554507166762)) -- knee sit
+newAnim(82554507166762, true) -- knee sit
 newAnim(89890939126920, "peter fall")
 newAnim(110164198331994,"fall to knees scream")
-newAnim(126440766651628, getname(126440766651628)) -- kawaii knee sitting
-newAnim(110299716356487, getname(110299716356487)) -- low bow
+newAnim(126440766651628,true) -- kawaii knee sitting
+newAnim(110299716356487, true) -- low bow
 newAnim(133718157859498,"kawaii sit")
 newAnim(74653824167228,"slow CPR heart pump")
 newAnim(101096721142418,"CPR")
@@ -277,7 +288,7 @@ newAnim(112666788146566, "disappointed head nod")
 newAnim(83436515542426,"shy shaking")
 newAnim(137757501272874, "nervous shaking")
 newAnim(130698558421319, "shake v3")
-newAnim(115591593036589, getname(115591593036589)) -- super krazy shake dance
+newAnim(115591593036589, true) -- super krazy shake dance
 newAnim(79367046382209, getname(79367046382209)) -- shake dat (Bossman Dlow)
 newAnim(91785487048391, "sexyy red - shake yo dreads")
 newAnim(96387457087289,"ROXKSTAR HEAD SHAKE")
@@ -291,13 +302,13 @@ newAnim(113665123051133,"bby girl shake that short rig 2")
 newAnim(138296642082362, "prettygirl movement")
 newAnim(125655851814978,"Baddie shake v2")
 newAnim(82290588229832,"Baddie shake")
-newAnim(103606174140721, getname(103606174140721)) -- hip bounce
+newAnim(103606174140721, true) -- hip bounce
 newAnim(118552217459650, "paku jalur")
-newAnim(112534296956901, getname(112534296956901)) -- switchway dance
+newAnim(112534296956901, true) -- switchway dance
 newAnim(104149584253673, "happy dance")
-newAnim(119159857703733, getname(119159857703733)) -- koncert dance
-newAnim(103097233919227, getname(103097233919227)) -- korean dance
-newAnim(126092655593662, getname(126092655593662)) -- nippon dance
+newAnim(119159857703733, true) -- koncert dance
+newAnim(103097233919227, true) -- korean dance
+newAnim(126092655593662, true) -- nippon dance
 newAnim(78195344190486, "doggy")
 newAnim(115417853064013, "helikopter mode 🚁 ")
 newAnim(85588129788692, "hit the Griddy")
