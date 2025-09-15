@@ -4,7 +4,7 @@ local hub,no=pcall(function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/rrixh/uwuware/refs/heads/main/skripts/globaLS', true))();
 local lastupdate;
 
-lastupdate = "Sep 14, "..os.date("%Y")
+lastupdate = "Sep 15, "..os.date("%Y")
 
 rnote = getgenv().rnote;
 spawn=spawn;
