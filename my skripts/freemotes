@@ -1,23 +1,22 @@
 -- FREEMOTES HUB v3.2 (freakymotes)--
 local hub,no=pcall(function()
 
+local loading = 0;
 loadstring(game:HttpGet('https://raw.githubusercontent.com/rrixh/uwuware/refs/heads/main/skripts/globaLS', true))();
 local lastupdate;
 
-lastupdate = "Sep 15, "..os.date("%Y")
+lastupdate = "Sep 16, "..os.date("%Y")
 
 rnote = getgenv().rnote;
 spawn=spawn;
         
 spawn(function()
-repeat wait() until rnote;
+if not rnote then repeat wait(-9e9) until rnote end;
 rnote("FREEMOTES V3 loading...", 3)
 end)
 
-local loading = 0;
-repeat
-    loading = loading + 2;
-    print("loading...", loading, "sekond(s)")
+repeat loading = loading + 2;
+ print("loading...", loading, "sekond(s)")
 until istype(getname, "function") and game:IsLoaded();
 
 -- ======================================================
@@ -30,7 +29,7 @@ emotes = "Highway", -- GothamSemibold
 pages = "FredokaOne",
 emotekount = "FredokaOne",
 kreator = "DenkOne",
-lastupdated = "GothamSemibold",
+lastupdated = "DenkOne", --GothamSemibold
 updates = "Bodoni",
 minimizeAndKlose = "FredokaOne", -- GothamBold
 arrows = "FredokaOne", -- Gotham
@@ -51,8 +50,78 @@ Name = (original == true) and Name.." (Roblox)" or Name == true and getname(tost
     table.insert(animationz, Name)
 end;
 local add = getgenv().newAnim;
+-- emotes: 362 + 70 = 462
 
 -- === EMOTE LIST === --
+add(112816775283756, "metro man aura float")
+add(128611142091245, "chainsaw man dance")
+add(76633706236365, "iron man rebuild")
+add(130600720005813, "wacky inflatable tubeman (offsale)")
+add(106040688907695,true) -- pacman
+add(76325688733257, true) -- mannrobics inna nutshell
+add(103668931865830, "running backflip")
+add(112003140402333, "attach to random peoples back")
+add(124400191241605, "kute back pose")
+add(111761872889019, "kute lean back idle pose")
+add(93824574757232, "sexy look back pose")
+add(139181392761723, "kute n shy look back")
+add(103210639627570, "Baddie Look back at it pose")
+add(120228229513186, "look back at it")
+add(84159172592482, "daydreaming on back")
+add(122944888546102, "daydreaming about you")
+add(122057942886310, "lying on back pose")
+add(123227911531838, "eat me out")
+add(119570846532473, "kick kick kick (offsale)")
+add(92366485905379, "laid back sit")
+add(109364514498221, "apple store girl (do u want me?)")
+add(121138326857050, true) -- fire it up
+add(119889021060156, "sonic spin dash")
+add(85752365414182, "sonic the hedgehog run")
+add(103921013750164, "sonic the hedgehog breakdance")
+add(81767423993408, "sonic & tails dance meme")
+add(137135247245806, "klassic sonic run")
+add(130200046116066, "Eggman /gerald robotnik dance (sonic movie)")
+add(123752364398241,true) -- honey pie dance
+add(110489516509726, "delicious pie smell")
+add(139636722534120, "i Bet u wont")
+add(135912374736236, "METTE - Bet")
+add(10714177846,  true) -- udzals summoning face
+add(127766841462270, "karry me <3")
+add(108542937110077, "back karry <3")
+add(87085855766965, "hands on hips looking back")
+add(101666581540492, "getting held yes (ride a friend)")
+add(83243669341890, "BFF's forever jump")
+add(106916047179477, "lean on a friend")
+add(76311389409448, "bite a friend!")
+add(82939291517057, true) -- best friends
+add(85678077191856, "FE butterfly friend")
+add(80879471830819, true) -- spin w a friend
+add(118979452794479, "summon a friend")
+add(125304018407686, "kick line dance w friends")
+add(80347980190740, true) -- half heart
+add(114587704555409, true) -- island two step official
+add(138353516964579, "funked up")
+add(79979515443365, "BLACKPINK jump")
+add(73996814961148, true) -- jump out of xhair in shoxk danxe
+add(72635363869441, "jump rope head")
+add(128292591994092, "Ommmm - Zen Yoga")
+add(125229667853542, "Sexy back arch - Freaky Yoga Pose")
+add(100974147245056, "Holding ankles - Freaky Yoga Pose")
+add(108325492990606, "Holding thighs - Freaky Yoga Pose")
+add(98203163897648, true) -- Drippin flavor
+add(81238026549544, "Drippin in finesse - Bruno Mars")
+add(79011997997187, "Rosé & Bruno Mars - APT")
+add(80202527361942, true) -- Bonde De Bruno
+add(93218399723211, "Drop it like its hot - Snoop Dogg")
+add(110204898807330, "Snoop's walk")
+add(82302936417232, "Sexy Zero two dance (original)")
+add(87044734758649, "Sexy Zero two dance (DARLING)")
+add(84827062300545, "Notice me (zero two)")
+add(87539936093366, "2 phut hon (zero two)")
+add(95560750875179, "Zero two shake")
+add(127977773973868, "Rollie Rollie 2.0 (ayo & teo)")
+add(96080125070691, "Rollie Rollie (ayo & teo)")
+add(128194392357720, "jubilation")
 add(118478958778995, "Kame Hame Ha")
 add(112220709701439, "goku charge up")
 add(106345021112927, "goku flying")
@@ -230,6 +299,7 @@ add(134367159363456,"(OG) KAT DADDY (offsale/exklusive)")
 add(96269478844761,"cha cha slide")
 add(131164821531850,"toosie slide")
 add(85247727536511,"jubi slide")
+add(78250513793946, "slick back jubi slide")
 add(92672042026262,"klassy - FORTNITE")
 add(137367641938990,"knocked - FORTNITE")
 add(125379786496551,"Thank The Busdriver skyfall - FORNITE")
@@ -555,6 +625,8 @@ track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function(
 end))
 
 local updates = {
+"(sep 16, 2025) +70 emotes added",
+"- some emotes may stop working due to them being removed from roblox",
 "(sep 15, 2025) +72 emotes added",
 "(Sep 14, 2025) +131 emotes added",
 "request emotes by sending me a dm on discord or telegram",
@@ -1208,4 +1280,4 @@ showPage(1)
 warn("Number of emotes:", math.floor(#animationz/2))
 
 end); -- pkall
-if not hub then rnote(tostring(no)) warn(no) return end;
+if not hub then rnote(tostring(no)) warn('error:',no) return end;
