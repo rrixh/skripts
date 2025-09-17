@@ -12,7 +12,7 @@ spawn=spawn;
         
 spawn(function()
 if not rnote then repeat wait(-9e9) until rnote end;
-rnote("FREEMOTES V3 loading...", 3)
+rnote("FREEMOTES V3 loading...", 4)
 end)
 
 repeat loading = loading + 2;
