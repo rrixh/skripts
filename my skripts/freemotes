@@ -75,9 +75,40 @@ Name = (original == true) and Name.." (Roblox)" or Name == true and getname(tost
     table.insert(animationz, Name)
 end;
 local add=getgenv().newAnim;
--- emotes: (362) + 70 = (432) + 30 = (462) + 79 = (541) + 38 = (579) + 
+-- emotes: (362) + 70 = (432) + 30 = (462) + 79 = (541) + 69 = (610) 
 
 -- === emotes list === --
+add(96775410637599, true) -- miku beam
+add(129077233677167,true) -- Caramelldansen
+add(79656659306355,true) -- TV TIME DANCE
+add(138302459593965,true) -- looking baxk
+add(87574738912971,true) -- dougie
+add(73867501246797,true) -- Animtronic Jumpscare
+add(10789327257, "Chiseled Good Looks - Mood")
+add(111733880310741, "kute wave hop")
+add(113042652554029,true) -- griffin laying pose
+add(117693569456399,true) -- jelly
+add(125559741616034,true) -- 333
+add(137982048325793, "katdance")
+add(109585388574936,true) -- konfess dance
+add(116911308256048,true) -- hipshop
+add(83803805663561, "unknown1")
+add(106291630863459,"unknown2")
+add(133754766989686, "unknown3") -- fwwfewfefwe
+add(132967433846099, "unknown4")
+add(132929943729396, "Play dead v4")
+add(126557109491163,"kute emotes")
+add(128604937463553,true) --Chiru2 0.84
+add(135611169366768,"Head banging!")
+add(80346469613817,true) --Transcendence
+add(139119221876136,true) -- loxked in
+add(118592095684994,true) -- ohiorizzing
+add(135463042079739,true) -- hair toss
+add(88108361500125,true) -- honk shoo
+add(131822997141096,true) -- headless
+add(136224735234038,true) -- andy's koming!
+add(74498799892136,"spider thriller")
+add(107771044135542, "Play dead v3")
 add(127626736897320, "demon slayer douma sit")
 add(93120611115496, "kawaii headphones listening to kpop")
 add(108871901565194, "kalifornia girls")
@@ -820,7 +851,7 @@ track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function(
 end))
 
 local updates = {
-"(sep 29, 2025) +38 emotes added",
+"(sep 29, 2025) +69 emotes added",
 "(sep 28, 2025) +79 emotes added",
 "(sep 23, 2025) +30 emotes added",
 "(sep 16, 2025) +70 emotes added",
