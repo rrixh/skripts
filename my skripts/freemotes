@@ -1,31 +1,56 @@
 -- FREEMOTES HUB v3.2 (freakymotes)--
 local hub,no=pcall(function()
 
+local lastupdate = "Sep 29, "..os.date("%Y")
+
 local loading = 0;
-loadstring(game:HttpGet('https://raw.githubusercontent.com/rrixh/uwuware/refs/heads/main/skripts/globaLS', true))();
-local lastupdate;
+local rnote,RRixh,n,fonts,add;
 
-lastupdate = "Sep 16, "..os.date("%Y")
+local rnote = function(txt, dur)
+RRixh=loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/uwuware/main/skripts/AkaliNotif", true))();n = RRixh.Notify; n({Description = txt,Duration=dur or 7}); 
+end;
 
-rnote = getgenv().rnote;
-spawn=spawn;
-        
-spawn(function()
-if not rnote then repeat wait(-9e9) until rnote end;
-rnote("FREEMOTES V3 loading...", 4)
-end)
+--// get ani/emo name by id \\--
+getgenv().animKaxhe = {};
+getgenv().getname = function(assetId, mode)
+if (not mode) or (not tonumber(mode)) then mode = 2; end;
+local mps = cloneref(game:GetService("MarketplaceService"))
+    local animId = tostring(assetId)
+  if not animId:match("%d+") then
+        return "[Invalid ID]"
+    end;
+  animId = animId:match("%d+");
+if (animKaxhe[animId] and animKaxhe[animId][mode]) then
+   return animKaxhe[animId][mode]
+ end;
+    local result = "[Unknown]"
+    if mode == 1 then
+        local anim = Instance.new("Animation")
+        anim.AnimationId = "rbxassetid://"..animId
+        result = anim.Name ~= "" and anim.Name or "Animation"
+        anim:Destroy()
+ elseif (mode == 2) or (mode==nil) or (mode:match("^%s*$"))then
+        pcall(function()
+            local info = mps:GetProductInfo(tonumber(animId))
+            result = info.Name or "[Unknown]"
+        end)
+    end;
+    animKaxhe[animId] = animKaxhe[animId] or {}
+    animKaxhe[animId][mode] = result
+    return result
+end;
+
+rnote("FREEMOTES V3 waiting for game to load...", 4)
 
 repeat loading = loading + 2;
- print("loading...", loading, "sekond(s)")
-until istype(getname, "function") and game:IsLoaded();
+ print("loading freemotes (FREEakymotes)...", loading, "sekond(s)")
+until getname and rnote and game:IsLoaded();
 
--- ======================================================
--- KONFIG: FONTS (edit these names; code uses Enum.Font[...])
--- ======================================================
+-- ======= FONTS =========--
 getgenv().fonts = {
-title = "Bangers", -- GothamBold
+title = "Bangers", -- GothamBold, Bangers
 buttons = "Highway", -- Gotham
-emotes = "Highway", -- GothamSemibold
+emotes = "DenkOne", -- GothamSemibold, Highway
 pages = "FredokaOne",
 emotekount = "FredokaOne",
 kreator = "DenkOne",
@@ -35,24 +60,193 @@ minimizeAndKlose = "FredokaOne", -- GothamBold
 arrows = "FredokaOne", -- Gotham
 }
 
-local fonts = getgenv().fonts;
+fonts = getgenv().fonts;
 local function F(name)
     return Enum.Font[name] or Enum.Font.Gotham
 end;
 
--- ======================================================
+-- ======================= --
 -- ANIMATION LIST API
--- ======================================================
+-- ======================= --
 getgenv().animationz = {};
 getgenv().newAnim = function(ID, Name, original)
 Name = (original == true) and Name.." (Roblox)" or Name == true and getname(tostring(ID)) or Name;
     table.insert(animationz, ID)
     table.insert(animationz, Name)
 end;
-local add = getgenv().newAnim;
--- emotes: 362 + 70 = 462
+local add=getgenv().newAnim;
+-- emotes: (362) + 70 = (432) + 30 = (462) + 79 = (541) + 38 = (579) + 
 
--- === EMOTE LIST === --
+-- === emotes list === --
+add(127626736897320, "demon slayer douma sit")
+add(93120611115496, "kawaii headphones listening to kpop")
+add(108871901565194, "kalifornia girls")
+-- Headbangers / Sturdy
+add(75117155576035, "head banger")
+add(138263668376663, "head banger 2.0")
+add(102571052202995, "GET STURDY")
+add(128968764985212, "STURDY")
+add(133050549047747, "GET STURDY (original)")
+-- Baddie set
+add(116785996260295, "baddie idle pose")
+add(118946465000288, "baddie icon pose")
+add(116902279609059, "exotic baddie leaning on vehicle pose")
+add(118189568846468, true) -- BADDIE mirror pose
+add(136515236788450, true) -- fashionable baddie idle pose
+add(138891833786621, "kutesie baddie idle pose")
+add(103210639627570, "Baddie diva hands on hips idle pose")
+
+-- Daydream / Sleeping set
+add(108579388307489, "daydream lay")
+add(81312244735824, "sweet daydreaming")
+add(82303957583300, "daydreaming 3.0")
+add(128941887300629, "sleeping looking at the stars")
+add(87817848860831, "daydreaming neko kitty idle pose")
+
+-- Neko / Cute set
+add(124087364069041, "kawaii neko idle pose")
+add(131701276534080, "adorable neko sit")
+add(99147657093890, "neko kitty laying down")
+
+-- Model / Diva set
+add(79223861212555, "hehehe")
+add(76425491958644, "sexy model pose")
+add(127141077930802, "fashion model idle pose")
+add(80313618518510, "diva model walk")
+add(75566100254160, "Flirty Diva laying down model pose")
+add(70418480730096, "YAAASSSS Diva walk")
+add(76677916613028, "sassy diva walk")
+add(123077988329588, "gyaru diva photoshoot pose")
+add(112405511280072, "runway model katwalk")
+
+-- Ballet / Ballerina
+add(116694742257990, true) -- ballerina spin
+add(88335221324934, "ballet ballerina spin 2.0")
+
+-- Knight / Power / Swim
+add(121226705456394, true) -- roaring knight idle pose
+add(85486999728079, "power blast")
+add(94324173536622, "air swimming")
+add(129675136666614, "SWIMMING")
+-- Jason Voorhees set
+add(126786971779567, "jason vorhees dance 2.0")
+add(120452122477461, "jason vorhees dance")
+add(86501318752546, "jason vorhees - shake it")
+add(128844427493100, true) -- jason vorhees tang
+-- Silly / Wiggle
+add(118143986824244, true) -- silly wiggle
+add(74221062642713, true) -- silly
+add(139310328821985, "silly jumping spider")
+-- excited / dog
+add(76797790911570, "excited dog wants a treat")
+add(82726502516305, "excited dog")
+add(89127088044007, "YAYYY!!!")
+-- matrix 
+add(117487922277025, "DODGING BULLETS LIKE THE MATRIX")
+add(102783328133834, "SLO MO MATRIX DODGE")
+-- jump/jig/shake
+add(96986581261246, "little excitement jumps")
+add(134027792002158, "fake jump troll")
+add(131801935640653, "JUMPING Mii CHARACTER")
+add(129316095635633, "MAKE IT JUMP")
+add(73512897978721, "shake that booty")
+add(72081313822408, "tryna shake my small booty")
+add(96443729165861, "eat eat tiktok dance")
+add(86865556539643, "JOLLY JIG (UGC LIMITED)")
+add(137368887846445, "HUGO HILLAIRE JIG")
+add(100830277911723, "gangsta jig")
+-- Kurve emotes
+add(83650099589962, "KOTONAI KURVE")
+add(128391778661913, "JAMES DANCE KURVE")
+-- Drake Hotline Bling emotes
+add(79582075064148, "DRAKE - HOTLINE BLING")
+add(81023410433257, "DRAKE HOTLINE BLING 2.0")
+-- rawr emotes
+add(124848224088086, "RAWR KITTY pose")
+add(72000026804736, "RAWR XD pose")
+add(76502714470393, "RAWR KAWAII float idle pose")
+add(116152163069958, "KUTE RAWR idle pose")
+-- party emotes
+add(106140267738400, "PARTY IN THA GHETTO")
+add(121183265128562, "KLASSIC 2016 PARTY DANCE")
+add(88768442281995, "BUNNY PARTY")
+add(88636622147206, "TOP ROCK SHUFFLE")
+add(80597276788903, "PARTY SIT IDLE")
+add(110245751153752, "WEA THA PARTY AT!?!?")
+add(140600876510175, "WEA THE PARTY AT v2")
+add(112463506075862, true) -- TYLA we wanna party
+add(75704364346999, "IN DA PARTY SURROUNDED BY A KROWD I GOTTA GET LITTY")
+add(133011962883734, "PARTYBOY")
+add(133168969022883, "PARTY TABLE SPIN")
+add(86773515339763, "kute little party hips")
+-- misk. singles
+add(139840470518909, "SUBARU DUCK")
+add(108354407270256, "Blocky head nod")
+add(88754229150365, "Andy's Delicia (OLD)")
+add(85704979688926, "krying dont look at me")
+add(100889007285644, "once in a life time")
+add(134302893924822, "KOMPASSION")
+add(86682332698302, "cheerful bop (2016)")
+add(124024537401098, "alluring diva pose")
+add(105599661959141, "* tries to fly *")
+add(122830998347064, "good vibes idle pose")
+add(118437829955391, "IN NEW YORK I MILLY ROCK (old ver)")
+add(135394349041629, "sexy flirty rizz idle pose")
+add(107553826038610, "KATSEYE - better than yours")
+add(108025254624123, true) -- nyan nyan 2.5
+add(139350105169228, "im an adorable doll kute idle pose")
+add(131701276534080, "adorable sit 3.0")
+add(88050523705839, "MAKE U MINE")
+add(116411211106205, "blocky mine")
+add(74621691809481, "DIVA headroll")
+add(135630098620308, true) -- thinking bout u float
+add(129976380062762, "kawaii komfy sit")
+add(130876615733477, "RJ DANCE")
+add(121289717975820, "KLUB PENGUIN")
+add(116835198609765, "7 RINGS DANCE")
+add(121445684851981, "tuff chinese dance")
+add(120889465880740, "jiggle jiggle")
+add(115044428254622, "YOU BABYGIRL! pose")
+add(111357667521950, "WOAAAH")
+add(135507560258222, "JAFI ROCK")
+add(87558857809035, "BLUE TOP ROCK (OFFSALE)")
+add(79130553824879, "BEAT DA KATONAI")
+add(136564848542311, "hold my head pls")
+add(110307029446528, "headless juggle")
+--more
+add(110685204624634, "A horny money world - Houshou Marine")
+add(107365875058802, "banging head on desk")
+add(125989257723384, "money money green green dance")
+add(131582474288402, "Model Money Walk")
+add(77941625312065, "Diva Money Walk - Elley Duhê")
+add(134716522095350, "MONEY - LISA (BLAcKPINK)")
+add(104248876465825, "i want money")
+add(119779839156900, "on my knees looking up")
+add(115134008219873, "deeply possessed meditation")
+add(91315068957882, "angry & disappointed")
+add(136353724884184, "angry aura floating - bug eye")
+add(117991470645633, "nasty footwork with your eyes shut")
+add(104062506559570, "dabka arab - FORTNITE")
+add(136316171951913, true) -- one two threee
+add(83950455298284, "swaying shake")
+add(93159742154286, "beefy shake")
+add(103913447080306, "speed dance")
+add(115318724645140, "shake it the original seductive dance")
+add(117696617128282, "shy sweet anime pose idle")
+add(80554731110555, "sitting on floor chilling idle")
+add(118629000625479, "choppy pointing idle")
+add(72422053662438, "kutesy leg up idle pose")
+add(130257409612734, "hikari idle")
+add(97481216166160, "super kute neko idle")
+add(97532637410256, "kool sit idle")
+add(133980069318135, "vampire princess idle")
+add(103766246107841, "more and more twice")
+add(138160053020260, "scared sit")
+add(139183810597430, "scared like in a cartoon")
+add(89973918892326, "head pats")
+add(88988727253154, "spongebob shuffle")
+add(113486161860753, "spongebob wiggle")
+add(95115626835451, "akuma fighting stance")
 add(112816775283756, "metro man aura float")
 add(128611142091245, "chainsaw man dance")
 add(76633706236365, "iron man rebuild")
@@ -114,10 +308,11 @@ add(79011997997187, "Rosé & Bruno Mars - APT")
 add(80202527361942, true) -- Bonde De Bruno
 add(93218399723211, "Drop it like its hot - Snoop Dogg")
 add(110204898807330, "Snoop's walk")
-add(82302936417232, "Sexy Zero two dance (original)")
-add(87044734758649, "Sexy Zero two dance (DARLING)")
-add(84827062300545, "Notice me (zero two)")
-add(87539936093366, "2 phut hon (zero two)")
+add(82331816532694, "Zero two hip swing")
+add(82302936417232, "Kawaii sexy Zero two dance (original)")
+add(87044734758649, "Kawaii sexy Zero two dance (DARLING)")
+add(84827062300545, "Notice me (Zero two)")
+add(87539936093366, "2 phut hon (Zero two)")
 add(95560750875179, "Zero two shake")
 add(127977773973868, "Rollie Rollie 2.0 (ayo & teo)")
 add(96080125070691, "Rollie Rollie (ayo & teo)")
@@ -625,6 +820,9 @@ track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function(
 end))
 
 local updates = {
+"(sep 29, 2025) +38 emotes added",
+"(sep 28, 2025) +79 emotes added",
+"(sep 23, 2025) +30 emotes added",
 "(sep 16, 2025) +70 emotes added",
 "- some emotes may stop working due to them being removed from roblox",
 "(sep 15, 2025) +72 emotes added",
@@ -1280,4 +1478,4 @@ showPage(1)
 warn("Number of emotes:", math.floor(#animationz/2))
 
 end); -- pkall
-if not hub then rnote(tostring(no)) warn('error:',no) return end;
+if not hub then rnote(tostring(no)) warn(no) return end;
