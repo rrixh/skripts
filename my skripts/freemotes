@@ -1,268 +1,1522 @@
--- OBFUSKATED USING LULASLOLLIPOP🍭's FE OBFUSKATOR GUI • Diskord: @bommunity 🤖 • Telegram: https://t.me/sIipped --	
-local StrToNumber = tonumber;
-local Byte = string.byte;
-local Char = string.char;
-local Sub = string.sub;
-local Subg = string.gsub;
-local Rep = string.rep;
-local Concat = table.concat;
-local Insert = table.insert;
-local LDExp = math.ldexp;
-local GetFEnv = getfenv or function()
-	return _ENV;
+-- FREEMOTES HUB v3.4 (FREEakyMOTES)--
+local hub,no=pcall(function()
+
+local lastupdate = "Sep 29, "..os.date("%Y")
+
+local loading = 0;
+local rnote,RRixh,n,fonts,add;
+
+local rnote = function(txt, dur)
+    RRixh=loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/uwuware/main/skripts/AkaliNotif", true))();n = RRixh.Notify; n({Description = txt,Duration=dur or 7});
 end;
-local Setmetatable = setmetatable;
-local PCall = pcall;
-local Select = select;
-local Unpack = unpack or table.unpack;
-local ToNumber = tonumber;
-local function VMCall(ByteString, vmenv, ...)
-	local DIP = 1;
-	local repeatNext;
-	ByteString = Subg(Sub(ByteString, 5), "..", function(byte)
-		if (Byte(byte, 2) == 81) then
-			repeatNext = StrToNumber(Sub(byte, 1, 1));
-			return "";
-		else
-			local a = Char(StrToNumber(byte, 16));
-			if repeatNext then
-				local b = Rep(a, repeatNext);
-				repeatNext = nil;
-				return b;
-			else
-				return a;
-			end
-		end
-	end);
-	local function gBit(Bit, Start, End)
-		if End then
-			local Res = (Bit / (2 ^ (Start - 1))) % (2 ^ (((End - 1) - (Start - 1)) + 1));
-			return Res - (Res % 1);
-		else
-			local Plc = 2 ^ (Start - 1);
-			return (((Bit % (Plc + Plc)) >= Plc) and 1) or 0;
-		end
-	end
-	local function gBits8()
-		local a = Byte(ByteString, DIP, DIP);
-		DIP = DIP + 1;
-		return a;
-	end
-	local function gBits16()
-		local a, b = Byte(ByteString, DIP, DIP + 2);
-		DIP = DIP + 2;
-		return (b * 256) + a;
-	end
-	local function gBits32()
-		local a, b, c, d = Byte(ByteString, DIP, DIP + 3);
-		DIP = DIP + 4;
-		return (d * 16777216) + (c * 65536) + (b * 256) + a;
-	end
-	local function gFloat()
-		local Left = gBits32();
-		local Right = gBits32();
-		local IsNormal = 1;
-		local Mantissa = (gBit(Right, 1, 20) * (2 ^ 32)) + Left;
-		local Exponent = gBit(Right, 21, 31);
-		local Sign = ((gBit(Right, 32) == 1) and -1) or 1;
-		if (Exponent == 0) then
-			if (Mantissa == 0) then
-				return Sign * 0;
-			else
-				Exponent = 1;
-				IsNormal = 0;
-			end
-		elseif (Exponent == 2047) then
-			return ((Mantissa == 0) and (Sign * (1 / 0))) or (Sign * NaN);
-		end
-		return LDExp(Sign, Exponent - 1023) * (IsNormal + (Mantissa / (2 ^ 52)));
-	end
-	local function gString(Len)
-		local Str;
-		if not Len then
-			Len = gBits32();
-			if (Len == 0) then
-				return "";
-			end
-		end
-		Str = Sub(ByteString, DIP, (DIP + Len) - 1);
-		DIP = DIP + Len;
-		local FStr = {};
-		for Idx = 1, #Str do
-			FStr[Idx] = Char(Byte(Sub(Str, Idx, Idx)));
-		end
-		return Concat(FStr);
-	end
-	local gInt = gBits32;
-	local function _R(...)
-		return {...}, Select("#", ...);
-	end
-	local function Deserialize()
-		local Instrs = {};
-		local Functions = {};
-		local Lines = {};
-		local Chunk = {Instrs,Functions,nil,Lines};
-		local ConstCount = gBits32();
-		local Consts = {};
-		for Idx = 1, ConstCount do
-			local Type = gBits8();
-			local Cons;
-			if (Type == 1) then
-				Cons = gBits8() ~= 0;
-			elseif (Type == 2) then
-				Cons = gFloat();
-			elseif (Type == 3) then
-				Cons = gString();
-			end
-			Consts[Idx] = Cons;
-		end
-		Chunk[3] = gBits8();
-		for Idx = 1, gBits32() do
-			local Descriptor = gBits8();
-			if (gBit(Descriptor, 1, 1) == 0) then
-				local Type = gBit(Descriptor, 2, 3);
-				local Mask = gBit(Descriptor, 4, 6);
-				local Inst = {gBits16(),gBits16(),nil,nil};
-				if (Type == 0) then
-					Inst[3] = gBits16();
-					Inst[4] = gBits16();
-				elseif (Type == 1) then
-					Inst[3] = gBits32();
-				elseif (Type == 2) then
-					Inst[3] = gBits32() - (2 ^ 16);
-				elseif (Type == 3) then
-					Inst[3] = gBits32() - (2 ^ 16);
-					Inst[4] = gBits16();
-				end
-				if (gBit(Mask, 1, 1) == 1) then
-					Inst[2] = Consts[Inst[2]];
-				end
-				if (gBit(Mask, 2, 2) == 1) then
-					Inst[3] = Consts[Inst[3]];
-				end
-				if (gBit(Mask, 3, 3) == 1) then
-					Inst[4] = Consts[Inst[4]];
-				end
-				Instrs[Idx] = Inst;
-			end
-		end
-		for Idx = 1, gBits32() do
-			Functions[Idx - 1] = Deserialize();
-		end
-		return Chunk;
-	end
-	local function Wrap(Chunk, Upvalues, Env)
-		local Instr = Chunk[1];
-		local Proto = Chunk[2];
-		local Params = Chunk[3];
-		return function(...)
-			local Instr = Instr;
-			local Proto = Proto;
-			local Params = Params;
-			local _R = _R;
-			local VIP = 1;
-			local Top = -1;
-			local Vararg = {};
-			local Args = {...};
-			local PCount = Select("#", ...) - 1;
-			local Lupvals = {};
-			local Stk = {};
-			for Idx = 0, PCount do
-				if (Idx >= Params) then
-					Vararg[Idx - Params] = Args[Idx + 1];
-				else
-					Stk[Idx] = Args[Idx + 1];
-				end
-			end
-			local Varargsz = (PCount - Params) + 1;
-			local Inst;
-			local Enum;
-			while true do
-				Inst = Instr[VIP];
-				Enum = Inst[1];
-				if (Enum <= 3) then
-					if (Enum <= 1) then
-						if (Enum > 0) then
-							Stk[Inst[2]]();
-						else
-							Stk[Inst[2]] = Inst[3];
-						end
-					elseif (Enum > 2) then
-						local A = Inst[2];
-						local Results, Limit = _R(Stk[A](Unpack(Stk, A + 1, Inst[3])));
-						Top = (Limit + A) - 1;
-						local Edx = 0;
-						for Idx = A, Top do
-							Edx = Edx + 1;
-							Stk[Idx] = Results[Edx];
-						end
-					else
-						local A = Inst[2];
-						Stk[A] = Stk[A](Unpack(Stk, A + 1, Top));
-					end
-				elseif (Enum <= 5) then
-					if (Enum == 4) then
-						Stk[Inst[2]] = Env[Inst[3]];
-					else
-						local Edx;
-						local Results, Limit;
-						local B;
-						local A;
-						Stk[Inst[2]] = Env[Inst[3]];
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						Stk[Inst[2]] = Env[Inst[3]];
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						A = Inst[2];
-						B = Stk[Inst[3]];
-						Stk[A + 1] = B;
-						Stk[A] = B[Inst[4]];
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						Stk[Inst[2]] = Inst[3];
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						Stk[Inst[2]] = Inst[3] ~= 0;
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						A = Inst[2];
-						Results, Limit = _R(Stk[A](Unpack(Stk, A + 1, Inst[3])));
-						Top = (Limit + A) - 1;
-						Edx = 0;
-						for Idx = A, Top do
-							Edx = Edx + 1;
-							Stk[Idx] = Results[Edx];
-						end
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						A = Inst[2];
-						Stk[A] = Stk[A](Unpack(Stk, A + 1, Top));
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						Stk[Inst[2]]();
-						VIP = VIP + 1;
-						Inst = Instr[VIP];
-						do
-							return;
-						end
-					end
-				elseif (Enum <= 6) then
-					Stk[Inst[2]] = Inst[3] ~= 0;
-				elseif (Enum == 7) then
-					do
-						return;
-					end
-				else
-					local A = Inst[2];
-					local B = Stk[Inst[3]];
-					Stk[A + 1] = B;
-					Stk[A] = B[Inst[4]];
-				end
-				VIP = VIP + 1;
-			end
-		end;
-	end
-	return Wrap(Deserialize(), {}, vmenv)(...);
+
+--// get ani/emo name by id \\--
+getgenv().animKaxhe = {};
+getgenv().getname = function(assetId, mode)
+    if (not mode) or (not tonumber(mode)) then mode = 2; end;
+    local mps = cloneref(game:GetService("MarketplaceService"))
+    local animId = tostring(assetId)
+    if not animId:match("%d+") then
+        return "[Invalid ID]"
+    end;
+    animId = animId:match("%d+");
+    if (animKaxhe[animId] and animKaxhe[animId][mode]) then
+        return animKaxhe[animId][mode]
+    end;
+    local result = "[Unknown]"
+    if mode == 1 then
+        local anim = Instance.new("Animation")
+        anim.AnimationId = "rbxassetid://"..animId
+        result = anim.Name ~= "" and anim.Name or "Animation"
+        anim:Destroy()
+    elseif (mode == 2) or (mode==nil) or (mode:match("^%s*$"))then
+        pcall(function()
+            local info = mps:GetProductInfo(tonumber(animId))
+            result = info.Name or "[Unknown]"
+        end)
+    end;
+    animKaxhe[animId] = animKaxhe[animId] or {}
+    animKaxhe[animId][mode] = result
+    return result
+end;
+
+rnote("FREEMOTES V3 waiting for game to load...", 4)
+
+repeat loading = loading + 2;
+    print("loading freemotes (FREEakymotes)...", loading, "sekond(s)")
+until getname and rnote and game:IsLoaded();
+
+-- ======= FONTS =========--
+getgenv().fonts = {
+    title = "Bangers",
+    buttons = "Highway",
+    emotes = "DenkOne",
+    pages = "FredokaOne",
+    emotekount = "FredokaOne",
+    kreator = "DenkOne",
+    lastupdated = "DenkOne",
+    updates = "Bodoni",
+    minimizeAndKlose = "FredokaOne",
+    arrows = "FredokaOne",
+}
+
+fonts = getgenv().fonts;
+local function F(name) return Enum.Font[name] or Enum.Font.Gotham end
+
+-- ======================= --
+-- ANIMATION LIST API
+-- ======================= --
+getgenv().animationz = {};
+getgenv().newAnim = function(ID, Name, original)
+    Name = (original == true) and Name.." (Roblox)" or Name == true and getname(tostring(ID)) or Name;
+    table.insert(animationz, ID)
+    table.insert(animationz, Name)
+end;
+local add=getgenv().newAnim;
+-- emotes: (362) + 70 = (432) + 30 = (462) + 79 = (541) + 69 = (610) 
+
+-- === emotes list === --
+add(96775410637599, true) -- miku beam
+add(129077233677167,true) -- Caramelldansen
+add(79656659306355,true) -- TV TIME DANCE
+add(138302459593965,true) -- looking baxk
+add(87574738912971,true) -- dougie
+add(73867501246797,true) -- Animtronic Jumpscare
+add(10789327257, "Chiseled Good Looks - Mood")
+add(111733880310741, "kute wave hop")
+add(113042652554029,true) -- griffin laying pose
+add(117693569456399,true) -- jelly
+add(125559741616034,true) -- 333
+add(137982048325793, "katdance")
+add(109585388574936,true) -- konfess dance
+add(116911308256048,true) -- hipshop
+add(83803805663561, "unknown1")
+add(106291630863459,"circus klown balancing on head")
+add(133754766989686, "wait watch me work") -- fwwfewfefwe
+add(132967433846099, "i barely know how to get sturdy!")
+add(132929943729396, "Play dead v4")
+add(126557109491163,"kute emotes")
+add(128604937463553,true) --Chiru2 0.84
+add(135611169366768,"Head banging!")
+add(80346469613817,true) --Transcendence
+add(139119221876136,true) -- loxked in
+add(118592095684994,true) -- ohiorizzing
+add(135463042079739,true) -- hair toss
+add(88108361500125,true) -- honk shoo
+add(131822997141096,true) -- headless
+add(136224735234038,true) -- andy's koming!
+add(74498799892136,"spider thriller")
+add(107771044135542, "Play dead v3")
+add(127626736897320, "demon slayer douma sit")
+add(93120611115496, "kawaii headphones listening to kpop")
+add(108871901565194, "kalifornia girls")
+-- Headbangers / Sturdy
+add(75117155576035, "head banger")
+add(138263668376663, "head banger 2.0")
+add(102571052202995, "GET STURDY")
+add(128968764985212, "STURDY")
+add(133050549047747, "GET STURDY (original)")
+-- Baddie set
+add(116785996260295, "baddie idle pose")
+add(118946465000288, "baddie icon pose")
+add(116902279609059, "exotic baddie leaning on vehicle pose")
+add(118189568846468, true) -- BADDIE mirror pose
+add(136515236788450, true) -- fashionable baddie idle pose
+add(138891833786621, "kutesie baddie idle pose")
+add(103210639627570, "Baddie diva hands on hips idle pose")
+
+-- Daydream / Sleeping set
+add(108579388307489, "daydream lay")
+add(81312244735824, "sweet daydreaming")
+add(82303957583300, "daydreaming 3.0")
+add(128941887300629, "sleeping looking at the stars")
+add(87817848860831, "daydreaming neko kitty idle pose")
+
+-- Neko / Cute set
+add(124087364069041, "kawaii neko idle pose")
+add(131701276534080, "adorable neko sit")
+add(99147657093890, "neko kitty laying down")
+-- Model / Diva set
+add(79223861212555, "hehehe")
+add(76425491958644, "sexy model pose")
+add(127141077930802, "fashion model idle pose")
+add(80313618518510, "diva model walk")
+add(75566100254160, "Flirty Diva laying down model pose")
+add(70418480730096, "YAAASSSS Diva walk")
+add(76677916613028, "sassy diva walk")
+add(123077988329588, "gyaru diva photoshoot pose")
+add(112405511280072, "runway model katwalk")
+-- Ballet / Ballerina
+add(116694742257990, true) -- ballerina spin
+add(88335221324934, "ballet ballerina spin 2.0")
+-- Knight / Power / Swim
+add(121226705456394, true) -- roaring knight idle pose
+add(85486999728079, "power blast")
+add(94324173536622, "air swimming")
+add(129675136666614, "SWIMMING")
+-- Jason Voorhees set
+add(126786971779567, "jason vorhees dance 2.0")
+add(120452122477461, "jason vorhees dance")
+add(86501318752546, "jason vorhees - shake it")
+add(128844427493100, true) -- jason vorhees tang
+-- Silly / Wiggle
+add(118143986824244, true) -- silly wiggle
+add(74221062642713, true) -- silly
+add(139310328821985, "silly jumping spider")
+-- excited / dog
+add(76797790911570, "excited dog wants a treat")
+add(82726502516305, "excited dog")
+add(89127088044007, "YAYYY!!!")
+-- matrix 
+add(117487922277025, "DODGING BULLETS LIKE THE MATRIX")
+add(102783328133834, "SLO MO MATRIX DODGE")
+-- jump/jig/shake
+add(96986581261246, "little excitement jumps")
+add(134027792002158, "fake jump troll")
+add(131801935640653, "JUMPING Mii CHARACTER")
+add(129316095635633, "MAKE IT JUMP")
+add(73512897978721, "shake that booty")
+add(72081313822408, "tryna shake my small booty")
+add(96443729165861, "eat eat tiktok dance")
+add(86865556539643, "JOLLY JIG (UGC LIMITED)")
+add(137368887846445, "HUGO HILLAIRE JIG")
+add(100830277911723, "gangsta jig")
+-- Kurve emotes
+add(83650099589962, "KOTONAI KURVE")
+add(128391778661913, "JAMES DANCE KURVE")
+-- Drake Hotline Bling emotes
+add(79582075064148, "DRAKE - HOTLINE BLING")
+add(81023410433257, "DRAKE HOTLINE BLING 2.0")
+-- rawr emotes
+add(124848224088086, "RAWR KITTY pose")
+add(72000026804736, "RAWR XD pose")
+add(76502714470393, "RAWR KAWAII float idle pose")
+add(116152163069958, "KUTE RAWR idle pose")
+-- party emotes
+add(106140267738400, "PARTY IN THA GHETTO")
+add(121183265128562, "KLASSIC 2016 PARTY DANCE")
+add(88768442281995, "BUNNY PARTY")
+add(88636622147206, "TOP ROCK SHUFFLE")
+add(80597276788903, "PARTY SIT IDLE")
+add(110245751153752, "WEA THA PARTY AT!?!?")
+add(140600876510175, "WEA THA PARTY AT v2")
+add(112463506075862, true) -- TYLA we wanna party
+add(75704364346999, "IN DA PARTY SURROUNDED BY A KROWD I GOTTA GET LITTY")
+add(133011962883734, "PARTYBOY")
+add(133168969022883, "PARTY TABLE SPIN")
+add(86773515339763, "kute little party hips")
+-- misk. singles
+add(139840470518909, "SUBARU DUCK")
+add(108354407270256, "Blocky head nod")
+add(88754229150365, "Andy's Delicia (OLD)")
+add(85704979688926, "krying dont look at me")
+add(100889007285644, "once in a life time")
+add(134302893924822, "KOMPASSION")
+add(86682332698302, "cheerful bop (2016)")
+add(124024537401098, "alluring diva pose")
+add(105599661959141, "* tries to fly *")
+add(122830998347064, "good vibes idle pose")
+add(118437829955391, "IN NEW YORK I MILLY ROCK (old ver)")
+add(135394349041629, "sexy flirty rizz idle pose")
+add(107553826038610, "KATSEYE - better than yours")
+add(108025254624123, true) -- nyan nyan 2.5
+add(139350105169228, "im an adorable doll kute idle pose")
+add(131701276534080, "adorable sit 3.0")
+add(88050523705839, "MAKE U MINE")
+add(116411211106205, "blocky mine")
+add(74621691809481, "DIVA headroll")
+add(135630098620308, true) -- thinking bout u float
+add(129976380062762, "kawaii komfy sit")
+add(130876615733477, "RJ DANCE")
+add(121289717975820, "KLUB PENGUIN")
+add(116835198609765, "7 RINGS DANCE")
+add(121445684851981, "tuff chinese dance")
+add(120889465880740, "jiggle jiggle")
+add(115044428254622, "YOU BABYGIRL! pose")
+add(111357667521950, "WOAAAH")
+add(135507560258222, "JAFI ROCK")
+add(87558857809035, "BLUE TOP ROCK (OFFSALE)")
+add(79130553824879, "BEAT DA KATONAI")
+add(136564848542311, "hold my head pls")
+add(110307029446528, "headless juggle")
+--more
+add(110685204624634, "A horny money world - Houshou Marine")
+add(107365875058802, "banging head on desk")
+add(125989257723384, "money money green green dance")
+add(131582474288402, "Model Money Walk")
+add(77941625312065, "Diva Money Walk - Elley DuhÃª")
+add(134716522095350, "MONEY - LISA (BLAcKPINK)")
+add(104248876465825, "i want money")
+add(119779839156900, "on my knees looking up")
+add(115134008219873, "deeply possessed meditation")
+add(91315068957882, "angry & disappointed")
+add(136353724884184, "angry aura floating - bug eye")
+add(117991470645633, "nasty footwork with your eyes shut")
+add(104062506559570, "dabka arab - FORTNITE")
+add(136316171951913, true) -- one two threee
+add(83950455298284, "swaying shake")
+add(93159742154286, "beefy shake")
+add(103913447080306, "speed dance")
+add(115318724645140, "shake it the original seductive dance")
+add(117696617128282, "shy sweet anime pose idle")
+add(80554731110555, "sitting on floor chilling idle")
+add(118629000625479, "choppy pointing idle")
+add(72422053662438, "kutesy leg up idle pose")
+add(130257409612734, "hikari idle")
+add(97481216166160, "super kute neko idle")
+add(97532637410256, "kool sit idle")
+add(133980069318135, "vampire princess idle")
+add(103766246107841, "more and more twice")
+add(138160053020260, "scared sit")
+add(139183810597430, "scared like in a cartoon")
+add(89973918892326, "head pats")
+add(88988727253154, "spongebob shuffle")
+add(113486161860753, "spongebob wiggle")
+add(95115626835451, "akuma fighting stance")
+add(112816775283756, "metro man aura float")
+add(128611142091245, "chainsaw man dance")
+add(76633706236365, "iron man rebuild")
+add(130600720005813, "wacky inflatable tubeman (offsale)")
+add(106040688907695,true) -- pacman
+add(76325688733257, true) -- mannrobics inna nutshell
+add(103668931865830, "running backflip")
+add(112003140402333, "attach to random peoples back")
+add(124400191241605, "kute back pose")
+add(111761872889019, "kute lean back idle pose")
+add(93824574757232, "sexy look back pose")
+add(139181392761723, "kute n shy look back")
+add(103210639627570, "Baddie Look back at it pose")
+add(120228229513186, "look back at it")
+add(84159172592482, "daydreaming on back")
+add(122944888546102, "daydreaming about you")
+add(122057942886310, "lying on back pose")
+add(123227911531838, "eat me out")
+add(119570846532473, "kick kick kick (offsale)")
+add(92366485905379, "laid back sit")
+add(109364514498221, "apple store girl (do u want me?)")
+add(121138326857050, true) -- fire it up
+add(119889021060156, "sonic spin dash")
+add(85752365414182, "sonic the hedgehog run")
+add(103921013750164, "sonic the hedgehog breakdance")
+add(81767423993408, "sonic & tails dance meme")
+add(137135247245806, "klassic sonic run")
+add(130200046116066, "Eggman /gerald robotnik dance (sonic movie)")
+add(123752364398241,true) -- honey pie dance
+add(110489516509726, "delicious pie smell")
+add(139636722534120, "i Bet u wont")
+add(135912374736236, "METTE - Bet")
+add(10714177846,  true) -- udzals summoning face
+add(127766841462270, "karry me <3")
+add(108542937110077, "back karry <3")
+add(87085855766965, "hands on hips looking back")
+add(101666581540492, "getting held yes (ride a friend)")
+add(83243669341890, "BFF's forever jump")
+add(106916047179477, "lean on a friend")
+add(76311389409448, "bite a friend!")
+add(82939291517057, true) -- best friends
+add(85678077191856, "FE butterfly friend")
+add(80879471830819, true) -- spin w a friend
+add(118979452794479, "summon a friend")
+add(125304018407686, "kick line dance w friends")
+add(80347980190740, true) -- half heart
+add(114587704555409, true) -- island two step official
+add(138353516964579, "funked up")
+add(79979515443365, "BLACKPINK jump")
+add(73996814961148, true) -- jump out of xhair in shoxk danxe
+add(72635363869441, "jump rope head")
+add(128292591994092, "Ommmm - Zen Yoga")
+add(125229667853542, "Sexy back arch - Freaky Yoga Pose")
+add(100974147245056, "Holding ankles - Freaky Yoga Pose")
+add(108325492990606, "Holding thighs - Freaky Yoga Pose")
+add(98203163897648, true) -- Drippin flavor
+add(81238026549544, "Drippin in finesse - Bruno Mars")
+add(79011997997187, "RosÃ© & Bruno Mars - APT")
+add(80202527361942, true) -- Bonde De Bruno
+add(93218399723211, "Drop it like its hot - Snoop Dogg")
+add(110204898807330, "Snoop's walk")
+add(82331816532694, "Zero two hip swing")
+add(82302936417232, "Kawaii sexy Zero two dance (original)")
+add(87044734758649, "Kawaii sexy Zero two dance (DARLING)")
+add(84827062300545, "Notice me (Zero two)")
+add(87539936093366, "2 phut hon (Zero two)")
+add(95560750875179, "Zero two shake")
+add(127977773973868, "Rollie Rollie 2.0 (ayo & teo)")
+add(96080125070691, "Rollie Rollie (ayo & teo)")
+add(128194392357720, "jubilation")
+add(118478958778995, "Kame Hame Ha")
+add(112220709701439, "goku charge up")
+add(106345021112927, "goku flying")
+add(89495830134450, "goku hop")
+add(135021333879521, "die lit dance")
+add(138213797821927, "Boogie down - FORTNITE")
+add(97512291756771, "Billy bounce - FORTNITE")
+add(116073335606789, "zany - FORTNITE")
+add(88071224385325, "phonk - FORTNITE")
+add(105934608518484, "rat dance - FORTNITE")
+add(138727713064496, "elektro shuffle - FORTNITE")
+add(119284187579961, "Ride The Pony - FORTNITE")
+add(110835311100233, "charleston roaring 1920s dance")
+add(84462709967194, "MJ moonwalk")
+add(112934105807112, "MJ moonwalk around")
+add(82471303022920, "slow infinite fall")
+add(110979677723900, "slo motion saitama punch")
+add(79428627645102, "slo motion backflip")
+add(123763532572423, "ninja run")
+add(114495718243722, "miss the RAGE")
+add(135823269056913, "kawaii blowing kiss")
+add(116400359809034, "blow a kiss")
+add(86339673982616, "kid tantrum")
+add(117722859258913, "rolling tantrum")
+add(138243322520289, "basketball head")
+add(106722547325315, "sumo stomp")
+add(88577457423712, "have u seen my head")
+add(99694231408564, "superhero fly")
+add(132105268936736, "superhero flying loop")
+add(77286786289523, "blocboy jb - shoot")
+add(80443100846814, "party party")
+add(5895324424, "jumping cheer")
+add(139390570947836, "Klassic retro jump")
+add(100901692455858, "jump spin")
+add(10714378156, "jumping wave")
+add(74184679835720, "star jump")
+add(91486819956007, "hopping")
+add(124944721534059, "bloxky krouxh jump")
+add(124944721534059, "Blocky YIPPEE jump")
+add(102892231143777, "Anime cheer")
+add(75888548366951, "jumping jacks")
+add(139177215097167, "jumping n spinning around (LIMITEDâ¨)")
+add(96767105386109, "kat jump")
+add(115952229051580, "kawaii jump")
+add(102999180775248, "klassic upside down jump")
+add(106604976894858, "(T-pose) pixar light jump")
+add(11444443576, "Elton John - Still Standing",true)
+add(91821363359739, "standing barrage fight")
+add(104146517681516, "FE poop")
+add(96767103034146, "FE mega poop")
+add(110823391306128, "FE ultra poop")
+add(114876082979747, "ugly knee drop")
+add(136456098761541, "tall kreature run")
+add(70636286183373, "run in place")
+add(104428851742579, "I WANNA RUN AWAY")
+add(87721497492370, "animal run")
+add(104074120169874, "naruto run")
+add(102355014922549, "naruto run 2.0 (LIMITEDâ¨)")
+add(73485678861586, "naruto run 3.0")
+add(77304386644418,true) -- big hand wave
+add(108646388198302,true) -- flexer
+add(10714371274,"shuffle") -- shuffle
+add(118468821959324,"shuffle 2.0") -- shuffling
+add(112931882473990,"signature shuffle") -- signature shuffle
+add(95849769342211,"Elektro shuffle") --elektro shuffle
+add(109677964084274,"6 7") -- ohio shuffle (6-7)
+add(107828342516230,"shuffle litvin") -- shuffle litvin 
+add(90396962685022,"Squid shuffle") -- squid shuffle 
+add(126842570000334,"Bring it around town - spongebob") -- bring it around town
+add(10714391240,"Old Town Road - Lil Nas X",true)
+add(136831243854748,"fashion roadkill")
+add(133597663639529,"happy sit")
+add(79415545851251,"disconnect lag fall")
+add(131944532784605,"disconnect lag fall 2")
+add(100858437532182,"lag")
+-- add(1114184856480219,true) -- sad rocking
+add(10714403700,true) -- rock on face
+add(84129863420846,"deliquent squat")
+add(104151027065011,"look how fat my ass is")
+add(128264493741915,"squat workout")
+add(137068880594650,"goofy stance")
+add(85970143628380, true) -- bboy pose
+add(10714100539,"plaqueboymax messing up the beat")
+add(124972419921258,"become a mini me")
+add(89414911001028,"become mini dance")
+add(137271301043519,"mini Gangnam style PSY")
+add(139646149622620,"mini walk")
+add(17000021306,"Mini Kong",true)
+add(12804157977,"Ay-Yo Dance Move (NCT-127)")
+add(85267023718407,"Chappell Roan - HOT TO GO!",true)
+add(15679621440,"Festive Dance",true)
+add(15571453761,"Nicki Minaj - Starships",true)
+add(15698404340,"Cuco - Levitate",true)
+-- add(1278290938049071,"muslim praying")
+add(133013198006917,"dizzy v2")
+add(10714066964,"dizzy")
+add(119100855615432,"Squid Game - skipping emote")
+add(11309255148,"Elton John - Heart Skip",true)
+add(15505459811,"Flex Walk",true)
+add(71105746210464,"The Weeknd Starboy strut")
+add(94437106564879,"fighting warrior stance")
+add(105947156749343,"fighting idle")
+add(139832013282381,"fighting stance 2")
+add(116763940575803,true) -- fighting stance
+add(71483195998835,"KAPOW! (offsale exklusive)")
+add(85670977721943,"ready to fight!")
+add(122348959836766,"Baddies slap fight")
+add(108225134235478,"slap")
+add(99230819255990,"JUMP SLAP") -- jumpslapv4
+add(137713041194843,"body waving")
+add(132856429338244,"backflip fail ðµ")
+add(79428627645102,"slow motion backflip")
+add(131205329995035,"flirty backflip")
+add(117373674181293,"kool backflip")
+add(83263981931146,"iShowSpeed slo mo backflip") -- SLOMO BAXKFLIP
+add(15693621070,"backflip")
+add(103381045781392,"Kawaii krossed legs pose")
+add(83986683016694,"Kute leg up Profile Pose")
+add(128197972195350,true) -- KUTE LEGS UP POSE
+add(96673018720208,"DO THA THANG 2.0 (viral shimmy dance)")
+add(140486970056356,true) -- DO THA THANG!!
+add(106460951920573,"Twirl That Thang")
+add(133595981289603,"flying hero")
+add(94649451773818,"Richard - The Hero Dance")
+add(133307155622158,"star sleeping face down")
+add(10714360343,"Sleep")
+add(125186677354672,"god emote")
+add(10714347256,"Godlike")
+add(106529787409818,"Baby sit")
+add(79269224561595,"krybaby")
+add(136678550375678,true) -- Bouncy
+add(106398383152416, true) -- kawaii bouncy poses
+add(138118251473453, "Kute Bouncy anime dance")
+add(99581988002903,"Bouncy spring")
+add(124063531509789,"Queen Funk - Zoomin Zoomin")
+add(132499588684957,"Bouncy human ball")
+add(96302637160212, true) -- kawaii bouncy sit
+add(14352343065, "Baby Queen - Bouncy Twirl",true)
+add(15609995579,"Yungblud Happier Jump",true)
+add(14022936101,"YUNG BLUD - HIGH KICK",true)
+add(74087960856949, "spiderman pose (exklusive)")
+add(140603973935390,"maboy spiderman")
+add(71918078252326,"spidey")
+add(78342162273616,"spiderman 2.0")
+add(83345430870757,"SPIDEY HANG")
+add(100415783658122,"TWICE - The Feels",true)
+add(78449434716522,"Tyla Baddie dance")
+add(135666457483077,"kute duo hug emote")
+add(124780202850939,"Kutesy hug duo pose cutecore kawaii hold")
+add(89930880557935,"Kute kawaii side hug Pose")
+add(74146582057902,"Kute kawaii hugging & kicking feet")
+add(110271693046662, "Diva Katwalk")
+add(70418480730096,"Kute model Katwalk")
+add(107611766569881,true) -- baxkflip into split
+add(115150168480412,"front splits 3.0")
+add(16371217304,"Skadoosh Emote - Kung Fu Panda 4 (offsale)",true)
+add(119294845436998,"everybody loves kung fu fighting")
+add(98795536838908,"asian boat dance")
+add(75040559357535,"asian squat")
+add(107271599689246,"annyeong (ìë)")
+add(92324467121726, true) -- Cleopatra Reclining Style Pose
+add(133718157859498,"kozy kawaii sit")
+add(131532348578183,"kute silly kawaii sit")
+add(102036475756594,"kawaii kute anime sit v3.0")
+add(85961795938515,"kawaii shy sit idle pose")
+add(136073073685621,"kandy emote")
+add(119784159661596,"kute kawaii girly pose [moving idle]")
+add(126834786214500,"kartwheel moving")
+add(82493645455958,"watch it move")
+add(17746180844, "Sturdy Dance - Ice Spice",true)
+add(133405528329839,"Lady Gaga - Judas 2025 Choreo",true)
+add(126216621030394, "Lady Gaga - Abracadabra",true)
+add(738678484827471,"(OG) THE REJEKT (exklusive)")
+add(134367159363456,"(OG) KAT DADDY (offsale/exklusive)")
+add(96269478844761,"cha cha slide")
+add(131164821531850,"toosie slide")
+add(85247727536511,"jubi slide")
+add(78250513793946, "slick back jubi slide")
+add(92672042026262,"klassy - FORTNITE")
+add(137367641938990,"knocked - FORTNITE")
+add(125379786496551,"Thank The Busdriver skyfall - FORNITE")
+add(116409384225743,"orange justice - FORTNITE")
+add(135940354239870,"eating - TIKTOK")
+add(79018027660574, "ian dance - TIKTOK")
+add(117760015982719,"Jumpstyle - TIKTOK")
+add(139057884114649, "Just know - TIKTOK")
+add(82462838694002, "hit the folks")
+add(96183692791512, "sitting legs out holding plushie ^_^")
+add(120092695096312,"LOL")
+add(95761454251213, true) -- roxk  with me
+add(135507560258222, true) -- Basic Jafi Rock (130 BPM) 
+add(105007742376735,"tweak out roll")
+add(139872659085764, "milly rock")
+add(85844480092557, "ROCK LEE STANCE")
+-- add(1171598172032171,"billy bounce v2.0")
+-- add(137603230947968, "billy bounce")
+newAnim(87428466949063,"bouncing baddie")
+newAnim(78072494163948, "micheal myers bounce v2.0")
+newAnim(129357062468183, "micheal myers bounce")
+newAnim(118050477588612,"upside down floating mirage")
+newAnim(140029540689849,"flying mirage")
+newAnim(91648079587853,"flashpoint run mirage")
+newAnim(130284331740270, "speed mirage")
+newAnim(115334992181298, "idle mirage v3")
+newAnim(71031117208314, "nya kitty kneel")
+newAnim(116622837605059, "kutest sitting kitty idle pose")
+newAnim(115326549133848, "flying body")
+newAnim(74035416563851, "chill sit (LIMITEDâ¨)")
+newAnim(96100759913198, "BELLY DaNciNG ð ")
+newAnim(122240113032501, "PUSH-UP FLEX")
+newAnim(128614920168305, "HEADLESS FLEX")
+newAnim(99727536526069, "MORTAL FLEX (LIMITEDâ¨)")
+newAnim(79327740539126, "/e flex ðª ")
+newAnim(75427101137102, "back bend")
+newAnim(106063100689798, "Kreepy doll back bend")
+newAnim(122195322227561, "bending over")
+newAnim(129978051960282, "DEFOE SPLIT")
+newAnim(95913051955954,"split jump")
+newAnim(115493878238772, "hip wiggle - TIKTOK dance")
+newAnim(137686269290725, "KRA HIP-HOP VIKTORY DaNce")
+newAnim(125196131087705, "Krazy hips")
+newAnim(100031088637347, "phut hon hip dance")
+newAnim(88593312682192, "hip roll")
+newAnim(133900243915397, "sharp hip sway")
+newAnim(95632241886226, "krossed arms - hip sway")
+newAnim(91767510752557, "hands down - hip sway")
+newAnim(118384730513841, "kute hip sway v3.0")
+newAnim(72055951191150, "kute hip sway v2.0")
+newAnim(138316142522795, "kute hip sway")
+newAnim(123072232025169, "Hips")
+newAnim(95017473712131, "GOJO GOKU STRETcH")
+newAnim(96018013254855, "kartwheel to split - gymnastics ð¤¸ ")
+newAnim(76279004953134, true) -- SPLIT
+newAnim(125632404352712, "incredible splits")
+newAnim(127935496272883, "perfekt standing split - gymnastics ð¤¸ ")
+newAnim(72023263424662, "kartwheel > 360 > split - gymnastics ð¤¸")
+newAnim(89840901635688, "floating split - gymnastics ð¤¸ ")
+newAnim(93563443014395, "frontflip - gymnastics ð¤¸")
+newAnim(88302645471896, "low quality baxkflip")
+newAnim(125974052384400, "kute sidewayz lay")
+newAnim(73161476966723, "feeling kute - feet kicks")
+newAnim(98912013563025, "ghost got my leg")
+newAnim(95680170751590, "lazy handstand")
+newAnim(113862174571669, "kriss kross applesauce - sit")
+newAnim(102840777887514, "look under legs v2.0")
+newAnim(98673561169547, "look under legs")
+newAnim(105973640923990, "smooth tip toes")
+newAnim(99783661468387, "heebie jeebies")
+newAnim(113675536501038, true) -- head shoulders knees toes
+newAnim(103670521359891, "anime exorcism")
+newAnim(87234220922831,"anime koi ì¶¤")
+newAnim(110619271110653, "kupid shuffle")
+newAnim(140692198363356, true) -- one hand pushup
+newAnim(123144357660575,"floating sit - legs krossed")
+newAnim(112902720817093, "kute shoulder karry v2")
+newAnim(122931716945373, "kute shoulder karry v1")
+-- newAnim(123362166434262, "kute side sit")
+newAnim(124412437293606, "kawaii tiptoe pose")
+newAnim(74646376889974,"flirty split to lay down ")
+newAnim(138762128384941,"kute sit")
+newAnim(130864458167146, "kawaii pose")
+newAnim(85028748752300, true) -- happy wave
+newAnim(116313244331689, "kute chill pose")
+newAnim(133603603298438, "wickedly kute")
+newAnim(88945588397605, "feeling kute v2.0")
+newAnim(95148665700645, "kute sidewayz feet kicks")
+newAnim(128974543601967, "sexy seductive kneel")
+newAnim(124369689700678,"kute wave")
+newAnim(87552868168208, true) -- shhhhhhhh!
+newAnim(83747413459673, getname(83747413459673)) -- little jumps
+newAnim(108053044406872, "kute leg up pose")
+newAnim(115257437995638, "sassy hands on hip")
+newAnim(102785083457436, "kute kitty kat paws")
+newAnim(110083585424215, "kute krouch")
+newAnim(134221596131910, "kute pose")
+newAnim(72261453241756, true) -- knee slapper
+newAnim(132998845771568, "praying v2")
+newAnim(70792784107234, getname(70792784107234).." v1")
+newAnim(84973303565168,"broken")
+newAnim(82554507166762, true) -- knee sit
+newAnim(89890939126920, "peter fall")
+newAnim(110164198331994,"fall to knees scream")
+newAnim(126440766651628,true) -- kawaii knee sitting
+newAnim(110299716356487, true) -- low bow
+newAnim(133718157859498,"kawaii sit")
+newAnim(74653824167228,"slow CPR heart pump")
+newAnim(101096721142418,"CPR")
+newAnim(120229215392605,"viktory shake")
+newAnim(96455358995318,"harlem shake")
+newAnim(106827778313177, "little shake")
+newAnim(112666788146566, "disappointed head nod")
+newAnim(83436515542426,"shy shaking")
+newAnim(137757501272874, "nervous shaking")
+newAnim(130698558421319, "shake v3")
+newAnim(115591593036589, true) -- super krazy shake dance
+newAnim(79367046382209, getname(79367046382209)) -- shake dat (Bossman Dlow)
+newAnim(91785487048391, "sexyy red - shake yo dreads")
+newAnim(96387457087289,"ROXKSTAR HEAD SHAKE")
+newAnim(105628828093393, "bbygirl shake it to the max")
+newAnim(105697258375266,"ishowspeed v2")
+newAnim(132899777776049,"mikrophone shake")
+newAnim(83950455298284,"kute sway dance")
+newAnim(116898969797488, "mexikan cha cha hips")
+newAnim(127692117808045, "the thug")
+newAnim(113665123051133,"bby girl shake that short rig 2")
+newAnim(138296642082362, "prettygirl movement")
+newAnim(125655851814978,"Baddie shake v2")
+newAnim(82290588229832,"Baddie shake")
+newAnim(103606174140721, true) -- hip bounce
+newAnim(118552217459650, "paku jalur")
+newAnim(112534296956901, true) -- switchway dance
+newAnim(104149584253673, "happy dance")
+newAnim(119159857703733, true) -- koncert dance
+newAnim(103097233919227, true) -- korean dance
+newAnim(126092655593662, true) -- nippon dance
+newAnim(78195344190486, "doggy")
+newAnim(115417853064013, "helikopter mode ð ")
+newAnim(85588129788692, "hit the Griddy")
+newAnim(79757971761739, "shattered")
+newAnim(83265734904502, "take the L")
+newAnim(129764254213842, "gangnam style")
+newAnim(114400428765989, "180Â° flip")
+newAnim(128334204821841, "skbidi toilet")
+newAnim(138433137191760, "i alone am the Honored One")
+newAnim(110146282544198, "Orange Justice")
+newAnim(10714340543, "the floss")
+newAnim(77984841414450, "Deltarune dance or smthn")
+newAnim(109873544976020, "biblically accurate")
+newAnim(90333292347820, "the worm")
+newAnim(88130117312312, "fake death")
+newAnim(111251252458517, "uuuuuhhh")
+newAnim(84623954062978, "peter nooooo")
+newAnim(124756446017361, "and I turn into a konvertable,Les goooo")
+newAnim(93014787120483, "garry's dance")
+newAnim(92618727772186, "ishowspeed dance")
+newAnim(99499783161907, "aura farm")
+newAnim(80177289449617, "snow angel")
+newAnim(70432904702322, "get skinwalked")
+newAnim(123916423751437, "rat dance")
+newAnim(129537633250603, "ITS PEANUT BUTTER JELLY TIME")
+newAnim(99158928535706, "fortnite default dance")
+newAnim(94915612757079, "tank mode")
+newAnim(130059214239749, "pissing dog")
+newAnim(91047682123297, "makerena")
+newAnim(130019914905925, "very serious Omni-Man")
+newAnim(133612047483255, "roll")
+newAnim(79075971527754, "U know wat that means")
+newAnim(99637983789946, "its a spooky month!! ð»")
+newAnim(82135680487389, "plane mode")
+newAnim(88971195093161, "monster mash")
+newAnim(118592095684994, "drone mode")
+newAnim(95894948496521, "PVZ sunflower")
+newAnim(137969542385356, "fish mode")
+newAnim(132399051509976, "take a shit")
+newAnim(122583653807009, "sokker juggle")
+newAnim(107355541549056, "engineer chum")
+newAnim(126960077574956, "chicken chum")
+newAnim(78347793265211, "hes pulling his kock out!")
+newAnim(122770336163563, "KALI GURLZ")
+newAnim(97148848007002, "russian chum")
+newAnim(114687548971893, "Kreepr mode")
+newAnim(106389948045296, "thanos ")
+newAnim(108313130500811, "push up")
+newAnim(106022089542174, "floating on klouds")
+newAnim(114140630538674, "chair mode")
+newAnim(108865839239307, "Ai kat chum")
+newAnim(84352128203419, "vegetable chum")
+newAnim(82293338535013, "DJ KHALED")
+-- === end list === --
+
+-- SERVICES/THEME/GEOMETRY --
+-- ======================= --
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
+local RS = game:GetService("RunService")
+local Player = game.Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local HeaderSize = 30
+--kolor
+local Red   = Color3.new(0.9,0,0)
+local Green = Color3.new(0.26,0.85,0)
+local Grey  = Color3.new(0.25,0.25,0.25)
+local Yellow = Color3.new(0.7, 0.65, 0)
+local Purple = Color3.new(0.7, 0, 0.65)
+local Blue = Color3.new(0.26,0.53,0.95)
+local FadedRed = Color3.new(0.7, 0.10, 0.10)
+
+local PAGE_X, PAGE_Y, PAGE_W, PAGE_H = 60, 60, 380, 210
+local MARGIN, ROW_H = 6, 36
+local TOP_PADDING = MARGIN + ROW_H + MARGIN + ROW_H + MARGIN  -- 90
+
+local Connections, GlowTweens = {}, {}
+local function track(conn) table.insert(Connections, conn); return conn end
+local function trackTween(tw) table.insert(GlowTweens, tw); return tw end
+
+-- ======================================================
+-- ROOT GUI + BACKGROUND + GLOW
+-- ======================================================
+local freemotegui = Instance.new("ScreenGui")
+freemotegui.Name = getgenv().freeEmotesName or "FREEMOTES by @lulaslollipop"
+freemotegui.ResetOnSpawn = false
+freemotegui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+freemotegui.Parent = Player:WaitForChild("PlayerGui")
+
+local PageBG = Instance.new("Frame", freemotegui)
+PageBG.Name = "PageBG"
+PageBG.Size = UDim2.new(0, PAGE_W, 0, PAGE_H)
+PageBG.Position = UDim2.new(0, PAGE_X, 0, PAGE_Y)
+PageBG.BackgroundColor3 = Color3.fromRGB(48,48,48)
+PageBG.BorderSizePixel = 0
+PageBG.ZIndex = 0
+Instance.new("UICorner", PageBG)
+
+local function addGlow(target)
+    local stroke = Instance.new("UIStroke")
+    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    stroke.Color = Color3.fromRGB(255, 40, 40)
+    stroke.Thickness = 2
+    stroke.Transparency = 0.2
+    stroke.Parent = target
+
+    local tw = TweenService:Create(stroke, TweenInfo.new(0.9, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+        Thickness = 4, Transparency = 0.05
+    })
+    tw:Play()
+    trackTween(tw)
+    return stroke
 end
-return VMCall("LOL!043Q00030A3Q006C6F6164737472696E6703043Q0067616D6503073Q00482Q747047657403563Q00682Q7470733A2Q2F7261772E67697468756275736572636F6E74656E742E636F6D2F2Q726978682F736B72697074732F726566732F68656164732F6D61696E2F6D79253230736B72697074732F66722Q656D6F74657300093Q0012053Q00013Q00122Q000100023Q00202Q00010001000300122Q000300046Q000400016Q000100049Q0000026Q000100016Q00017Q00", GetFEnv(), ...);
+
+addGlow(PageBG)
+
+local function CreateScrollingFrame(name)
+    local sf = Instance.new("ScrollingFrame")
+    sf.Name = name
+    sf.Size = UDim2.new(0, PAGE_W, 0, PAGE_H - TOP_PADDING)
+    sf.Position = UDim2.new(0, PAGE_X, 0, PAGE_Y + TOP_PADDING)
+    sf.BackgroundTransparency = 1
+    sf.BorderSizePixel = 0
+    sf.CanvasSize = UDim2.new(0,0,0,0)
+    sf.ScrollBarThickness = 6
+    sf.ZIndex = 1
+    sf.Parent = freemotegui
+    return sf
+end
+
+local AnimationsFrame = CreateScrollingFrame("AnimationsFrame")
+local StolenAnimationsFrame = CreateScrollingFrame("StolenAnimationsFrame")
+StolenAnimationsFrame.Visible = false
+
+-- ======================================================
+-- INFO PAGE
+-- ======================================================
+local InfoFrame = Instance.new("Frame", freemotegui)
+InfoFrame.Name = "InfoFrame"
+InfoFrame.Size = UDim2.new(0,PAGE_W,0,PAGE_H)
+InfoFrame.Position = UDim2.new(0,PAGE_X,0,PAGE_Y)
+InfoFrame.BackgroundColor3 = Color3.fromRGB(48,48,48)
+InfoFrame.BorderSizePixel = 0
+InfoFrame.Visible = false
+InfoFrame.ZIndex = 1
+Instance.new("UICorner", InfoFrame)
+addGlow(InfoFrame)
+
+local InfoEmoteCount = Instance.new("TextLabel", InfoFrame)
+InfoEmoteCount.Size = UDim2.new(1, -12, 0, 24)
+InfoEmoteCount.Position = UDim2.new(0,6,0,6)
+InfoEmoteCount.BackgroundTransparency = 1
+InfoEmoteCount.TextColor3 = Color3.fromRGB(200,255,200)
+InfoEmoteCount.Font = F(fonts.emotekount)
+InfoEmoteCount.TextScaled = true
+InfoEmoteCount.Text = "Emotes: ".. tostring(math.floor(#animationz/2))
+
+local InfoCreator = Instance.new("TextLabel", InfoFrame)
+InfoCreator.Size = UDim2.new(1, -12, 0, 20)
+InfoCreator.Position = UDim2.new(0,6,0,36)
+InfoCreator.BackgroundTransparency = 1
+InfoCreator.TextColor3 = Color3.fromRGB(255,255,255)
+InfoCreator.Font = F(fonts.kreator)
+InfoCreator.TextScaled = true
+InfoCreator.Text = "Kreator: @lulaslollipop 🍭 (RBX) // DC: @bommunity 🤖"
+
+local InfoDate = Instance.new("TextLabel", InfoFrame)
+InfoDate.Size = UDim2.new(1, -12, 0, 18)
+InfoDate.Position = UDim2.new(0,6,0,60)
+InfoDate.BackgroundTransparency = 1
+InfoDate.TextColor3 = Color3.fromRGB(200,200,200)
+InfoDate.Font = F(fonts.lastupdated)
+InfoDate.TextScaled = true
+InfoDate.Text = "Date updated: "..lastupdate
+
+local ChangeLogScroll = Instance.new("ScrollingFrame", InfoFrame)
+ChangeLogScroll.Name = "ChangeLog"
+ChangeLogScroll.Size = UDim2.new(1, -12, 0, 120)
+ChangeLogScroll.Position = UDim2.new(0,6,0,86)
+ChangeLogScroll.BackgroundTransparency = 1
+ChangeLogScroll.ScrollBarThickness = 6
+ChangeLogScroll.CanvasSize = UDim2.new(0,0,0,0)
+Instance.new("UICorner", ChangeLogScroll)
+local CLLayout = Instance.new("UIListLayout", ChangeLogScroll)
+CLLayout.Padding = UDim.new(0,4)
+track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    ChangeLogScroll.CanvasSize = UDim2.new(0,0,0,CLLayout.AbsoluteContentSize.Y + 8)
+end))
+
+local updates = {
+    "(sep 29, 2025) +69 emotes added",
+    "(sep 28, 2025) +79 emotes added",
+    "(sep 23, 2025) +30 emotes added",
+    "(sep 16, 2025) +70 emotes added",
+    "- some emotes may stop working due to them being removed from roblox",
+    "(sep 15, 2025) +72 emotes added",
+    "(Sep 14, 2025) +131 emotes added",
+    "request emotes by sending me a dm on discord or telegram",
+    "(sep 10, 2025) +26 new emotes added",
+    "(sep 10, 2025) - search box added to lookup emotes by name easily",
+    "[v3.0] (sep 9, 2025) - animation speed boxes (page 1 & 2), steal players animations (page 2)",
+    "(sep 8, 2025) - pages fixed",
+    "- Emote buttons default red, green while playing",
+    "- [v2.0] steal mode: pick & steal players animations by klicking 'Pick & Steal' button then tapping the player, or 'Steal Play' to grab kurrent",
+    "- dragging supports all devices 📲 🖥️"
+}
+for _, entry in ipairs(updates) do
+    local t = Instance.new("TextLabel", ChangeLogScroll)
+    t.Size = UDim2.new(1, -6, 0, 28)
+    t.BackgroundTransparency = 1
+    t.TextColor3 = Color3.fromRGB(230,230,230)
+    t.Font = F(fonts.updates)
+    t.TextScaled = true
+    t.TextXAlignment = Enum.TextXAlignment.Left
+    t.Text = entry
+end
+
+-- ======================================================
+-- HEADER
+-- ======================================================
+local Header = Instance.new("TextButton", freemotegui)
+Header.Name = "Header"
+Header.Size = UDim2.new(0,PAGE_W,0,HeaderSize)
+Header.Position = UDim2.new(0,PAGE_X,0,PAGE_Y - HeaderSize)
+Header.BackgroundColor3 = Color3.fromRGB(30,30,30)
+Header.AutoButtonColor = false
+Header.Text = ""
+Header.ZIndex = 3
+Instance.new("UICorner", Header)
+addGlow(Header)
+
+local PrevBtn = Instance.new("TextButton", Header)
+PrevBtn.Size = UDim2.new(0,34,0,HeaderSize-6)
+PrevBtn.Position = UDim2.new(0,6,0,3)
+PrevBtn.Text = "<"
+PrevBtn.Font = F(fonts.arrows)
+PrevBtn.TextScaled = true
+PrevBtn.BackgroundColor3 = Grey
+PrevBtn.ZIndex = 3
+Instance.new("UICorner", PrevBtn)
+
+local NextBtn = Instance.new("TextButton", Header)
+NextBtn.Size = UDim2.new(0,34,0,HeaderSize-6)
+NextBtn.Position = UDim2.new(0,46,0,3)
+NextBtn.Text = ">"
+NextBtn.Font = F(fonts.arrows)
+NextBtn.TextScaled = true
+NextBtn.BackgroundColor3 = Grey
+NextBtn.ZIndex = 3
+Instance.new("UICorner", NextBtn)
+
+local BTN_W, PAD = 34, 6
+local RightButtonsW = BTN_W*2 + PAD
+
+local RightButtons = Instance.new("Frame", Header)
+RightButtons.Name = "RightButtons"
+RightButtons.Size = UDim2.new(0, RightButtonsW, 1, -6)
+RightButtons.Position = UDim2.new(1, -RightButtonsW - 6, 0, 3)
+RightButtons.BackgroundTransparency = 1
+RightButtons.ZIndex = 3
+local RBLayout = Instance.new("UIListLayout", RightButtons)
+RBLayout.FillDirection = Enum.FillDirection.Horizontal
+RBLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+RBLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+RBLayout.Padding = UDim.new(0, PAD)
+
+local MinimizeButton = Instance.new("TextButton", RightButtons)
+MinimizeButton.Size = UDim2.new(0, BTN_W, 1, 0)
+MinimizeButton.Text = "—"
+MinimizeButton.Font = F(fonts.minimizeAndKlose)
+MinimizeButton.TextScaled = true
+MinimizeButton.BackgroundColor3 = Grey
+MinimizeButton.ZIndex = 3
+Instance.new("UICorner", MinimizeButton)
+
+local CloseButton = Instance.new("TextButton", RightButtons)
+CloseButton.Size = UDim2.new(0, BTN_W, 1, 0)
+CloseButton.Text = "ⓧ"
+CloseButton.Font = F(fonts.minimizeAndKlose)
+CloseButton.TextScaled = true
+CloseButton.BackgroundColor3 = Red
+CloseButton.ZIndex = 3
+Instance.new("UICorner", CloseButton)
+
+local PAGE_BADGE_W = 88
+local PageBadge = Instance.new("TextLabel", Header)
+PageBadge.Size = UDim2.new(0, PAGE_BADGE_W, 0, HeaderSize-6)
+PageBadge.Position = UDim2.new(1, -(RightButtonsW + PAD + PAGE_BADGE_W + 6), 0, 3)
+PageBadge.BackgroundColor3 = Color3.fromRGB(48,48,48)
+PageBadge.TextColor3 = Color3.fromRGB(255,255,255)
+PageBadge.TextScaled = true
+PageBadge.Font = F(fonts.pages)
+PageBadge.Text = "Page: 1"
+PageBadge.ZIndex = 3
+Instance.new("UICorner", PageBadge)
+
+local LEFT_START = 92
+local rightReserved = RightButtonsW + PAD + PAGE_BADGE_W + 12
+local Title = Instance.new("TextLabel", Header)
+Title.BackgroundTransparency = 1
+Title.TextColor3 = Color3.fromRGB(255,255,255)
+Title.TextScaled = true
+Title.Font = F(fonts.title)
+Title.Text = "🍭 FREEaky EMOTES v3 🍭"
+Title.ZIndex = 3
+Title.Position = UDim2.new(0, LEFT_START, 0, 0)
+Title.Size = UDim2.new(1, -(LEFT_START + rightReserved), 0, HeaderSize)
+Instance.new("UIStroke", Title)
+
+-- ======================================================
+-- PINNED OVERLAYS
+-- ======================================================
+local Overlay1 = Instance.new("Frame", freemotegui)
+Overlay1.Name = "Overlay_Page1"
+Overlay1.Size = UDim2.new(0,PAGE_W,0,PAGE_H)
+Overlay1.Position = UDim2.new(0,PAGE_X,0,PAGE_Y)
+Overlay1.BackgroundTransparency = 1
+Overlay1.Visible = true
+Overlay1.ZIndex = 4
+
+local Overlay2 = Instance.new("Frame", freemotegui)
+Overlay2.Name = "Overlay_Page2"
+Overlay2.Size = UDim2.new(0,PAGE_W,0,PAGE_H)
+Overlay2.Position = UDim2.new(0,PAGE_X,0,PAGE_Y)
+Overlay2.BackgroundTransparency = 1
+Overlay2.Visible = false
+Overlay2.ZIndex = 4
+
+-- ======================================================
+-- PAGE STATE / VISIBILITY / MINIMIZE
+-- ======================================================
+local currentPage, minimized = 1, false
+
+local function refreshInfoEmoteCount()
+    InfoEmoteCount.Text = "Emotes: " .. tostring(math.floor(#animationz/2))
+end
+
+local function applyVisibility()
+    if minimized then
+        AnimationsFrame.Visible = false
+        StolenAnimationsFrame.Visible = false
+        InfoFrame.Visible = false
+        Overlay1.Visible = false
+        Overlay2.Visible = false
+        PageBG.Visible = false
+    else
+        AnimationsFrame.Visible = (currentPage == 1)
+        StolenAnimationsFrame.Visible = (currentPage == 2)
+        InfoFrame.Visible = (currentPage == 3)
+        Overlay1.Visible = (currentPage == 1)
+        Overlay2.Visible = (currentPage == 2)
+        PageBG.Visible = (currentPage == 1 or currentPage == 2)
+    end
+end
+
+local function showPage(page)
+    currentPage = page
+    PageBadge.Text = "Page: " .. tostring(page)
+    if page == 3 then
+        refreshInfoEmoteCount()
+        InfoDate.Text = "Date updated: "..lastupdate
+    end
+    applyVisibility()
+end
+
+track(PrevBtn.MouseButton1Click:Connect(function()
+    if currentPage > 1 then showPage(currentPage - 1) end
+end))
+track(NextBtn.MouseButton1Click:Connect(function()
+    if currentPage < 3 then showPage(currentPage + 1) end
+end))
+
+track(MinimizeButton.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    if _G.__setStealMode then _G.__setStealMode(false) end
+    applyVisibility()
+end))
+
+-- ======================================================
+-- DRAGGING
+-- ======================================================
+local dragging, dragOffset = false, Vector2.new(0,0)
+track(Header.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        local pos = input.Position
+        dragOffset = Vector2.new(pos.X - PageBG.AbsolutePosition.X, pos.Y - PageBG.AbsolutePosition.Y)
+    end
+end))
+track(Header.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+    end
+end))
+local dragInputConn
+dragInputConn = track(UIS.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local pos = input.Position
+        local newX = pos.X - dragOffset.X
+        local newY = pos.Y - dragOffset.Y
+        local scPos  = UDim2.new(0,newX,0,newY + TOP_PADDING)
+        local basePos= UDim2.new(0,newX,0,newY)
+
+        PageBG.Position            = basePos
+        AnimationsFrame.Position   = scPos
+        StolenAnimationsFrame.Position = scPos
+        InfoFrame.Position         = basePos
+        Overlay1.Position          = basePos
+        Overlay2.Position          = basePos
+        Header.Position            = basePos + UDim2.new(0,0,0,-HeaderSize)
+    end
+end))
+
+-- ======================================================
+-- LIST LAYOUTS
+-- ======================================================
+local function AutoCanvas(scroller)
+    local layout = Instance.new("UIListLayout", scroller)
+    layout.SortOrder = Enum.SortOrder.LayoutOrder
+    layout.Padding = UDim.new(0,6)
+    track(layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        scroller.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 12)
+    end))
+    return layout
+end
+AutoCanvas(AnimationsFrame)
+AutoCanvas(StolenAnimationsFrame)
+
+-- ======================================================
+-- PLAY/STOP HELPERS
+-- ======================================================
+local Active = {track = nil, id = nil, btn = nil}
+local function buildAnimationId(raw)
+    local s = tostring(raw)
+    if string.find(s, "rbxassetid://") then return s end
+    local digits = s:match("%d+")
+    if digits then return "rbxassetid://" .. digits end
+    return "rbxassetid://" .. s
+end
+
+local function StopAllAnimations()
+    local char = Player.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    if hum then
+        for _, tr in ipairs(hum:GetPlayingAnimationTracks()) do
+            pcall(function() tr:Stop() end)
+        end
+    end
+    if Active.btn and Active.btn.Parent then Active.btn.BackgroundColor3 = Red end
+    Active.track, Active.id, Active.btn = nil, nil, nil
+end
+
+-- ======================================================
+-- CreateEmoteEntry
+-- ======================================================
+local function CreateEmoteEntry(name, id, parent)
+    local entry = Instance.new("Frame")
+    entry.Size = UDim2.new(1, 0, 0, 40)
+    entry.BackgroundTransparency = 1
+    entry.Name = "EmoteEntry"
+    entry.Parent = parent
+
+    local hLayout = Instance.new("UIListLayout", entry)
+    hLayout.FillDirection = Enum.FillDirection.Horizontal
+    hLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+    hLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    hLayout.Padding = UDim.new(0,6)
+
+    local btn = Instance.new("TextButton", entry)
+    btn.Size = UDim2.new(0.68, 0, 1, 0)
+    btn.BackgroundColor3 = Red
+    btn.Text = name
+    btn.Name = "EmoteButton"
+    btn.Font = F(fonts.emotes)
+    btn.TextScaled = true
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn:SetAttribute("AnimId", id)
+    Instance.new("UICorner", btn)
+
+    local speedBox = Instance.new("TextBox", entry)
+    speedBox.Size = UDim2.new(0.32, 0, 1, 0)
+    speedBox.PlaceholderText = "speed (1)"
+    speedBox.Text = ""
+    speedBox.Font = F(fonts.buttons)
+    speedBox.TextScaled = true
+    speedBox.BackgroundColor3 = Color3.fromRGB(60,60,60)
+    speedBox.TextColor3 = Color3.new(1,1,1)
+    speedBox.Name = "SpeedBox"
+    Instance.new("UICorner", speedBox)
+
+    track(btn.MouseButton1Click:Connect(function()
+        local animIdStr = buildAnimationId(id)
+
+        if Active.id == tostring(id) then
+            if Active.track then pcall(function() Active.track:Stop() end) end
+            btn.BackgroundColor3 = Red
+            Active.track, Active.id, Active.btn = nil, nil, nil
+            return
+        end
+
+        if Active.track then
+            pcall(function() Active.track:Stop() end)
+            if Active.btn and Active.btn.Parent then Active.btn.BackgroundColor3 = Red end
+        end
+
+        local char = Player.Character
+        local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+        if not humanoid then warn("No humanoid; can't play anim") return end
+
+        local animObj = Instance.new("Animation")
+        animObj.AnimationId = animIdStr
+        local ok, trackAnim = pcall(function() return humanoid:LoadAnimation(animObj) end)
+        if not ok or not trackAnim then warn("Failed to load anim:", animIdStr) return end
+
+        trackAnim.Looped = true
+        trackAnim.Priority = Enum.AnimationPriority.Action
+        trackAnim:Play()
+
+        local sp = tonumber(speedBox.Text)
+        if sp and trackAnim.AdjustSpeed then pcall(function() trackAnim:AdjustSpeed(sp) end) end
+
+        Active.track, Active.id, Active.btn = trackAnim, tostring(id), btn
+        btn.BackgroundColor3 = Green
+    end))
+
+    track(speedBox.FocusLost:Connect(function()
+        local sp = tonumber(speedBox.Text)
+        if sp and Active and Active.track and Active.id == tostring(id) then
+            pcall(function() Active.track:AdjustSpeed(sp) end)
+        end
+    end))
+
+    return entry
+end
+
+-- Populate Page 1
+for i = 1, #animationz, 2 do
+    local id = animationz[i]
+    local name = tostring(animationz[i+1] or "Animation")
+    CreateEmoteEntry(name, id, AnimationsFrame)
+end
+
+-- ======================================================
+-- Search factory (with ❌)
+-- ======================================================
+local function CreateInteractable(size, name, placeholder, bgColor, cornerRadiusPx, withStroke, kind, parent)
+    local container = Instance.new("Frame")
+    container.Name = name .. "Container"
+    container.Size = size
+    container.BackgroundTransparency = 1
+    container.Parent = parent
+    container.ZIndex = parent.ZIndex
+
+    local h = Instance.new("UIListLayout", container)
+    h.FillDirection = Enum.FillDirection.Horizontal
+    h.Padding = UDim.new(0,6)
+
+    if kind == "TextBox" then
+        local box = Instance.new("TextBox")
+        box.Name = "SearchbarBox"
+        box.Size = UDim2.new(1, -34, 1, 0)
+        box.BackgroundColor3 = bgColor or Grey
+        box.TextColor3 = Color3.new(1,1,1)
+        box.PlaceholderText = placeholder or ""
+        box.ClearTextOnFocus = false
+        box.Text = ""
+        box.Font = F(fonts.buttons)
+        box.TextScaled = true
+        box.ZIndex = parent.ZIndex
+
+        local radius = tonumber(cornerRadiusPx) or 6
+        local corner = Instance.new("UICorner", box)
+        corner.CornerRadius = UDim.new(0, radius)
+
+        local clear = Instance.new("TextButton")
+        clear.Name = "ClearSearch"
+        clear.Size = UDim2.new(0, 28, 1, 0)
+        clear.BackgroundColor3 = Color3.fromRGB(70,70,70)
+        clear.Text = "❌"
+        clear.Font = F(fonts.buttons)
+        clear.TextScaled = true
+        clear.ZIndex = parent.ZIndex
+        Instance.new("UICorner", clear)
+
+        box.Parent = container
+        clear.Parent = container
+
+        track(clear.MouseButton1Click:Connect(function()
+            box.Text = ""
+            box:ReleaseFocus()
+        end))
+
+        return box
+    end
+
+    return container
+end
+
+local function filterList(scroller, queryLower)
+    for _, child in ipairs(scroller:GetChildren()) do
+        if child:IsA("Frame") and child.Name == "EmoteEntry" then
+            local btn = child:FindFirstChild("EmoteButton")
+            local txt = btn and (btn.Text or "") or ""
+            child.Visible = (queryLower == "") or (string.find(string.lower(txt), queryLower, 1, true) ~= nil)
+        end
+    end
+end
+
+-- ======================================================
+-- PAGE 1 OVERLAY
+-- ======================================================
+do
+    local row1 = Instance.new("Frame", Overlay1)
+    row1.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+    row1.Position = UDim2.new(0, MARGIN, 0, MARGIN)
+    row1.BackgroundTransparency = 1
+    row1.ZIndex = 4
+
+    local StopBtn = Instance.new("TextButton", row1)
+    StopBtn.Name = "StopAllBtn_P1"
+    StopBtn.Size = UDim2.new(1, 0, 1, 0)
+    StopBtn.Text = "🚨 STOP ANIMATIONS"
+    StopBtn.Font = F(fonts.buttons)
+    StopBtn.TextScaled = true
+    StopBtn.BackgroundColor3 = Red
+    StopBtn.TextColor3 = Color3.new(1,1,1)
+    StopBtn.ZIndex = 4
+    Instance.new("UICorner", StopBtn)
+    track(StopBtn.MouseButton1Click:Connect(StopAllAnimations))
+
+    local row2 = Instance.new("Frame", Overlay1)
+    row2.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+    row2.Position = UDim2.new(0, MARGIN, 0, MARGIN*2 + ROW_H)
+    row2.BackgroundTransparency = 1
+    row2.ZIndex = 4
+
+    local SearchBox_P1 = CreateInteractable(UDim2.new(1,0,1,0), "Searchbar", "search animations here...", Grey, 6, false, "TextBox", row2)
+    track(SearchBox_P1:GetPropertyChangedSignal("Text"):Connect(function()
+        filterList(AnimationsFrame, string.lower(SearchBox_P1.Text or ""))
+    end))
+    filterList(AnimationsFrame, "")
+end;
+
+-- ======================================================
+-- STEAL MODE (Page 2)
+-- ======================================================
+local StealMode, highlightObj, stealConn = false, nil, nil
+local pickClickConn
+
+local function destroyHighlight()
+    if highlightObj then highlightObj:Destroy(); highlightObj = nil end
+end
+
+local function setStealMode(on)
+    if on then
+        StealMode = true
+        destroyHighlight()
+        highlightObj = Instance.new("Highlight")
+        highlightObj.FillColor = Blue
+        highlightObj.OutlineTransparency = 1
+        highlightObj.Parent = workspace
+
+        if stealConn then stealConn:Disconnect() end
+        stealConn = track(RS.Heartbeat:Connect(function()
+            if not StealMode then return end
+            local target = Mouse.Target
+            if target then
+                local model = target:FindFirstAncestorWhichIsA("Model")
+                if model and model:FindFirstChildOfClass("Humanoid") then
+                    highlightObj.Adornee = model
+                else
+                    highlightObj.Adornee = nil
+                end
+            else
+                highlightObj.Adornee = nil
+            end
+        end))
+    else
+        StealMode = false
+        if stealConn then stealConn:Disconnect(); stealConn = nil end
+        destroyHighlight()
+    end
+end
+_G.__setStealMode = setStealMode
+
+local function AddStolenEntry(label, animId)
+    CreateEmoteEntry(label, animId, StolenAnimationsFrame)
+end
+
+local function ClearStolenList()
+    for _, child in ipairs(StolenAnimationsFrame:GetChildren()) do
+        if child:IsA("Frame") and child.Name == "EmoteEntry" then
+            child:Destroy()
+        end
+    end
+end
+
+do
+    -- Row 1: Stop + Search (no spacing, perfect fill)
+    local row1 = Instance.new("Frame", Overlay2)
+    row1.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+    row1.Position = UDim2.new(0, MARGIN, 0, MARGIN)
+    row1.BackgroundTransparency = 1
+    row1.ZIndex = 4
+    local h1 = Instance.new("UIListLayout", row1)
+    h1.FillDirection = Enum.FillDirection.Horizontal
+    h1.Padding = UDim.new(0,0) -- no gaps
+
+    local StopBtn2 = Instance.new("TextButton", row1)
+    StopBtn2.Name = "StopAllBtn_P2"
+    StopBtn2.Size = UDim2.new(0.5, 0, 1, 0) -- half width
+    StopBtn2.Text = "🚨 STOP ANIMATIONS"
+    StopBtn2.Font = F(fonts.buttons)
+    StopBtn2.TextScaled = true
+    StopBtn2.BackgroundColor3 = Red
+    StopBtn2.TextColor3 = Color3.new(1,1,1)
+    StopBtn2.ZIndex = 4
+    Instance.new("UICorner", StopBtn2)
+    track(StopBtn2.MouseButton1Click:Connect(function()
+        StopAllAnimations()
+        setStealMode(false)
+    end))
+
+    local SearchHalf = Instance.new("Frame", row1)
+    SearchHalf.Size = UDim2.new(0.5, 0, 1, 0) -- other half
+    SearchHalf.BackgroundTransparency = 1
+    SearchHalf.ZIndex = 4
+
+    local SearchBox_P2 = CreateInteractable(UDim2.new(1,0,1,0), "Searchbar", "search stolen animations...", Grey, 6, false, "TextBox", SearchHalf)
+    track(SearchBox_P2:GetPropertyChangedSignal("Text"):Connect(function()
+        filterList(StolenAnimationsFrame, string.lower(SearchBox_P2.Text or ""))
+    end))
+    filterList(StolenAnimationsFrame, "")
+
+    -- Row 2: Steal Play + Pick & Steal + Klear List (no spacing, perfect thirds)
+    local row2 = Instance.new("Frame", Overlay2)
+    row2.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+    row2.Position = UDim2.new(0, MARGIN, 0, MARGIN*2 + ROW_H)
+    row2.BackgroundTransparency = 1
+    row2.ZIndex = 4
+    local h2 = Instance.new("UIListLayout", row2)
+    h2.FillDirection = Enum.FillDirection.Horizontal
+    h2.Padding = UDim.new(0,0) -- no gaps
+
+    local StealPlayBtn = Instance.new("TextButton", row2)
+    StealPlayBtn.Size = UDim2.new(1/3, 0, 1, 0)
+    StealPlayBtn.Text = "Steal Play"
+    StealPlayBtn.Font = F(fonts.buttons)
+    StealPlayBtn.TextScaled = true
+    StealPlayBtn.BackgroundColor3 = Purple
+    StealPlayBtn.TextColor3 = Color3.new(1,1,1)
+    StealPlayBtn.ZIndex = 4
+    Instance.new("UICorner", StealPlayBtn)
+
+    local PickStealBtn = Instance.new("TextButton", row2)
+    PickStealBtn.Size = UDim2.new(1/3, 0, 1, 0)
+    PickStealBtn.Text = "Pick & Steal"
+    PickStealBtn.Font = F(fonts.buttons)
+    PickStealBtn.TextScaled = true
+ PickStealBtn.BackgroundColor3 = Yellow
+    PickStealBtn.TextColor3 = Color3.new(1,1,1)
+    PickStealBtn.ZIndex = 4
+    Instance.new("UICorner", PickStealBtn)
+
+    local KlearBtn = Instance.new("TextButton", row2)
+    KlearBtn.Size = UDim2.new(1/3, 0, 1, 0)
+    KlearBtn.Text = "Klear List"
+    KlearBtn.Font = F(fonts.buttons)
+    KlearBtn.TextScaled = true
+    KlearBtn.BackgroundColor3 = FadedRed
+    KlearBtn.TextColor3 = Color3.new(1,1,1)
+    KlearBtn.ZIndex = 4
+    Instance.new("UICorner", KlearBtn)
+
+    -- Steal Play
+    track(StealPlayBtn.MouseButton1Click:Connect(function()
+        if Active.id then
+            local animName = tostring(getname(Active.id));
+            local animId = tonumber(Active.id);
+            local label = "Stole: "..animName.." ["..animId.."]"
+            AddStolenEntry(label, Active.id)
+            warn("stolen animation ID:", Active.id)
+        else
+            warn("no aktive animation to steal")
+        end
+        setStealMode(false)
+        PickStealBtn.BackgroundColor3 = Yellow
+    end))
+
+    -- Toggle pick mode
+    track(PickStealBtn.MouseButton1Click:Connect(function()
+        setStealMode(not StealMode)
+        PickStealBtn.BackgroundColor3 = StealMode and Blue or Yellow
+    end))
+
+    -- Klear List
+    track(KlearBtn.MouseButton1Click:Connect(function()
+        ClearStolenList()
+        local boxContainer = SearchHalf:FindFirstChild("SearchbarContainer")
+        if boxContainer and boxContainer:FindFirstChild("SearchbarBox") then
+            boxContainer.SearchbarBox.Text = ""
+        end
+        filterList(StolenAnimationsFrame, "")
+    end))
+
+    -- Click-to-pick steal
+    pickClickConn = track(UIS.InputBegan:Connect(function(input, processed)
+        if not StealMode or processed then return end
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            local target = Mouse.Target
+            if not target then return end
+            local model = target:FindFirstAncestorWhichIsA("Model")
+            if not model then return end
+            local humanoid = model:FindFirstChildOfClass("Humanoid")
+            if not humanoid then return end
+
+            for _, theirTrack in ipairs(humanoid:GetPlayingAnimationTracks()) do
+                local animIdRaw = tostring(theirTrack.Animation and theirTrack.Animation.AnimationId or "")
+                local digits = animIdRaw:match("%d+")
+                local finalId = digits or animIdRaw
+                if finalId and finalId ~= "" then
+                    local idname = tostring(getname(finalId));
+                    local idnumber = tonumber(finalId);
+                    local label = "Stole: ".. idname.." ["..idnumber.."]"
+                    AddStolenEntry(label, finalId)
+                    setStealMode(false)
+                    PickStealBtn.BackgroundColor3 = Grey
+                    warn("Stolen animation id from player:", finalId)
+                    break
+                end
+            end
+        end
+    end))
+end
+
+-- ======================================================
+-- klose: hard teardown
+-- ======================================================
+local function tearDownAndClose()
+    StopAllAnimations()
+    setStealMode(false)
+    if pickClickConn then pickClickConn:Disconnect(); pickClickConn = nil end
+    if dragInputConn then dragInputConn:Disconnect(); dragInputConn = nil end
+    for _, tw in ipairs(GlowTweens) do pcall(function() tw:Cancel() end) end
+    for _, c in ipairs(Connections) do pcall(function() c:Disconnect() end) end
+    table.clear(Connections); table.clear(GlowTweens)
+    _G.__setStealMode = nil
+    freemotegui:Destroy()
+end
+track(CloseButton.MouseButton1Click:Connect(tearDownAndClose))
+
+-- ======================================================
+-- INIT
+-- ======================================================
+local function filterInit() end
+filterInit()
+
+showPage(1)
+warn("Number of emotes:", math.floor(#animationz/2))
+
+end); -- pkall
+if not hub then rnote(tostring(no)) warn(no) return end;
