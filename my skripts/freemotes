@@ -2,8 +2,7 @@
 local hub, no = pcall(function()
 
 -- ==================== META ====================
-local lastupdate = "Oct 5, " .. os.date("%Y")
-local loading = 0
+local lastupdate = "Oct 6, " .. os.date("%Y")
 local rnote, RRixh, n, fonts, add, updates, emoteKount, animationz, UC
 
 rnote = function(txt, dur)
@@ -12,8 +11,7 @@ rnote = function(txt, dur)
     n({ Description = txt, Duration = dur or 7 })
 end
 
--- make a short alias so we can embed proper emoji via Unicode code points
-UC = utf8.char
+UC = utf8.char;
 
 -- ==================== SAFE SERVICES (cloneref) ====================
 local _cloneref = rawget(getfenv(), "cloneref")
@@ -58,7 +56,7 @@ getgenv().getname = function(assetId, mode)
     return result
 end
 
-rnote("FREEMOTES V4 " .. (game:IsLoaded() and "\nby @lulaslollipop 🍭 on RBX!" or "waiting for game to load...\nby @lulaslollipop 🍭 on RBX!"), 5)
+rnote("FREEMOTES V4 " .. (game:IsLoaded() and "waiting for emotes to load...\nby @lulaslollipop 🍭 on RBX!" or "waiting for game to load...\nby @lulaslollipop 🍭 on RBX!"), 6)
 
 -- ==================== FONTS ====================
 getgenv().fonts = {
@@ -69,12 +67,13 @@ getgenv().fonts = {
     emotekount = "FredokaOne",
     kreator = "DenkOne",
     lastupdated = "DenkOne",
-    updates = "Bodoni",
+    updates = "FredokaOne", -- Bodoni
     minimizeAndKlose = "FredokaOne",
     arrows = "FredokaOne",
 }
 fonts = getgenv().fonts
-local function F(name) return Enum.Font[name] or Enum.Font.Gotham end
+local function F(name) return Enum.Font[name] or Enum.Font.Gotham 
+end;
 
 -- ==================== EMOTE API (shared) ====================
 getgenv().animationz = getgenv().animationz or {}
@@ -88,8 +87,91 @@ getgenv().newAnim = function(ID, Name, original)
     table.insert(anims, Name)
 end
 add = getgenv().newAnim
+-- emotes; (617) + 82 = (699) + 
 
 -- === emotes list === --
+add(127635925379219, "zombie krawling") -- zombie krawling
+add(77672872857991, "halloween zombie idle 2") -- halloween zombie idle 2
+add(117024374347125, "halloween zombie idle") -- halloween zombie idle
+add(125762453875466, "zombie MM2") -- zombie MM2
+add(107496612670669, "kawaii zombie girl idle") -- kawaii zombie girl idle
+add(120551956523143, "take my zombie head") -- take my zombie head
+add(90806086002292, "come to mama") -- come to mama
+add(111909991843927, "halloween kute zombie pose") -- halloween kute zombie pose
+add(118931331662156, "zombie tweaking idle") -- zombie tweaking idle
+add(90907772359114, "hypno disco zombie") -- hypno disco zombie
+add(74467748914901, "hands up zombie") -- hands up zombie
+add(104635183510216, "zombie emote") -- zombie emote
+add(109480626205021, "zombie shambles walk") -- zombie shambles walk
+add(129029783290578, "zombie head spin") -- zombie head spin
+add(119180242626905, "kawaii zombie kitty") -- kawaii zombie kitty
+add(106320514159313, "flesh eating zombie") -- flesh eating zombie
+add(113076603308515, true) -- zombie walking
+add(136566475419021, "zombie krawling Last words") -- zombie krawling Last words
+add(80660196496048, "zombie down!") -- zombie down!
+add(114128928889444, "zombie - my head fell off") -- zombie - my head fell off
+add(98437918739935, "sugar rush") -- JIGSAW shake
+add(79639816976240, "halloween witch idle") -- halloween witch idle
+add(132644742102046, "witch on a broom float") -- witch on a broom float
+add(73373301800407, "halloween kawaii witch pose idle") -- halloween kawaii witch pose idle
+add(138278745080506, "magic witch float idle") -- magic witch float idle
+add(70548055669985, "witch floating on a broom") -- witch floating on a broom
+add(96200984806089, "lias kute girly pose") -- lias kute girly pose
+add(74556052228669, true) -- witch broom
+add(101717677816415, "adorable dolly pose") -- adorable dolly pose
+add(97516899632731, "kutesy dolly sitting pose") -- kutesy dolly sitting pose
+add(84331657436396, "puppy sit") -- puppy sit
+add(86790922195585, "dollie drying off toes") -- dollie drying off toes
+add(84430541726449, "adorable air sitting") -- adorable air sitting
+add(112455083563294, "dwerk dance") -- dwerk dance
+add(101174082379049, "flirty hips") -- flirty hips
+add(120808142411970, "twerk") -- twerk
+add(84200166892562, "slow sexy air hump") -- slow sexy air hump
+add(114195294382626, "Hip Hop Rib Bop") -- Hip Hop Rib Bop
+add(79916022377862, "spanish hips") -- spanish hips
+add(106495041629365, "seductive dance 😜") -- seductive dance 😜
+add(14548619594, "BLACKPINK - Get em get em get em") -- BLACKPINK - Get em get em get em
+add(80406371127367, "getting bullied") -- getting bullied
+add(131847596154744, true) -- get schwifty
+add(128037005039467, "kute sitting") -- kute sitting
+add(123707339862211, "FNAF circus") -- FNAF circus
+add(91095655333403, "sitting on head") -- sitting on head
+add(129976380062762, "sit comfy idle") -- sit comfy idle
+add(70758081822194, "kawaii chibi kute girl sitting") -- kawaii chibi kute girl sitting
+add(138716347866720, "kawaii pretty girl sitting") -- kawaii pretty girl sitting
+add(82320066545331, "over where?") -- over where?
+add(78416139427572, "model idle pose") -- model idle pose
+add(93062298566806, "popular") -- popular
+add(140524490084302, true) -- gnarly
+add(98056495356917, "KATSEYE - Gnarly (like a bag of takis)") -- KATSEYE - Gnarly (like a bag of takis)
+add(93413174711404, "KATSEYE - Gnarly Pop") -- KATSEYE - Gnarly Pop
+add(107545196805784, true) -- gnarly dance
+add(102800800690923, "trendy game") -- trendy game
+add(137501135905857, "BillyBounce - FORTNITE") -- BillyBounce - FORTNITE
+add(94505880782162, "flirty stylish sit (R)") -- flirty stylish sit (R)
+add(108472004273778, "flirty stylish sit (L)") -- flirty stylish sit (L)
+add(73666255471093, "thinking sit") -- thinking sit
+add(80621140833482, "justin vibin'") -- justin vibin'
+add(71112973269174, "kute sitting w legs out") -- kute sitting w legs out
+add(104741679253066, "kute legs out sit Meow") -- kute legs out sit Meow
+add(83873446355818, "kawaii good kitty") -- kawaii good kitty
+add(83873446355818, "hip dance (dwerk)") -- hip dance (dwerk)
+add(128267423988466, "baddie getting jiggy") -- baddie getting jiggy
+add(98626253804205, "kowgirl") -- kowgirl
+add(102342919277367, "floating in love") -- floating in love
+add(82569467568320, "meow meow meow") -- meow meow meow
+add(82978297547122, "hand stand leg shaking (offsale)") -- hand stand leg shaking (offsale)
+add(74891170201602, "Micheal Jackson - smooth kriminal") -- Micheal Jackson - smooth kriminal
+add(79286792343909, "flatlined") -- flatlined
+add(129106143819906, "Chinese Qinghai Yao") -- Chinese Qinghai Yao
+add(96937779442756, "raiden shogun floating genshin mediation") -- raiden shogun floating genshin mediation
+add(108759656834820, "Dia Delicia") -- Dia Delicia
+add(104826288857844, "OH YEA!") -- OH YEA!
+add(83790974554159, "OH YEA! v2.0") -- OH YEA! v2.0
+add(122719596509695, "rock out") -- rock out
+add(84677435762629, "motorboat") -- motorboat
+add(96147994216119, "MOSH WALK") -- MOSH WALK
+add(74919246969815, true) -- OUT KOLD
 add(110255880541719,"Needy balance") -- needy balance
 add(109452346238919,true) -- needy streamer dance
 add(90696131349427,"kawaii kute yoga kitty pose") -- kawaii kut yoga pose kitty
@@ -850,7 +932,7 @@ InfoDate.BackgroundTransparency = 1
 InfoDate.TextColor3 = Color3.fromRGB(200,200,200)
 InfoDate.Font = F(fonts.lastupdated)
 InfoDate.TextScaled = true
-InfoDate.Text = "Date updated: " .. lastupdate
+InfoDate.Text = "last updated: " .. lastupdate
 
 local ChangeLogScroll = Instance.new("ScrollingFrame", InfoFrame)
 ChangeLogScroll.Name = "ChangeLog"
@@ -867,8 +949,9 @@ track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function(
 end))
 
 updates = {
+"(oct 6, 2025) +82 emotes added",
 "(oct 4, 2025) +7 emotes added",
-    "(Oct 1, 2025) emote list sorting by Name & Alphabet",
+"(Oct 1, 2025) emote list sorting by Name & Alphabet",
     "(sep 29, 2025) +69 emotes added",
     "(sep 28, 2025) +79 emotes added",
     "(sep 23, 2025) +30 emotes added",
@@ -1029,7 +1112,7 @@ local function showPage(page)
     PageBadge.Text = "Page: " .. tostring(page)
     if page == 3 then
         refreshInfoEmoteCount()
-        InfoDate.Text = "Date updated: " .. lastupdate
+        InfoDate.Text = "Last updated: " .. lastupdate
     end
     applyVisibility()
 end
