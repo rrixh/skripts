@@ -1,23 +1,26 @@
--- FREEMOTES HUB v4 (FREEakyMOTES) --
+-- FREEMOTES HUB v4.1 (FREEakyMOTES) --
 local hub, no = pcall(function()
 
--- ==================== META ====================
 local lastupdate = "Oct 6, " .. os.date("%Y")
-local rnote, RRixh, n, fonts, add, updates, emoteKount, animationz, UC
+local hub = "FREEMOTES"
+local ver = "4.1"
+
+-- ==================== META ====================
+local load, rnote, RRixh, n, fonts, add, updates, emoteKount, animationz, UC
 
 rnote = function(txt, dur)
-    RRixh = loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/uwuware/main/skripts/AkaliNotif", true))()
-    n = RRixh.Notify
-    n({ Description = txt, Duration = dur or 7 })
+RRixh = loadstring(game:HttpGet("https://raw.githubusercontent.com/rrixh/uwuware/main/skripts/AkaliNotif", true))()
+n = RRixh.Notify
+n({ Description = txt, Duration = dur or 7 })
 end
 
-UC = utf8.char;
+UC = utf8.char
 
 -- ==================== SAFE SERVICES (cloneref) ====================
 local _cloneref = rawget(getfenv(), "cloneref")
 local function S(name)
-    local svc = game:GetService(name)
-    return _cloneref and _cloneref(svc) or svc
+local svc = game:GetService(name)
+return _cloneref and _cloneref(svc) or svc
 end
 
 -- Services
@@ -30,50 +33,51 @@ local Mouse        = Player:GetMouse()
 local Marketplace  = S("MarketplaceService")
 
 -- ==================== NAME RESOLVER ====================
-getgenv().animKaxhe = {}
+getgenv().animKaxhe = getgenv().animKaxhe or {};
 getgenv().getname = function(assetId, mode)
-    if (not mode) or (not tonumber(mode)) then mode = 2 end
-    local animId = tostring(assetId)
-    if not animId:match("%d+") then return "[Invalid ID]" end
-    animId = animId:match("%d+")
-    if (animKaxhe[animId] and animKaxhe[animId][mode]) then
-        return animKaxhe[animId][mode]
-    end
-    local result = "[Unknown]"
-    if mode == 1 then
-        local anim = Instance.new("Animation")
-        anim.AnimationId = "rbxassetid://" .. animId
-        result = (anim.Name ~= "" and anim.Name) or "Animation"
-        anim:Destroy()
-    else -- mode == 2
-        pcall(function()
-            local info = Marketplace:GetProductInfo(tonumber(animId))
-            result = info.Name or "[Unknown]"
-        end)
-    end
-    animKaxhe[animId] = animKaxhe[animId] or {}
-    animKaxhe[animId][mode] = result
-    return result
+if (not mode) or (not tonumber(mode)) then mode = 2 end
+local animId = tostring(assetId)
+if not animId:match("%d+") then return "[Invalid ID]" end
+animId = animId:match("%d+")
+if (animKaxhe[animId] and animKaxhe[animId][mode]) then
+    return animKaxhe[animId][mode]
 end
+local result = "[Unknown]"
+if mode == 1 then
+    local anim = Instance.new("Animation")
+    anim.AnimationId = "rbxassetid://" .. animId
+    result = (anim.Name ~= "" and anim.Name) or "Animation"
+    anim:Destroy()
+else -- mode == 2
+    pcall(function()
+        local info = Marketplace:GetProductInfo(tonumber(animId))
+        result = info.Name or "[Unknown]"
+    end)
+end
+animKaxhe[animId] = animKaxhe[animId] or {}
+animKaxhe[animId][mode] = result
+return result
+end;
 
-rnote("FREEMOTES V4 " .. (game:IsLoaded() and "waiting for emotes to load...\nby @lulaslollipop 🍭 on RBX!" or "waiting for game to load...\nby @lulaslollipop 🍭 on RBX!"), 6)
+load="yes"print(load)
+
+rnote(hub.." V"..ver.." "..(game:IsLoaded() and "loading emotes...\nby @lulaslollipop 🍭 on RBX!" or "waiting for game to load...\nby @lulaslollipop 🍭 on RBX!"), 6.5)
 
 -- ==================== FONTS ====================
 getgenv().fonts = {
-    title = "Bangers",
-    buttons = "Highway",
-    emotes = "DenkOne",
-    pages = "FredokaOne",
-    emotekount = "FredokaOne",
-    kreator = "DenkOne",
-    lastupdated = "DenkOne",
-    updates = "FredokaOne", -- Bodoni
-    minimizeAndKlose = "FredokaOne",
-    arrows = "FredokaOne",
+title = "Bangers",
+buttons = "Highway",
+emotes = "DenkOne",
+pages = "FredokaOne",
+emotekount = "FredokaOne",
+kreator = "DenkOne",
+lastupdated = "DenkOne",
+updates = "FredokaOne",
+minimizeAndKlose = "FredokaOne",
+arrows = "FredokaOne",
 }
 fonts = getgenv().fonts
-local function F(name) return Enum.Font[name] or Enum.Font.Gotham 
-end;
+local function F(name) return Enum.Font[name] or Enum.Font.Gotham end
 
 -- ==================== EMOTE API (shared) ====================
 getgenv().animationz = getgenv().animationz or {}
@@ -81,13 +85,12 @@ local anims = getgenv().animationz
 animationz = anims -- local mirror
 
 getgenv().newAnim = function(ID, Name, original)
-    Name = (original == true) and (Name .. " (Roblox)")
-        or (Name == true and getname(tostring(ID)) or Name)
-    table.insert(anims, ID)
-    table.insert(anims, Name)
+Name = (original == true) and (Name .. " (Roblox)")
+    or (Name == true and getname(tostring(ID)) or Name)
+table.insert(anims, ID)
+table.insert(anims, Name)
 end
-add = getgenv().newAnim
--- emotes; (617) + 82 = (699) + 
+add = getgenv().newAnim;
 
 -- === emotes list === --
 add(127635925379219, "zombie krawling") -- zombie krawling
@@ -129,7 +132,7 @@ add(120808142411970, "twerk") -- twerk
 add(84200166892562, "slow sexy air hump") -- slow sexy air hump
 add(114195294382626, "Hip Hop Rib Bop") -- Hip Hop Rib Bop
 add(79916022377862, "spanish hips") -- spanish hips
-add(106495041629365, "seductive dance 😜") -- seductive dance 😜
+add(106495041629365, "seductive dance đ") -- seductive dance đ
 add(14548619594, "BLACKPINK - Get em get em get em") -- BLACKPINK - Get em get em get em
 add(80406371127367, "getting bullied") -- getting bullied
 add(131847596154744, true) -- get schwifty
@@ -605,7 +608,7 @@ add(16371217304,"Skadoosh Emote - Kung Fu Panda 4 (offsale)",true)
 add(119294845436998,"everybody loves kung fu fighting")
 add(98795536838908,"asian boat dance")
 add(75040559357535,"asian squat")
-add(107271599689246,"annyeong (ìë)")
+add(107271599689246,"annyeong (ĂŹÂÂĂŤÂÂ)")
 add(92324467121726, true) -- Cleopatra Reclining Style Pose
 add(133718157859498,"kozy kawaii sit")
 add(131532348578183,"kute silly kawaii sit")
@@ -696,7 +699,7 @@ newAnim(105973640923990, "smooth tip toes")
 newAnim(99783661468387, "heebie jeebies")
 newAnim(113675536501038, true) -- head shoulders knees toes
 newAnim(103670521359891, "anime exorcism")
-newAnim(87234220922831,"anime koi ì¶¤")
+newAnim(87234220922831,"anime koi ĂŹÂśÂ¤")
 newAnim(110619271110653, "kupid shuffle")
 newAnim(140692198363356, true) -- one hand pushup
 newAnim(123144357660575,"floating sit - legs krossed")
@@ -816,6 +819,107 @@ newAnim(84352128203419, "vegetable chum")
 newAnim(82293338535013, "DJ KHALED")
 -- === end list === --
 
+emoteKount = tostring(math.floor(#animationz/2));
+
+-- ==================== TYPE GROUPING (keywords + overrides) ====================
+local function _norm(s)
+s = tostring(s or "")
+s = s:gsub("[%p%c]", " "):gsub("%s+", " "):lower()
+return s
+end
+
+-- broad keywords → bucket
+local KEYWORDS = {
+cat      = {"neko","kitty","cat"},
+sit      = {" sit"," sitting"," air sit"," knee sit","kneel"},
+sleep    = {"sleep","sleeping","daydream"},
+dance    = {"dance","shuffle","boogie","party","groove","twerk","hip","jig","shake"},
+sturdy   = {"sturdy"},
+headbang = {"head bang","headbanger","head banger"},
+hug      = {"hug"},
+friend   = {"friend"},
+fortnite = {"- fortnite","fortnite"},
+mj       = {"mj ","michael jackson","moonwalk"},
+goku     = {"goku","kame hame ha"},
+sonic    = {"sonic","eggman","robotnik"},
+spiderman= {"spiderman","spidey"},
+halloween= {"halloween"},
+witch    = {"witch"},
+zombie   = {"zombie"},
+pose     = {" pose"," idle"},
+run      = {" run"},
+walk     = {" walk"},
+float    = {" float"," hover"},
+jump     = {" jump"},
+yoga     = {"yoga"},
+anime    = {"anime","zero two","akuma"},
+}
+
+-- explicit title → bucket (wins over keywords)
+local OVERRIDES = {
+[_norm("kawaii neko idle pose")] = "cat",
+[_norm("adorable neko sit")] = "cat",
+[_norm("neko kitty laying down")] = "cat",
+[_norm("kawaii kitty kneel")] = "cat",
+
+[_norm("sit comfy idle")] = "sit",
+[_norm("kute silly kawaii sit")] = "sit",
+[_norm("kute legs out sit meow")] = "sit",
+[_norm("kool sit idle")] = "sit",
+
+[_norm("sleeping looking at the stars")] = "sleep",
+[_norm("daydream lay")] = "sleep",
+[_norm("sweet daydreaming")] = "sleep",
+
+[_norm("billy bounce - fortnite")] = "fortnite",
+[_norm("boogie down - fortnite")] = "fortnite",
+[_norm("elektro shuffle - fortnite")] = "fortnite",
+
+[_norm("get sturdy (original)")] = "sturdy",
+[_norm("head banger 2.0")] = "headbang",
+
+[_norm("best friends")] = "friend",
+[_norm("kutesy hug duo pose cutecore kawaii hold")] = "hug",
+
+[_norm("mj moonwalk")] = "mj",
+[_norm("mj moonwalk around")] = "mj",
+
+[_norm("kame hame ha")] = "goku",
+[_norm("goku flying")] = "goku",
+
+[_norm("sonic the hedgehog run")] = "sonic",
+[_norm("sonic spin dash")] = "sonic",
+
+[_norm("spiderman 2.0")] = "spiderman",
+[_norm("spidey hang")] = "spiderman",
+
+[_norm("halloween zombie idle")] = "halloween",
+[_norm("witch on a broom float")] = "witch",
+
+[_norm("zombie krawling")] = "zombie",
+[_norm("zombie krawling last words")] = "zombie",
+}
+
+local function guessType(name)
+local s = tostring(name or "")
+local key = _norm(s)
+if OVERRIDES[key] then return OVERRIDES[key] end
+local ls = string.lower(s)
+for cat, words in pairs(KEYWORDS) do
+    for _, w in ipairs(words) do
+        if string.find(ls, w, 1, true) then return cat end
+    end
+end
+if ls:find("sleep") or ls:find("snor") then return "sleep" end
+if ls:find("pose")  or ls:find("idle")  then return "pose"  end
+if ls:find("sit") then return "sit"   end
+if ls:find("dance")  then return "dance" end
+if ls:find("run") then return "run"   end
+if ls:find("walk") then return "walk"  end
+if ls:find("float") or ls:find("hover") then return "float" end
+return "misc"
+end
+
 -- ==================== THEME / GEOMETRY ====================
 local Red      = Color3.new(0.9, 0, 0)
 local Green    = Color3.new(0.26, 0.85, 0)
@@ -852,42 +956,39 @@ Instance.new("UICorner", PageBG)
 
 -- Glow
 local function addGlow(target)
-    local stroke = Instance.new("UIStroke")
-    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    stroke.Color = Color3.fromRGB(255, 40, 40)
-    stroke.Thickness = 2
-    stroke.Transparency = 0.2
-    stroke.Parent = target
-    local tw = TweenService:Create(
-        stroke,
-        TweenInfo.new(0.9, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
-        { Thickness = 4, Transparency = 0.05 }
-    )
-    tw:Play()
-    trackTween(tw)
-    return stroke
+local stroke = Instance.new("UIStroke")
+stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+stroke.Color = Color3.fromRGB(255, 40, 40)
+stroke.Thickness = 2
+stroke.Transparency = 0.2
+stroke.Parent = target
+local tw = TweenService:Create(stroke, TweenInfo.new(0.9, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
+    { Thickness = 4, Transparency = 0.05 })
+tw:Play()
+trackTween(tw)
+return stroke
 end
 addGlow(PageBG)
 
 -- Scrollers
 local function CreateScrollingFrame(name)
-    local sf = Instance.new("ScrollingFrame")
-    sf.Name = name
-    sf.Size = UDim2.new(0, PAGE_W, 0, PAGE_H - TOP_PADDING)
-    sf.Position = UDim2.new(0, PAGE_X, 0, PAGE_Y + TOP_PADDING)
-    sf.BackgroundTransparency = 1
-    sf.BorderSizePixel = 0
-    sf.CanvasSize = UDim2.new(0, 0, 0, 0)
-    sf.ScrollBarThickness = 6
-    sf.ZIndex = 1
-    sf.Parent = gui
-    local layout = Instance.new("UIListLayout", sf)
-    layout.SortOrder = Enum.SortOrder.LayoutOrder
-    layout.Padding = UDim.new(0, 6)
-    track(layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-        sf.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 12)
-    end))
-    return sf
+local sf = Instance.new("ScrollingFrame")
+sf.Name = name
+sf.Size = UDim2.new(0, PAGE_W, 0, PAGE_H - TOP_PADDING)
+sf.Position = UDim2.new(0, PAGE_X, 0, PAGE_Y + TOP_PADDING)
+sf.BackgroundTransparency = 1
+sf.BorderSizePixel = 0
+sf.CanvasSize = UDim2.new(0, 0, 0, 0)
+sf.ScrollBarThickness = 6
+sf.ZIndex = 1
+sf.Parent = gui
+local layout = Instance.new("UIListLayout", sf)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Padding = UDim.new(0, 6)
+track(layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    sf.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 12)
+end))
+return sf
 end
 
 local AnimationsFrame       = CreateScrollingFrame("AnimationsFrame")
@@ -915,7 +1016,6 @@ InfoEmoteCount.Font = F(fonts.emotekount)
 InfoEmoteCount.TextScaled = true
 InfoEmoteCount.Text = "Emotes: " .. tostring(math.floor(#animationz/2))
 
--- (UC alias already defined at top)
 local InfoCreator = Instance.new("TextLabel", InfoFrame)
 InfoCreator.Size = UDim2.new(1, -12, 0, 20)
 InfoCreator.Position = UDim2.new(0,6,0,36)
@@ -945,23 +1045,24 @@ Instance.new("UICorner", ChangeLogScroll)
 local CLLayout = Instance.new("UIListLayout", ChangeLogScroll)
 CLLayout.Padding = UDim.new(0,4)
 track(CLLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    ChangeLogScroll.CanvasSize = UDim2.new(0,0,0,CLLayout.AbsoluteContentSize.Y + 8)
+ChangeLogScroll.CanvasSize = UDim2.new(0,0,0,CLLayout.AbsoluteContentSize.Y + 8)
 end))
 
 updates = {
-"(oct 6, 2025) +82 emotes added",
+"[v4.1] (oct 6, 2025) added emote sorting 'type' & 'old→new' to list",
+"(oct 4, 2025) +ui polish",
 "(oct 4, 2025) +7 emotes added",
-"(Oct 1, 2025) emote list sorting by Name & Alphabet",
-    "(sep 29, 2025) +69 emotes added",
-    "(sep 28, 2025) +79 emotes added",
-    "(sep 23, 2025) +30 emotes added",
-    "(sep 16, 2025) +70 emotes added",
-    "- some emotes may stop working due to them being removed from roblox",
-    "(sep 15, 2025) +72 emotes added",
-    "(Sep 14, 2025) +131 emotes added",
-    "request emotes by sending me a dm on discord or telegram",
-    "(sep 10, 2025) +26 new emotes added",
-    "(sep 10, 2025) - search box added to lookup emotes by name easily",
+"[v4.0] (oct 1, 2025) emote list sorting by Name & Alphabet",
+"(sep 29, 2025) +69 emotes added",
+"(sep 28, 2025) +79 emotes added",
+"(sep 23, 2025) +30 emotes added",
+"(sep 16, 2025) +70 emotes added",
+"- note: some emotes may stop working due to them being removed from roblox but who gives a fuk",
+"(sep 15, 2025) +72 emotes added",
+"(sep 14, 2025) +131 emotes added",
+"request emotes by sending me a dm on discord or telegram",
+ "(sep 10, 2025) +26 new emotes added",
+    "(sep 10, 2025) - search box added to lookup emotes easily",
     "[v3.0] (sep 9, 2025) - animation speed boxes (page 1 & 2), steal players animations (page 2)",
     "(sep 8, 2025) - pages fixed",
     "- Emote buttons default red, green while playing",
@@ -969,14 +1070,14 @@ updates = {
     "- dragging supports all devices " .. UC(0x1F4F2) .. UC(0x1F5A5, 0xFE0F),
 }
 for _,entry in ipairs(updates) do
-    local t = Instance.new("TextLabel", ChangeLogScroll)
-    t.Size = UDim2.new(1, -6, 0, 28)
-    t.BackgroundTransparency = 1
-    t.TextColor3 = Color3.fromRGB(230,230,230)
-    t.Font = F(fonts.updates)
-    t.TextScaled = true
-    t.TextXAlignment = Enum.TextXAlignment.Left
-    t.Text = entry
+local t = Instance.new("TextLabel", ChangeLogScroll)
+t.Size = UDim2.new(1, -6, 0, 28)
+t.BackgroundTransparency = 1
+t.TextColor3 = Color3.fromRGB(230,230,230)
+t.Font = F(fonts.updates)
+t.TextScaled = true
+t.TextXAlignment = Enum.TextXAlignment.Left
+t.Text = entry
 end
 
 -- ==================== HEADER / NAV ====================
@@ -995,20 +1096,16 @@ local PrevBtn = Instance.new("TextButton", Header)
 PrevBtn.Size = UDim2.new(0,34,0,HeaderSize-6)
 PrevBtn.Position = UDim2.new(0,6,0,3)
 PrevBtn.Text = "<"
-PrevBtn.Font = F(fonts.arrows)
-PrevBtn.TextScaled = true
-PrevBtn.BackgroundColor3 = Grey
-PrevBtn.ZIndex = 3
+PrevBtn.Font = F(fonts.arrows); PrevBtn.TextScaled = true
+PrevBtn.BackgroundColor3 = Grey; PrevBtn.ZIndex = 3
 Instance.new("UICorner", PrevBtn)
 
 local NextBtn = Instance.new("TextButton", Header)
 NextBtn.Size = UDim2.new(0,34,0,HeaderSize-6)
 NextBtn.Position = UDim2.new(0,46,0,3)
 NextBtn.Text = ">"
-NextBtn.Font = F(fonts.arrows)
-NextBtn.TextScaled = true
-NextBtn.BackgroundColor3 = Grey
-NextBtn.ZIndex = 3
+NextBtn.Font = F(fonts.arrows); NextBtn.TextScaled = true
+NextBtn.BackgroundColor3 = Grey; NextBtn.ZIndex = 3
 Instance.new("UICorner", NextBtn)
 
 local BTN_W, PAD = 34, 6
@@ -1029,19 +1126,15 @@ RBLayout.Padding = UDim.new(0, PAD)
 local MinimizeButton = Instance.new("TextButton", RightButtons)
 MinimizeButton.Size = UDim2.new(0, BTN_W, 1, 0)
 MinimizeButton.Text = "—"
-MinimizeButton.Font = F(fonts.minimizeAndKlose)
-MinimizeButton.TextScaled = true
-MinimizeButton.BackgroundColor3 = Grey
-MinimizeButton.ZIndex = 3
+MinimizeButton.Font = F(fonts.minimizeAndKlose); MinimizeButton.TextScaled = true
+MinimizeButton.BackgroundColor3 = Grey; MinimizeButton.ZIndex = 3
 Instance.new("UICorner", MinimizeButton)
 
 local CloseButton = Instance.new("TextButton", RightButtons)
 CloseButton.Size = UDim2.new(0, BTN_W, 1, 0)
 CloseButton.Text = "ⓧ"
-CloseButton.Font = F(fonts.minimizeAndKlose)
-CloseButton.TextScaled = true
-CloseButton.BackgroundColor3 = Red
-CloseButton.ZIndex = 3
+CloseButton.Font = F(fonts.minimizeAndKlose); CloseButton.TextScaled = true
+CloseButton.BackgroundColor3 = Red; CloseButton.ZIndex = 3
 Instance.new("UICorner", CloseButton)
 
 local PAGE_BADGE_W = 88
@@ -1063,7 +1156,7 @@ Title.BackgroundTransparency = 1
 Title.TextColor3 = Color3.fromRGB(255,255,255)
 Title.TextScaled = true
 Title.Font = F(fonts.title)
-Title.Text = "🍭 FREEaky EMOTES v4 🍭"
+Title.Text = "🍭 FREEaky EMOTES v" .. ver .. " 🍭"
 Title.ZIndex = 3
 Title.Position = UDim2.new(0, LEFT_START, 0, 0)
 Title.Size = UDim2.new(1, -(LEFT_START + rightReserved), 0, HeaderSize)
@@ -1088,639 +1181,651 @@ Overlay2.ZIndex = 4
 
 local currentPage, minimized = 1, false
 local function applyVisibility()
-    if minimized then
-        AnimationsFrame.Visible = false
-        StolenAnimationsFrame.Visible = false
-        InfoFrame.Visible = false
-        Overlay1.Visible = false
-        Overlay2.Visible = false
-        PageBG.Visible = false
-    else
-        AnimationsFrame.Visible       = (currentPage == 1)
-        StolenAnimationsFrame.Visible = (currentPage == 2)
-        InfoFrame.Visible             = (currentPage == 3)
-        Overlay1.Visible              = (currentPage == 1)
-        Overlay2.Visible              = (currentPage == 2)
-        PageBG.Visible                = (currentPage == 1 or currentPage == 2)
-    end
+if minimized then
+    AnimationsFrame.Visible = false
+    StolenAnimationsFrame.Visible = false
+    InfoFrame.Visible = false
+    Overlay1.Visible = false
+    Overlay2.Visible = false
+    PageBG.Visible = false
+else
+    AnimationsFrame.Visible       = (currentPage == 1)
+    StolenAnimationsFrame.Visible = (currentPage == 2)
+    InfoFrame.Visible             = (currentPage == 3)
+    Overlay1.Visible              = (currentPage == 1)
+    Overlay2.Visible              = (currentPage == 2)
+    PageBG.Visible                = (currentPage == 1 or currentPage == 2)
+end
 end
 local function refreshInfoEmoteCount()
-    InfoEmoteCount.Text = "Emotes: " .. tostring(math.floor(#animationz/2))
+InfoEmoteCount.Text = "Emotes: " .. tostring(math.floor(#animationz/2))
 end
 local function showPage(page)
-    currentPage = page
-    PageBadge.Text = "Page: " .. tostring(page)
-    if page == 3 then
-        refreshInfoEmoteCount()
-        InfoDate.Text = "Last updated: " .. lastupdate
-    end
-    applyVisibility()
+currentPage = page
+PageBadge.Text = "Page: " .. tostring(page)
+if page == 3 then
+    refreshInfoEmoteCount()
+    InfoDate.Text = "Last updated: " .. lastupdate
+end
+applyVisibility()
 end
 
 track(PrevBtn.MouseButton1Click:Connect(function()
-    if currentPage > 1 then showPage(currentPage - 1) end
+if currentPage > 1 then showPage(currentPage - 1) end
 end))
 track(NextBtn.MouseButton1Click:Connect(function()
-    if currentPage < 3 then showPage(currentPage + 1) end
+if currentPage < 3 then showPage(currentPage + 1) end
 end))
 track(MinimizeButton.MouseButton1Click:Connect(function()
-    minimized = not minimized
-    applyVisibility()
+minimized = not minimized
+applyVisibility()
 end))
 
 -- ==================== DRAGGING ====================
 local dragging, dragOffset = false, Vector2.new(0,0)
 track(Header.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        local pos = input.Position
-        dragOffset = Vector2.new(pos.X - PageBG.AbsolutePosition.X, pos.Y - PageBG.AbsolutePosition.Y)
-    end
+if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+    dragging = true
+    local pos = input.Position
+    dragOffset = Vector2.new(pos.X - PageBG.AbsolutePosition.X, pos.Y - PageBG.AbsolutePosition.Y)
+end
 end))
 track(Header.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = false
-    end
+if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+    dragging = false
+end
 end))
 local dragInputConn
 dragInputConn = track(UIS.InputChanged:Connect(function(input)
-    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-        local pos = input.Position
-        local newX = pos.X - dragOffset.X
-        local newY = pos.Y - dragOffset.Y
-        local scPos  = UDim2.new(0,newX,0,newY + TOP_PADDING)
-        local basePos= UDim2.new(0,newX,0,newY)
-        PageBG.Position                  = basePos
-        AnimationsFrame.Position         = scPos
-        StolenAnimationsFrame.Position   = scPos
-        InfoFrame.Position               = basePos
-        Overlay1.Position                = basePos
-        Overlay2.Position                = basePos
-        Header.Position                  = basePos + UDim2.new(0,0,0,-HeaderSize)
-    end
+if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+    local pos = input.Position
+    local newX = pos.X - dragOffset.X
+    local newY = pos.Y - dragOffset.Y
+    local scPos  = UDim2.new(0,newX,0,newY + TOP_PADDING)
+    local basePos= UDim2.new(0,newX,0,newY)
+    PageBG.Position                = basePos
+    AnimationsFrame.Position       = scPos
+    StolenAnimationsFrame.Position = scPos
+    InfoFrame.Position             = basePos
+    Overlay1.Position              = basePos
+    Overlay2.Position              = basePos
+    Header.Position                = basePos + UDim2.new(0,0,0,-HeaderSize)
+end
 end))
 
 -- ==================== ACTIVE / PLAY HELPERS ====================
 local Active = {track=nil, id=nil, btn=nil}
 local function buildAnimationId(raw)
-    local s = tostring(raw)
-    if string.find(s, "rbxassetid://") then return s end
-    local digits = s:match("%d+")
-    if digits then return "rbxassetid://" .. digits end
-    return "rbxassetid://" .. s
+local s = tostring(raw)
+if string.find(s, "rbxassetid://") then return s end
+local digits = s:match("%d+")
+if digits then return "rbxassetid://" .. digits end
+return "rbxassetid://" .. s
 end
 local function StopAllAnimations()
-    local char = Player.Character
-    local hum = char and char:FindFirstChildOfClass("Humanoid")
-    if hum then
-        for _, tr in ipairs(hum:GetPlayingAnimationTracks()) do
-            pcall(function() tr:Stop() end)
-        end
+local char = Player.Character
+local hum = char and char:FindFirstChildOfClass("Humanoid")
+if hum then
+    for _, tr in ipairs(hum:GetPlayingAnimationTracks()) do
+        pcall(function() tr:Stop() end)
     end
-    if Active.btn and Active.btn.Parent then Active.btn.BackgroundColor3 = Red end
-    Active.track, Active.id, Active.btn = nil, nil, nil
+end
+if Active.btn and Active.btn.Parent then Active.btn.BackgroundColor3 = Red end
+Active.track, Active.id, Active.btn = nil, nil, nil
 end
 
 -- ==================== EMOTE ENTRY + TRACKING ====================
-local EmoteRows = {} -- { {frame=Frame, name=string, id=number|string, base=index}, ... }
+local EmoteRows = {} -- { frame, name, id, base }
 local function normalizeAlphaKey(s)
-    s = tostring(s or "")
-    s = s:gsub("[%p%c]", " "):gsub("%s+", " "):lower()
-    return s
+s = tostring(s or "")
+s = s:gsub("[%p%c]", " "):gsub("%s+", " "):lower()
+return s
 end
 local function normalizeClusterKey(s)
-    local words = {}
-    for w in tostring(s):lower():gmatch("%w+") do table.insert(words, w) end
-    table.sort(words)
-    return table.concat(words, " ")
+local words = {}
+for w in tostring(s):lower():gmatch("%w+") do table.insert(words, w) end
+table.sort(words)
+return table.concat(words, " ")
 end
 
 local function CreateEmoteEntry(name, id, parent)
-    local entry = Instance.new("Frame")
-    entry.Size = UDim2.new(1, 0, 0, 40)
-    entry.BackgroundTransparency = 1
-    entry.Name = "EmoteEntry"
-    entry.Parent = parent
+local entry = Instance.new("Frame")
+entry.Size = UDim2.new(1, 0, 0, 40)
+entry.BackgroundTransparency = 1
+entry.Name = "EmoteEntry"
+entry.Parent = parent
 
-    local lay = Instance.new("UIListLayout", entry)
-    lay.FillDirection = Enum.FillDirection.Horizontal
-    lay.HorizontalAlignment = Enum.HorizontalAlignment.Left
-    lay.SortOrder = Enum.SortOrder.LayoutOrder
-    lay.Padding = UDim.new(0,6)
+local lay = Instance.new("UIListLayout", entry)
+lay.FillDirection = Enum.FillDirection.Horizontal
+lay.HorizontalAlignment = Enum.HorizontalAlignment.Left
+lay.SortOrder = Enum.SortOrder.LayoutOrder
+lay.Padding = UDim.new(0,6)
 
-    local btn = Instance.new("TextButton", entry)
-    btn.Size = UDim2.new(0.68, 0, 1, 0)
-    btn.BackgroundColor3 = Red
-    btn.Text = tostring(name or "Animation")
-    btn.Name = "EmoteButton"
-    btn.Font = F(fonts.emotes)
-    btn.TextScaled = true
-    btn.TextColor3 = Color3.new(1,1,1)
-    btn:SetAttribute("AnimId", id)
-    Instance.new("UICorner", btn)
+local btn = Instance.new("TextButton", entry)
+btn.Size = UDim2.new(0.68, 0, 1, 0)
+btn.BackgroundColor3 = Red
+btn.Text = tostring(name or "Animation")
+btn.Name = "EmoteButton"
+btn.Font = F(fonts.emotes)
+btn.TextScaled = true
+btn.TextColor3 = Color3.new(1,1,1)
+btn:SetAttribute("AnimId", id)
+Instance.new("UICorner", btn)
 
-    local speedBox = Instance.new("TextBox", entry)
-    speedBox.Size = UDim2.new(0.32, 0, 1, 0)
-    speedBox.PlaceholderText = "speed (1)"
-    speedBox.Text = ""
-    speedBox.Font = F(fonts.buttons)
-    speedBox.TextScaled = true
-    speedBox.BackgroundColor3 = Color3.fromRGB(60,60,60)
-    speedBox.TextColor3 = Color3.new(1,1,1)
-    speedBox.Name = "SpeedBox"
-    Instance.new("UICorner", speedBox)
+local speedBox = Instance.new("TextBox", entry)
+speedBox.Size = UDim2.new(0.32, 0, 1, 0)
+speedBox.PlaceholderText = "speed (1)"
+speedBox.Text = ""
+speedBox.Font = F(fonts.buttons)
+speedBox.TextScaled = true
+speedBox.BackgroundColor3 = Color3.fromRGB(60,60,60)
+speedBox.TextColor3 = Color3.new(1,1,1)
+speedBox.Name = "SpeedBox"
+Instance.new("UICorner", speedBox)
 
-    track(btn.MouseButton1Click:Connect(function()
-        local animIdStr = buildAnimationId(id)
+track(btn.MouseButton1Click:Connect(function()
+    local animIdStr = buildAnimationId(id)
 
-        if Active.id == tostring(id) then
-            if Active.track then pcall(function() Active.track:Stop() end) end
-            btn.BackgroundColor3 = Red
-            Active.track, Active.id, Active.btn = nil, nil, nil
-            return
-        end
+    if Active.id == tostring(id) then
+        if Active.track then pcall(function() Active.track:Stop() end) end
+        btn.BackgroundColor3 = Red
+        Active.track, Active.id, Active.btn = nil, nil, nil
+        return
+    end
 
-        if Active.track then
-            pcall(function() Active.track:Stop() end)
-            if Active.btn and Active.btn.Parent then Active.btn.BackgroundColor3 = Red end
-        end
+    if Active.track then
+        pcall(function() Active.track:Stop() end)
+        if Active.btn and Active.btn.Parent then Active.btn.BackgroundColor3 = Red end
+    end
 
-        local char = Player.Character
-        local humanoid = char and char:FindFirstChildOfClass("Humanoid")
-        if not humanoid then warn("No humanoid; can't play anim") return end
+    local char = Player.Character
+    local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+    if not humanoid then warn("No humanoid; can't play anim") return end
 
-        local animObj = Instance.new("Animation")
-        animObj.AnimationId = animIdStr
-        local ok, trackAnim = pcall(function() return humanoid:LoadAnimation(animObj) end)
-        if not ok or not trackAnim then warn("Failed to load anim:", animIdStr) return end
+    local animObj = Instance.new("Animation")
+    animObj.AnimationId = animIdStr
+    local ok, trackAnim = pcall(function() return humanoid:LoadAnimation(animObj) end)
+    if not ok or not trackAnim then warn("Failed to load anim:", animIdStr) return end
 
-        trackAnim.Looped = true
-        trackAnim.Priority = Enum.AnimationPriority.Action
-        trackAnim:Play()
+    trackAnim.Looped = true
+    trackAnim.Priority = Enum.AnimationPriority.Action
+    trackAnim:Play()
 
-        local sp = tonumber(speedBox.Text)
-        if sp and trackAnim.AdjustSpeed then pcall(function() trackAnim:AdjustSpeed(sp) end) end
+    local sp = tonumber(speedBox.Text)
+    if sp and trackAnim.AdjustSpeed then pcall(function() trackAnim:AdjustSpeed(sp) end) end
 
-        Active.track, Active.id, Active.btn = trackAnim, tostring(id), btn
-        btn.BackgroundColor3 = Green
-    end))
+    Active.track, Active.id, Active.btn = trackAnim, tostring(id), btn
+    btn.BackgroundColor3 = Green
+end))
 
-    track(speedBox.FocusLost:Connect(function()
-        local sp = tonumber(speedBox.Text)
-        if sp and Active and Active.track and Active.id == tostring(id) then
-            pcall(function() Active.track:AdjustSpeed(sp) end)
-        end
-    end))
+track(speedBox.FocusLost:Connect(function()
+    local sp = tonumber(speedBox.Text)
+    if sp and Active and Active.track and Active.id == tostring(id) then
+        pcall(function() Active.track:AdjustSpeed(sp) end)
+    end
+end))
 
-    -- Track for sorting
-    EmoteRows[#EmoteRows+1] = { frame = entry, name = tostring(name or ""), id = id, base = #EmoteRows + 1 }
-    return entry
+EmoteRows[#EmoteRows+1] = { frame = entry, name = tostring(name or ""), id = id, base = #EmoteRows + 1 }
+return entry
 end
 
 -- ==================== POPULATE PAGE 1 ====================
 for i = 1, #animationz, 2 do
-    local id   = animationz[i]
-    local name = tostring(animationz[i+1] or "Animation")
-    CreateEmoteEntry(name, id, AnimationsFrame)
+local id   = animationz[i]
+local name = tostring(animationz[i+1] or "Animation")
+CreateEmoteEntry(name, id, AnimationsFrame)
 end
 
 -- ==================== SORT ENGINE ====================
 local CurrentSortMode = "Latest"
 local function applySort()
-    if #EmoteRows == 0 then return end
-    local idx = {}
-    for i = 1, #EmoteRows do idx[i] = i end
+if #EmoteRows == 0 then return end
+local idx = {}
+for i = 1, #EmoteRows do idx[i] = i end
 
-    if CurrentSortMode == "Latest" then
-        table.sort(idx, function(a,b) return EmoteRows[a].base < EmoteRows[b].base end)
-    elseif CurrentSortMode == "Alphabetical" then
-        table.sort(idx, function(a,b)
+if CurrentSortMode == "Latest" then
+    table.sort(idx, function(a,b) return EmoteRows[a].base < EmoteRows[b].base end)
+elseif CurrentSortMode == "Old -> New" then
+    table.sort(idx, function(a,b) return EmoteRows[a].base > EmoteRows[b].base end)
+elseif CurrentSortMode == "Alphabetical" then
+    table.sort(idx, function(a,b)
+        return normalizeAlphaKey(EmoteRows[a].name) < normalizeAlphaKey(EmoteRows[b].name)
+    end)
+elseif CurrentSortMode == "Name" then
+    table.sort(idx, function(a,b)
+        local ka = normalizeClusterKey(EmoteRows[a].name)
+        local kb = normalizeClusterKey(EmoteRows[b].name)
+        if ka == kb then
             return normalizeAlphaKey(EmoteRows[a].name) < normalizeAlphaKey(EmoteRows[b].name)
-        end)
-    elseif CurrentSortMode == "Name" then
-        table.sort(idx, function(a,b)
-            local ka = normalizeClusterKey(EmoteRows[a].name)
-            local kb = normalizeClusterKey(EmoteRows[b].name)
-            if ka == kb then
-                return normalizeAlphaKey(EmoteRows[a].name) < normalizeAlphaKey(EmoteRows[b].name)
-            end
-            return ka < kb
-        end)
-    end
-
-    for order, irow in ipairs(idx) do
-        local fr = EmoteRows[irow].frame
-        if fr and fr.Parent == AnimationsFrame then
-            fr.LayoutOrder = order
         end
+        return ka < kb
+    end)
+elseif CurrentSortMode == "Type" then
+    table.sort(idx, function(a,b)
+        local ta = guessType(EmoteRows[a].name)
+        local tb = guessType(EmoteRows[b].name)
+        if ta == tb then
+            return normalizeAlphaKey(EmoteRows[a].name) < normalizeAlphaKey(EmoteRows[b].name)
+        end
+        return ta < tb
+    end)
+end
+
+for order, irow in ipairs(idx) do
+    local fr = EmoteRows[irow].frame
+    if fr and fr.Parent == AnimationsFrame then
+        fr.LayoutOrder = order
     end
+end
 end
 applySort()
 
 -- ==================== SEARCH FILTER ====================
 local function filterList(scroller, queryLower)
-    for _, child in ipairs(scroller:GetChildren()) do
-        if child:IsA("Frame") and child.Name == "EmoteEntry" then
-            local btn = child:FindFirstChild("EmoteButton")
-            local txt = btn and (btn.Text or "") or ""
-            child.Visible = (queryLower == "") or (string.find(string.lower(txt), queryLower, 1, true) ~= nil)
-        end
+for _, child in ipairs(scroller:GetChildren()) do
+    if child:IsA("Frame") and child.Name == "EmoteEntry" then
+        local btn = child:FindFirstChild("EmoteButton")
+        local txt = btn and (btn.Text or "") or ""
+        child.Visible = (queryLower == "") or (string.find(string.lower(txt), queryLower, 1, true) ~= nil)
     end
+end
 end
 
 local function CreateInteractable(size, name, placeholder, bgColor, cornerRadiusPx, parent)
-    local container = Instance.new("Frame")
-    container.Name = name .. "Container"
-    container.Size = size
-    container.BackgroundTransparency = 1
-    container.Parent = parent
-    container.ZIndex = parent.ZIndex
+local container = Instance.new("Frame")
+container.Name = name .. "Container"
+container.Size = size
+container.BackgroundTransparency = 1
+container.Parent = parent
+container.ZIndex = parent.ZIndex
 
-    local h = Instance.new("UIListLayout", container)
-    h.FillDirection = Enum.FillDirection.Horizontal
-    h.Padding = UDim.new(0,6)
+local h = Instance.new("UIListLayout", container)
+h.FillDirection = Enum.FillDirection.Horizontal
+h.Padding = UDim.new(0,6)
 
-    local box = Instance.new("TextBox")
-    box.Name = "SearchbarBox"
-    box.Size = UDim2.new(1, -34, 1, 0)
-    box.BackgroundColor3 = bgColor or Grey
-    box.TextColor3 = Color3.new(1,1,1)
-    box.PlaceholderText = placeholder or ""
-    box.ClearTextOnFocus = false
+local box = Instance.new("TextBox")
+box.Name = "SearchbarBox"
+box.Size = UDim2.new(1, -34, 1, 0)
+box.BackgroundColor3 = bgColor or Grey
+box.TextColor3 = Color3.new(1,1,1)
+box.PlaceholderText = placeholder or ""
+box.ClearTextOnFocus = false
+box.Text = ""
+box.Font = F(fonts.buttons)
+box.TextScaled = true
+box.ZIndex = parent.ZIndex
+local radius = tonumber(cornerRadiusPx) or 6
+local corner = Instance.new("UICorner", box)
+corner.CornerRadius = UDim.new(0, radius)
+
+local clear = Instance.new("TextButton")
+clear.Name = "ClearSearch"
+clear.Size = UDim2.new(0, 28, 1, 0)
+clear.BackgroundColor3 = Color3.fromRGB(70,70,70)
+clear.Text = ""..UC(0x274C) -- ❌
+clear.Font = F(fonts.buttons)
+clear.TextScaled = true
+clear.ZIndex = parent.ZIndex
+Instance.new("UICorner", clear)
+
+box.Parent = container
+clear.Parent = container
+
+track(clear.MouseButton1Click:Connect(function()
     box.Text = ""
-    box.Font = F(fonts.buttons)
-    box.TextScaled = true
-    box.ZIndex = parent.ZIndex
-    local radius = tonumber(cornerRadiusPx) or 6
-    local corner = Instance.new("UICorner", box)
-    corner.CornerRadius = UDim.new(0, radius)
+    box:ReleaseFocus()
+end))
 
-    local clear = Instance.new("TextButton")
-    clear.Name = "ClearSearch"
-    clear.Size = UDim2.new(0, 28, 1, 0)
-    clear.BackgroundColor3 = Color3.fromRGB(70,70,70)
-    clear.Text = ""..UC(0x274C) -- ❌
-    clear.Font = F(fonts.buttons)
-    clear.TextScaled = true
-    clear.ZIndex = parent.ZIndex
-    Instance.new("UICorner", clear)
-
-    box.Parent = container
-    clear.Parent = container
-
-    track(clear.MouseButton1Click:Connect(function()
-        box.Text = ""
-        box:ReleaseFocus()
-    end))
-
-    return box, container
+return box, container
 end
 
 -- ==================== PAGE 1 OVERLAY (STOP + SEARCH + SORT) ====================
 do
-    -- Row 1: STOP
-    local row1 = Instance.new("Frame", Overlay1)
-    row1.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
-    row1.Position = UDim2.new(0, MARGIN, 0, MARGIN)
-    row1.BackgroundTransparency = 1
-    row1.ZIndex = 4
-    local StopBtn = Instance.new("TextButton", row1)
-    StopBtn.Name = "StopAllBtn_P1"
-    StopBtn.Size = UDim2.new(1, 0, 1, 0)
-    StopBtn.Text = "🚨 STOP ANIMATIONS"
-    StopBtn.Font = F(fonts.buttons)
-    StopBtn.TextScaled = true
-    StopBtn.BackgroundColor3 = Red
-    StopBtn.TextColor3 = Color3.new(1,1,1)
-    StopBtn.ZIndex = 4
-    Instance.new("UICorner", StopBtn)
-    track(StopBtn.MouseButton1Click:Connect(StopAllAnimations))
+-- Row 1: STOP
+local row1 = Instance.new("Frame", Overlay1)
+row1.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+row1.Position = UDim2.new(0, MARGIN, 0, MARGIN)
+row1.BackgroundTransparency = 1
+row1.ZIndex = 4
+local StopBtn = Instance.new("TextButton", row1)
+StopBtn.Name = "StopAllBtn_P1"
+StopBtn.Size = UDim2.new(1, 0, 1, 0)
+StopBtn.Text = "🚨 STOP ANIMATIONS"
+StopBtn.Font = F(fonts.buttons)
+StopBtn.TextScaled = true
+StopBtn.BackgroundColor3 = Red
+StopBtn.TextColor3 = Color3.new(1,1,1)
+StopBtn.ZIndex = 4
+Instance.new("UICorner", StopBtn)
+track(StopBtn.MouseButton1Click:Connect(StopAllAnimations))
 
-    -- Row 2: Search (2/3) + Sort (1/3)
-    local row2 = Instance.new("Frame", Overlay1)
-    row2.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
-    row2.Position = UDim2.new(0, MARGIN, 0, MARGIN*2 + ROW_H)
-    row2.BackgroundTransparency = 1
-    row2.ZIndex = 5
-    local layout = Instance.new("UIListLayout", row2)
-    layout.FillDirection = Enum.FillDirection.Horizontal
-    layout.Padding = UDim.new(0,0)
-    layout.VerticalAlignment = Enum.VerticalAlignment.Center
+-- Row 2: Search (2/3) + Sort (1/3)
+local row2 = Instance.new("Frame", Overlay1)
+row2.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+row2.Position = UDim2.new(0, MARGIN, 0, MARGIN*2 + ROW_H)
+row2.BackgroundTransparency = 1
+row2.ZIndex = 5
+local layout = Instance.new("UIListLayout", row2)
+layout.FillDirection = Enum.FillDirection.Horizontal
+layout.Padding = UDim.new(0,0)
+layout.VerticalAlignment = Enum.VerticalAlignment.Center
 
-    local SearchWrap = Instance.new("Frame", row2)
-    SearchWrap.Size = UDim2.new(2/3, 0, 1, 0)
-    SearchWrap.BackgroundTransparency = 1
-    SearchWrap.ZIndex = 5
-    local SearchBox_P1 = select(1, CreateInteractable(UDim2.new(1,0,1,0), "Searchbar", "search animations here...", Grey, 6, SearchWrap))
-    track(SearchBox_P1:GetPropertyChangedSignal("Text"):Connect(function()
-        filterList(AnimationsFrame, string.lower(SearchBox_P1.Text or ""))
-    end))
-    filterList(AnimationsFrame, "")
+local SearchWrap = Instance.new("Frame", row2)
+SearchWrap.Size = UDim2.new(2/3, 0, 1, 0)
+SearchWrap.BackgroundTransparency = 1
+SearchWrap.ZIndex = 5
+local SearchBox_P1 = select(1, CreateInteractable(UDim2.new(1,0,1,0), "Searchbar", "search animations here...", Grey, 6, SearchWrap))
+track(SearchBox_P1:GetPropertyChangedSignal("Text"):Connect(function()
+    filterList(AnimationsFrame, string.lower(SearchBox_P1.Text or ""))
+end))
+filterList(AnimationsFrame, "")
 
-    local SortWrap = Instance.new("Frame", row2)
-    SortWrap.Size = UDim2.new(1/3, 0, 1, 0)
-    SortWrap.BackgroundTransparency = 1
-    SortWrap.ZIndex = 6
+local SortWrap = Instance.new("Frame", row2)
+SortWrap.Size = UDim2.new(1/3, 0, 1, 0)
+SortWrap.BackgroundTransparency = 1
+SortWrap.ZIndex = 6
 
-    local SortBtn = Instance.new("TextButton", SortWrap)
-    SortBtn.Name = "SortButton"
-    SortBtn.Size = UDim2.new(1, 0, 1, 0)
-    SortBtn.Text = "Sort ▲"
-    SortBtn.Font = F(fonts.buttons)
-    SortBtn.TextScaled = true
-    SortBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
-    SortBtn.TextColor3 = Color3.new(1,1,1)
-    SortBtn.ZIndex = 7
-    Instance.new("UICorner", SortBtn)
+local SortBtn = Instance.new("TextButton", SortWrap)
+SortBtn.Name = "SortButton"
+SortBtn.Size = UDim2.new(1, 0, 1, 0)
+SortBtn.Text = "Sort ▲"
+SortBtn.Font = F(fonts.buttons)
+SortBtn.TextScaled = true
+SortBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+SortBtn.TextColor3 = Color3.new(1,1,1)
+SortBtn.ZIndex = 7
+Instance.new("UICorner", SortBtn)
 
-    local Drop = Instance.new("Frame", Overlay1)
-    Drop.Name = "SortDropdown"
-    Drop.Size = UDim2.new(0, math.floor((PAGE_W - 2*MARGIN) * (1/3)), 0, ROW_H*3 + 2)
-    Drop.Position = UDim2.new(0, PAGE_X + MARGIN + math.floor((PAGE_W - 2*MARGIN) * (2/3)), 0, PAGE_Y + (MARGIN*2 + ROW_H) + ROW_H + 2)
-    Drop.BackgroundColor3 = Color3.fromRGB(42,42,42)
-    Drop.BorderSizePixel = 0
-    Drop.Visible = false
-    Drop.ZIndex = 100
-    Instance.new("UICorner", Drop)
-    addGlow(Drop)
+-- ======= compact, higher dropdown with strokes on all items =======
+local DROP_W = math.floor((PAGE_W - 2*MARGIN) * 0.30)
+local DROP_H = ROW_H * 5 + 4
+local DROP_X = PAGE_X + MARGIN + math.floor((PAGE_W - 2*MARGIN) * (2/3))
+local DROP_Y = PAGE_Y + (MARGIN*2 + ROW_H) + math.floor(ROW_H * 0.35)
 
-    local dLayout = Instance.new("UIListLayout", Drop)
-    dLayout.FillDirection = Enum.FillDirection.Vertical
-    dLayout.Padding = UDim.new(0,1)
+local Drop = Instance.new("Frame", Overlay1)
+Drop.Name = "SortDropdown"
+Drop.Size = UDim2.new(0, DROP_W, 0, DROP_H)
+Drop.Position = UDim2.new(0, DROP_X, 0, DROP_Y)
+Drop.BackgroundColor3 = Color3.fromRGB(42,42,42)
+Drop.BorderSizePixel = 0
+Drop.Visible = false
+Drop.ZIndex = 100
+Instance.new("UICorner", Drop)
+addGlow(Drop)
 
-    local function makeOpt(label)
-        local b = Instance.new("TextButton", Drop)
-        b.Size = UDim2.new(1, 0, 0, ROW_H)
-        b.Text = label
-        b.Font = F(fonts.buttons)
-        b.TextScaled = true
-        b.BackgroundColor3 = Color3.fromRGB(66,66,66)
-        b.TextColor3 = Color3.new(1,1,1)
-        b.ZIndex = 101
-        Instance.new("UICorner", b)
-        return b
+local dLayout = Instance.new("UIListLayout", Drop)
+dLayout.FillDirection = Enum.FillDirection.Vertical
+dLayout.Padding = UDim.new(0,1)
+
+local function makeOpt(label)
+    local b = Instance.new("TextButton", Drop)
+    b.Size = UDim2.new(1, 0, 0, ROW_H)
+    b.Text = label
+    b.Font = F(fonts.buttons)
+    b.TextScaled = true
+    b.BackgroundColor3 = Color3.fromRGB(66,66,66)
+    b.TextColor3 = Color3.new(1,1,1)
+    b.ZIndex = 101
+    Instance.new("UICorner", b)
+    local st = Instance.new("UIStroke", b)
+    st.Color = Color3.fromRGB(255,40,40)
+    st.Thickness = 1.6
+    st.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    st.Transparency = 0.15
+    return b
+end
+
+local OptLatest = makeOpt("Latest  (default)")
+local OptOldNew = makeOpt("Old -> New")
+local OptAlpha  = makeOpt("Alphabetical")
+local OptName   = makeOpt("Name")
+local OptType   = makeOpt("Type")
+
+local function closeDrop() Drop.Visible = false; SortBtn.Text = "Sort ▲" end
+local function openDrop()  Drop.Visible = true;  SortBtn.Text = "Sort ▼" end
+
+track(SortBtn.MouseButton1Click:Connect(function()
+    if Drop.Visible then closeDrop() else openDrop() end
+end))
+
+local function pick(mode)
+    CurrentSortMode = mode
+    applySort()
+    closeDrop()
+end
+track(OptLatest.MouseButton1Click:Connect(function() pick("Latest") end))
+track(OptOldNew.MouseButton1Click:Connect(function() pick("Old -> New") end))
+track(OptAlpha.MouseButton1Click:Connect(function()  pick("Alphabetical") end))
+track(OptName.MouseButton1Click:Connect(function()   pick("Name") end))
+track(OptType.MouseButton1Click:Connect(function()   pick("Type") end))
+
+-- click outside closes dropdown
+track(UIS.InputBegan:Connect(function(input, gp)
+    if gp or not Drop.Visible then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        local mx, my = input.Position.X, input.Position.Y
+        local abs, size = Drop.AbsolutePosition, Drop.AbsoluteSize
+        local inside = (mx >= abs.X and mx <= abs.X + size.X and my >= abs.Y and my <= abs.Y + size.Y)
+        if not inside then closeDrop() end
     end
-
-    local OptLatest = makeOpt("Latest  (default)")
-    local OptAlpha  = makeOpt("Alphabetical")
-    local OptName   = makeOpt("Name")
-
-    local function closeDrop()
-        Drop.Visible = false
-        SortBtn.Text = "Sort ▲"
-    end
-    local function openDrop()
-        Drop.Visible = true
-        SortBtn.Text = "Sort ▼"
-    end
-
-    track(SortBtn.MouseButton1Click:Connect(function()
-        if Drop.Visible then closeDrop() else openDrop() end
-    end))
-
-    local function pick(mode)
-        CurrentSortMode = mode
-        applySort()
-        closeDrop()
-    end
-    track(OptLatest.MouseButton1Click:Connect(function() pick("Latest") end))
-    track(OptAlpha.MouseButton1Click:Connect(function()  pick("Alphabetical") end))
-    track(OptName.MouseButton1Click:Connect(function()   pick("Name") end))
-
-    track(UIS.InputBegan:Connect(function(input, gp)
-        if gp or not Drop.Visible then return end
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            local mx, my = input.Position.X, input.Position.Y
-            local abs = Drop.AbsolutePosition
-            local size= Drop.AbsoluteSize
-            local inside = (mx >= abs.X and mx <= abs.X + size.X and my >= abs.Y and my <= abs.Y + size.Y)
-            if not inside then closeDrop() end
-        end
-    end))
+end))
 end
 
 -- ==================== PAGE 2 (STEAL MODE, SEARCH, STOP) ====================
 do
-    -- ---------- state ----------
-    local StealMode, highlightObj, hoverConn, pickConn = false, nil, nil, nil
+local StealMode, highlightObj, hoverConn, pickConn = false, nil, nil, nil
 
-    local function destroyHighlight()
-        if highlightObj then
-            highlightObj:Destroy()
-            highlightObj = nil
-        end
-    end
+local function destroyHighlight()
+    if highlightObj then highlightObj:Destroy(); highlightObj = nil end
+end
 
-    local function setStealMode(on)
-        if on then
-            if StealMode then return end
-            StealMode = true
-            destroyHighlight()
-            highlightObj = Instance.new("Highlight")
-            highlightObj.FillColor = Color3.fromRGB(66, 140, 242)
-            highlightObj.OutlineTransparency = 1
-            highlightObj.Adornee = nil
-            highlightObj.Parent = workspace
+local function setStealMode(on)
+    if on then
+        if StealMode then return end
+        StealMode = true
+        destroyHighlight()
+        highlightObj = Instance.new("Highlight")
+        highlightObj.FillColor = Color3.fromRGB(66, 140, 242)
+        highlightObj.OutlineTransparency = 1
+        highlightObj.Adornee = nil
+        highlightObj.Parent = workspace
 
-            if hoverConn then hoverConn:Disconnect() end
-            hoverConn = RS.Heartbeat:Connect(function()
-                if not StealMode then return end
+        if hoverConn then hoverConn:Disconnect() end
+        hoverConn = RS.Heartbeat:Connect(function()
+            if not StealMode then return end
+            local t = Mouse.Target
+            if not t then highlightObj.Adornee = nil return end
+            local model = t:FindFirstAncestorWhichIsA("Model")
+            if model and model:FindFirstChildOfClass("Humanoid") then
+                highlightObj.Adornee = model
+            else
+                highlightObj.Adornee = nil
+            end
+        end)
+
+        if pickConn then pickConn:Disconnect() end
+        pickConn = UIS.InputBegan:Connect(function(input, gp)
+            if gp or not StealMode then return end
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
                 local t = Mouse.Target
-                if not t then highlightObj.Adornee = nil return end
+                if not t then return end
                 local model = t:FindFirstAncestorWhichIsA("Model")
-                if model and model:FindFirstChildOfClass("Humanoid") then
-                    highlightObj.Adornee = model
-                else
-                    highlightObj.Adornee = nil
-                end
-            end)
+                local hum = model and model:FindFirstChildOfClass("Humanoid")
+                if not hum then return end
 
-            if pickConn then pickConn:Disconnect() end
-            pickConn = UIS.InputBegan:Connect(function(input, gp)
-                if gp or not StealMode then return end
-                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                    local t = Mouse.Target
-                    if not t then return end
-                    local model = t:FindFirstAncestorWhichIsA("Model")
-                    local hum = model and model:FindFirstChildOfClass("Humanoid")
-                    if not hum then return end
-
-                    for _, theirTrack in ipairs(hum:GetPlayingAnimationTracks()) do
-                        local raw = tostring(theirTrack.Animation and theirTrack.Animation.AnimationId or "")
-                        local id = raw:match("%d+") or raw
-                        if id and id ~= "" then
-                            local label = ("Stole: %s [%s]"):format(getname(id), tostring(id))
-                            CreateEmoteEntry(label, id, StolenAnimationsFrame)
-                            filterList(StolenAnimationsFrame, "")
-                            setStealMode(false)
-                            break
-                        end
+                for _, theirTrack in ipairs(hum:GetPlayingAnimationTracks()) do
+                    local raw = tostring(theirTrack.Animation and theirTrack.Animation.AnimationId or "")
+                    local id = raw:match("%d+") or raw
+                    if id and id ~= "" then
+                        local label = ("Stole: %s [%s]"):format(getname(id), tostring(id))
+                        CreateEmoteEntry(label, id, StolenAnimationsFrame)
+                        filterList(StolenAnimationsFrame, "")
+                        setStealMode(false)
+                        break
                     end
                 end
-            end)
-        else
-            StealMode = false
-            if hoverConn then hoverConn:Disconnect() hoverConn = nil end
-            if pickConn  then pickConn:Disconnect()  pickConn  = nil end
-            destroyHighlight()
-        end
-    end
-    _G.__setStealMode = setStealMode
-
-    local function ClearStolenList()
-        for _, ch in ipairs(StolenAnimationsFrame:GetChildren()) do
-            if ch:IsA("Frame") and ch.Name == "EmoteEntry" then
-                ch:Destroy()
             end
-        end
+        end)
+    else
+        StealMode = false
+        if hoverConn then hoverConn:Disconnect() hoverConn = nil end
+        if pickConn  then pickConn:Disconnect()  pickConn  = nil end
+        destroyHighlight()
     end
+end
+_G.__setStealMode = setStealMode
 
-    -- Row 1: STOP + SEARCH
-    local row1 = Instance.new("Frame", Overlay2)
-    row1.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
-    row1.Position = UDim2.new(0, MARGIN, 0, MARGIN)
-    row1.BackgroundTransparency = 1
-    row1.ZIndex = 4
-    local h1 = Instance.new("UIListLayout", row1)
-    h1.FillDirection = Enum.FillDirection.Horizontal
-    h1.Padding = UDim.new(0,0)
+local function ClearStolenList()
+    for _, ch in ipairs(StolenAnimationsFrame:GetChildren()) do
+        if ch:IsA("Frame") and ch.Name == "EmoteEntry" then ch:Destroy() end
+    end
+end
 
-    local StopBtn2 = Instance.new("TextButton", row1)
-    StopBtn2.Size = UDim2.new(0.5, 0, 1, 0)
-    StopBtn2.Text = UC(0x1F6A8).." STOP ANIMATIONS"
-    StopBtn2.Font = F(fonts.buttons)
-    StopBtn2.TextScaled = true
-    StopBtn2.BackgroundColor3 = Red
-    StopBtn2.TextColor3 = Color3.new(1,1,1)
-    StopBtn2.ZIndex = 4
-    Instance.new("UICorner", StopBtn2)
-    StopBtn2.MouseButton1Click:Connect(function()
-        StopAllAnimations()
-        setStealMode(false)
-    end)
+-- Row 1: STOP + SEARCH
+local row1 = Instance.new("Frame", Overlay2)
+row1.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+row1.Position = UDim2.new(0, MARGIN, 0, MARGIN)
+row1.BackgroundTransparency = 1
+row1.ZIndex = 4
+local h1 = Instance.new("UIListLayout", row1)
+h1.FillDirection = Enum.FillDirection.Horizontal
+h1.Padding = UDim.new(0,0)
 
-    local SearchHalf = Instance.new("Frame", row1)
-    SearchHalf.Size = UDim2.new(0.5, 0, 1, 0)
-    SearchHalf.BackgroundTransparency = 1
-    SearchHalf.ZIndex = 4
+local StopBtn2 = Instance.new("TextButton", row1)
+StopBtn2.Size = UDim2.new(0.5, 0, 1, 0)
+StopBtn2.Text = UC(0x1F6A8).." STOP ANIMATIONS"
+StopBtn2.Font = F(fonts.buttons)
+StopBtn2.TextScaled = true
+StopBtn2.BackgroundColor3 = Red
+StopBtn2.TextColor3 = Color3.new(1,1,1)
+StopBtn2.ZIndex = 4
+Instance.new("UICorner", StopBtn2)
+StopBtn2.MouseButton1Click:Connect(function()
+    StopAllAnimations()
+    setStealMode(false)
+end)
 
-    local SearchBox_P2 = (function()
-        local box = Instance.new("TextBox", SearchHalf)
-        box.Name = "SearchbarBox"
-        box.Size = UDim2.new(1, -34, 1, 0)
-        box.BackgroundColor3 = Grey
-        box.TextColor3 = Color3.new(1,1,1)
-        box.PlaceholderText = "search stolen animations..."
-        box.ClearTextOnFocus = false
+local SearchHalf = Instance.new("Frame", row1)
+SearchHalf.Size = UDim2.new(0.5, 0, 1, 0)
+SearchHalf.BackgroundTransparency = 1
+SearchHalf.ZIndex = 4
+
+local SearchBox_P2 = (function()
+    local box = Instance.new("TextBox", SearchHalf)
+    box.Name = "SearchbarBox"
+    box.Size = UDim2.new(1, -34, 1, 0)
+    box.BackgroundColor3 = Grey
+    box.TextColor3 = Color3.new(1,1,1)
+    box.PlaceholderText = "search stolen animations..."
+    box.ClearTextOnFocus = false
+    box.Text = ""
+    box.Font = F(fonts.buttons)
+    box.TextScaled = true
+    local corner = Instance.new("UICorner", box) corner.CornerRadius = UDim.new(0,6)
+
+    local clear = Instance.new("TextButton", SearchHalf)
+    clear.Name = "ClearSearch"
+    clear.Size = UDim2.new(0, 28, 1, 0)
+    clear.Position = UDim2.new(1, -28, 0, 0)
+    clear.BackgroundColor3 = Color3.fromRGB(70,70,70)
+    clear.Text = ""..UC(0x274C)
+    clear.Font = F(fonts.buttons)
+    clear.TextScaled = true
+    Instance.new("UICorner", clear)
+
+    clear.MouseButton1Click:Connect(function()
         box.Text = ""
-        box.Font = F(fonts.buttons)
-        box.TextScaled = true
-        local corner = Instance.new("UICorner", box) corner.CornerRadius = UDim.new(0,6)
-
-        local clear = Instance.new("TextButton", SearchHalf)
-        clear.Name = "ClearSearch"
-        clear.Size = UDim2.new(0, 28, 1, 0)
-        clear.Position = UDim2.new(1, -28, 0, 0)
-        clear.BackgroundColor3 = Color3.fromRGB(70,70,70)
-        clear.Text = ""..UC(0x274C)
-        clear.Font = F(fonts.buttons)
-        clear.TextScaled = true
-        Instance.new("UICorner", clear)
-
-        clear.MouseButton1Click:Connect(function()
-            box.Text = ""
-            box:ReleaseFocus()
-        end)
-
-        box:GetPropertyChangedSignal("Text"):Connect(function()
-            filterList(StolenAnimationsFrame, string.lower(box.Text or ""))
-        end)
-        return box
-    end)()
-    filterList(StolenAnimationsFrame, "")
-
-    -- Row 2: Steal Play / Pick & Steal / Klear List
-    local row2 = Instance.new("Frame", Overlay2)
-    row2.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
-    row2.Position = UDim2.new(0, MARGIN, 0, MARGIN*2 + ROW_H)
-    row2.BackgroundTransparency = 1
-    row2.ZIndex = 4
-
-    local h2 = Instance.new("UIListLayout", row2)
-    h2.FillDirection = Enum.FillDirection.Horizontal
-    h2.Padding = UDim.new(0,0)
-
-    local StealPlayBtn = Instance.new("TextButton", row2)
-    StealPlayBtn.Size = UDim2.new(1/3, 0, 1, 0)
-    StealPlayBtn.Text = "Steal Play"
-    StealPlayBtn.Font = F(fonts.buttons)
-    StealPlayBtn.TextScaled = true
-    StealPlayBtn.BackgroundColor3 = Color3.fromRGB(140, 0, 140)
-    StealPlayBtn.TextColor3 = Color3.new(1,1,1)
-    StealPlayBtn.ZIndex = 4
-    Instance.new("UICorner", StealPlayBtn)
-
-    local PickStealBtn = Instance.new("TextButton", row2)
-    PickStealBtn.Size = UDim2.new(1/3, 0, 1, 0)
-    PickStealBtn.Text = "Pick & Steal"
-    PickStealBtn.Font = F(fonts.buttons)
-    PickStealBtn.TextScaled = true
-    PickStealBtn.BackgroundColor3 = Yellow
-    PickStealBtn.TextColor3 = Color3.new(1,1,1)
-    PickStealBtn.ZIndex = 4
-    Instance.new("UICorner", PickStealBtn)
-
-    local KlearBtn = Instance.new("TextButton", row2)
-    KlearBtn.Size = UDim2.new(1/3, 0, 1, 0)
-    KlearBtn.Text = "Klear List"
-    KlearBtn.Font = F(fonts.buttons)
-    KlearBtn.TextScaled = true
-    KlearBtn.BackgroundColor3 = FadedRed
-    KlearBtn.TextColor3 = Color3.new(1,1,1)
-    KlearBtn.ZIndex = 4
-    Instance.new("UICorner", KlearBtn)
-
-    StealPlayBtn.MouseButton1Click:Connect(function()
-        if Active and Active.id then
-            local id = tostring(Active.id)
-            local label = ("Stole: %s [%s]"):format(getname(id), id)
-            CreateEmoteEntry(label, id, StolenAnimationsFrame)
-            filterList(StolenAnimationsFrame, "")
-        end
-        setStealMode(false)
+        box:ReleaseFocus()
     end)
 
-    PickStealBtn.MouseButton1Click:Connect(function()
-        local tgt = not StealMode
-        setStealMode(tgt)
-        PickStealBtn.BackgroundColor3 = tgt and Blue or Yellow
+    box:GetPropertyChangedSignal("Text"):Connect(function()
+        filterList(StolenAnimationsFrame, string.lower(box.Text or ""))
     end)
+    return box
+end)()
+filterList(StolenAnimationsFrame, "")
 
-    KlearBtn.MouseButton1Click:Connect(function()
-        ClearStolenList()
-        if SearchBox_P2 then SearchBox_P2.Text = "" end
+-- Row 2: Steal Play / Pick & Steal / Klear List
+local row2 = Instance.new("Frame", Overlay2)
+row2.Size = UDim2.new(1, -2*MARGIN, 0, ROW_H)
+row2.Position = UDim2.new(0, MARGIN, 0, MARGIN*2 + ROW_H)
+row2.BackgroundTransparency = 1
+row2.ZIndex = 4
+
+local h2 = Instance.new("UIListLayout", row2)
+h2.FillDirection = Enum.FillDirection.Horizontal
+h2.Padding = UDim.new(0,0)
+
+local StealPlayBtn = Instance.new("TextButton", row2)
+StealPlayBtn.Size = UDim2.new(1/3, 0, 1, 0)
+StealPlayBtn.Text = "Steal Play"
+StealPlayBtn.Font = F(fonts.buttons)
+StealPlayBtn.TextScaled = true
+StealPlayBtn.BackgroundColor3 = Color3.fromRGB(140, 0, 140)
+StealPlayBtn.TextColor3 = Color3.new(1,1,1)
+StealPlayBtn.ZIndex = 4
+Instance.new("UICorner", StealPlayBtn)
+
+local PickStealBtn = Instance.new("TextButton", row2)
+PickStealBtn.Size = UDim2.new(1/3, 0, 1, 0)
+PickStealBtn.Text = "Pick & Steal"
+PickStealBtn.Font = F(fonts.buttons)
+PickStealBtn.TextScaled = true
+PickStealBtn.BackgroundColor3 = Yellow
+PickStealBtn.TextColor3 = Color3.new(1,1,1)
+PickStealBtn.ZIndex = 4
+Instance.new("UICorner", PickStealBtn)
+
+local KlearBtn = Instance.new("TextButton", row2)
+KlearBtn.Size = UDim2.new(1/3, 0, 1, 0)
+KlearBtn.Text = "Klear List"
+KlearBtn.Font = F(fonts.buttons)
+KlearBtn.TextScaled = true
+KlearBtn.BackgroundColor3 = FadedRed
+KlearBtn.TextColor3 = Color3.new(1,1,1)
+KlearBtn.ZIndex = 4
+Instance.new("UICorner", KlearBtn)
+
+StealPlayBtn.MouseButton1Click:Connect(function()
+    if Active and Active.id then
+        local id = tostring(Active.id)
+        local label = ("Stole: %s [%s]"):format(getname(id), id)
+        CreateEmoteEntry(label, id, StolenAnimationsFrame)
         filterList(StolenAnimationsFrame, "")
-        setStealMode(false)
-        PickStealBtn.BackgroundColor3 = Yellow
-    end)
-end -- closes PAGE 2 block
+    end
+    setStealMode(false)
+end)
+
+PickStealBtn.MouseButton1Click:Connect(function()
+    local tgt = not StealMode
+    setStealMode(tgt)
+    PickStealBtn.BackgroundColor3 = tgt and Blue or Yellow
+end)
+
+KlearBtn.MouseButton1Click:Connect(function()
+    ClearStolenList()
+    if SearchBox_P2 then SearchBox_P2.Text = "" end
+    filterList(StolenAnimationsFrame, "")
+    setStealMode(false)
+    PickStealBtn.BackgroundColor3 = Yellow
+end)
+end -- PAGE 2
 
 -- ==================== CLOSE / TEARDOWN ====================
 local function tearDownAndClose()
-    StopAllAnimations()
-    if dragInputConn then dragInputConn:Disconnect() dragInputConn = nil end
-    for _, tw in ipairs(GlowTweens) do pcall(function() tw:Cancel() end) end
-    for _, c in ipairs(Connections) do pcall(function() c:Disconnect() end) end
-    table.clear(Connections) table.clear(GlowTweens)
-    gui:Destroy()
+StopAllAnimations()
+if dragInputConn then dragInputConn:Disconnect() dragInputConn = nil end
+for _, tw in ipairs(GlowTweens) do pcall(function() tw:Cancel() end) end
+for _, c in ipairs(Connections) do pcall(function() c:Disconnect() end) end
+table.clear(Connections) table.clear(GlowTweens)
+gui:Destroy()
 end
 track(CloseButton.MouseButton1Click:Connect(tearDownAndClose))
 
 -- ==================== INIT ====================
 showPage(1)
-emoteKount = tostring(math.floor(#animationz/2));
-rnote("Emotes loaded: "..emoteKount, 4)
-warn("Number of emotes:", math.floor(#animationz/2))
+rnote(emoteKount.." emotes loaded!", 4)
+warn("number of emotes:", emoteKount)
 
-end) -- protekt
+end) -- pcall(protekt)
 if not hub and no then warn(no) end;
