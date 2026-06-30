@@ -1,11 +1,11 @@
 -- FREEMOTES HUB v4.1 (FREEakyMOTES) --
 local hub, no = pcall(function()
 
-local lastupdate = "Oct 6, " .. os.date("%Y")
+local lastupdate = ("June 29, 2026")
 local hub = "FREEMOTES"
 local ver = "4.1"
 
--- ==================== META ====================
+-- =========== META ============ --
 local load, rnote, RRixh, n, fonts, add, updates, emoteKount, animationz, UC
 
 rnote = function(txt, dur)
@@ -93,6 +93,118 @@ end
 add = getgenv().newAnim;
 
 -- === emotes list === --
+add(100796042445927, "Hot Marat")
+add(122126431884541, "goofy Hot Dog dance - Mickey Mouse")
+add(76689730692695, "Hot diggity dog - mickey mouse")
+add(129197073429201, true) -- goober hot dogdance
+add(99354086878266, "hot dog dance x chainsaw man")
+add(138307051555796, "Hot Needy Shake")
+add(124487756017056, "Macareña (hot version)")
+add(109366845785128, "drinking hot chocolate")
+add(94080015059061, "LE SSERAFIM (hot version)")
+add(71012420360225, "BABY MONSTER - HOT K-POP DANCE")
+add(122085132612903, "caramelldansen")
+add(130300884993082, "muffin dance (offsale exclusive)")
+add(83185016439737, "ATEEZ - BOUNCY K-HOT CHILI PEPPERS")
+add(87923995147803, "DUMP IT (cute)")
+add(78803045087416, "U GOTTA CHILL")
+add(111574391429053, "U GOTTA CHILL (sprinkler version)")
+add(116179068468529, "showing off")
+add(101610725956737, "MICHEAL JACKSON - BEAT IT")
+add(100370394458439, "DONT HIDE, TURN UP")
+add(81860982150053, "DONT HIDE ME (sexy version)")
+add(104610803454349, "my girl dont want me idc dance")
+add(116095763672762, "long ass moon walk - micheal jackson")
+add(118134258316062, "micheal jackson spin")
+add(75382173926303, "soul taken")
+add(138176803620962, "smooth bounce")
+add(83579963322472, "make em say wow")
+add(92611559040242, "what can i say?")
+add(124824668234104, "supermarket- say now")
+add(85612839739153, "ATEEZ - say my name")
+add(113164397821194, "what you saying - lil uzi vert")
+add(123071837129860,true) -- say he word on beat
+add(77793876149584,true) -- florida stickin
+add(78431620127176,true) -- florida jook
+add(118102803354388, "woo bounce")
+add(119447563895347, "moon dance")
+add(125669852896422,true) -- roaming the streets
+add(134067079372130, "pure joy moves")
+add(86567495744860,"love & joy")
+add(104486714290914, "pure brazilian essence")
+add(111591039546432,true) -- so what bounce
+add(99758292888549, "what you want - cortis")
+add(95556554652429, "U SAID WAT?!")
+add(138709852455143, "what you want - prince egypt")
+add(140350391736964, "TWICE - what is love?")
+add(89628879328779, "WAT R THOSEEE (DAMN DANIEL MEME)")
+add(119188056608789,true) -- glide moves
+add(74631463090799, "micheal jackson - Smooth glide")
+add(86245590448727, "micheal jackson - Smooth Glide v2")
+add(119453677541532, true) -- URBAN DANCE
+add(70597768332606,true) -- urban the wave
+add(82354312290969, "kute ghetto dance")
+add(138146795333901,"BOOM BOOM BASS - RIIZE")
+add(94684769956967,"FAME - RIIZE")
+-- latest ^ (jun29,2026)
+add(80716715787167, "PangYa dance 3.0")
+add(136307438957868, "cutesy katgirl profile pose")
+add(79917966693154,"kute kitty standing paw pose")
+add(110490889501127,"kitty paws pose")
+add(84668393576188,"kitty paws pose 2.0")
+add(81640192204769,"shy hands behind back pose")
+add(125053750805024,"kute standing kold pose")
+add(132399156461615,"kawaii kitty rawr meow pose")
+add(85278338138308,"kneeling kitty")
+add(98800545333675,"kute matching kitty pose")
+add(101868678802996,"kawaii kitty licking paws sitting")
+add(75569892759956,"kawaii kitty licking paws sitting 2")
+add(74518007276355,"shake that thang with swag")
+add(76379166425946,"pull that thang")
+add(104055978598325,"shake that thang (hands up)")
+add(82203908643212,"shake that thang (baddie version)")
+add(83451864467215,"hip bounce 2")
+add(136817303087259,"Bop N Bounce")
+add(99929461031339,"driving bouncing")
+add(81425877326456,"baddie giving a lapdance")
+add(93187327044383,"kawaii bounce idle")
+add(95365412417733,"ass tease")
+add(112986481294122,"ass tease 2.0")
+add(139092375630441,"jersey klub bounce (TIKTOK)")
+add(95587611248371,"freedom floating")
+add(106791897561327,"golden dance")
+add(122052712384355,"adorable kawaii hand on head profile pose")
+add(115148661602945,"tonight pink Pinkpatherness dance")
+add(111414886159332,"GIVE ME EVERYTHING TONIGHT")
+add(107873403646435,"smug dance")
+add(83687507357006,"timeless")
+add(113018884205139,"Sexy shik shak shake")
+add(78502972379984,"side sleeping & snoring")
+-- add(77094371516110,"needy dance (shake)")
+add(123111866772804,"CELEBRATE ME")
+add(136957130926657,"KAWAII CELEBRATION")
+add(131829783462785,"hit the folks")
+add(108748954547905,"Groove out")
+add(95636653691213,"lets groove")
+add(140123160944327,"tiny squats ")
+add(77527874177418,"krab rave")
+add(135336822352332,"Krab dance")
+add(97689872770161,"SpyCrab dance")
+add(91018558186670,true) --IT DANCE
+add(79917966693154,"kawaii kitty standing paw pose")
+add(106996894998770,"pink jumbix (removed emote)")
+add(89794141549021,"pink kardigan")
+add(79979515443365,"BLAXKPINK JUMP (looped)")
+add(131117342572810,"GIVE ME EVERYTHING TONIGHT 🎵 ")
+add(122052712384355,"adorable kawaii hand on head girly pose")
+add(106791897561327,"golden dance")
+add(118097591253210,"kutesy cat sit")
+add(106801240159776,true) -- kutesy heart pose
+add(136307438957868,"kutesy catgirl profile pose")
+add(123575382851693,"kaguya sama dance")
+add(105848786528637,"salsa")
+add(133330670281304,"hakari dance")
+add(80716715787167, "pangya dance")
 add(127635925379219, "zombie krawling") -- zombie krawling
 add(77672872857991, "halloween zombie idle 2") -- halloween zombie idle 2
 add(117024374347125, "halloween zombie idle") -- halloween zombie idle
@@ -1049,10 +1161,11 @@ ChangeLogScroll.CanvasSize = UDim2.new(0,0,0,CLLayout.AbsoluteContentSize.Y + 8)
 end))
 
 updates = {
-"[v4.1] (oct 6, 2025) added emote sorting 'type' & 'old→new' to sort list",
+"(jun 29, 2026) +110 emotes added",
+"[v4.1] (oct 6, 2025) added 'type' & 'old→new' for emote sorting",
 "(oct 6, 2025) +82 emotes added",
 "(oct 4, 2025) +7 emotes added & ui add-ons",
-"[v4.0] (oct 1, 2025) emote list sorting by Name & Alphabet",
+"[v4.0] (oct 1, 2025) emote sorting by Name & Alphabet",
 "(sep 29, 2025) +69 emotes added",
 "(sep 28, 2025) +79 emotes added",
 "(sep 23, 2025) +30 emotes added",
